@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Jobs;
+using Unity.Jobs;
+using Unity.Collections;
 using System.Diagnostics;
 
 [ExecuteInEditMode]
@@ -12,18 +15,9 @@ public class NavigationManager : MonoBehaviour {
 
     private List<GameObject> walkables = new List<GameObject>();
 
-    void Start() {
-
-    }
-
-    void Update() {
-
-    }
-
     void OnValidate() {
         GenerateNavigationGrid();
     }
-
 
     private List<GameObject> getWalkableSurfaces () {
         var objects = GameObject.FindGameObjectsWithTag("Walkable");
@@ -43,8 +37,8 @@ public class NavigationManager : MonoBehaviour {
         for (int i = 0; i < walkables.Count; i++) {
             var w = walkables[i];
 
-            for (float x = 0; x < subDivision; x++) {
-                for (float y = 0; y < subDivision; y++) {
+            for (var x = 0; x < subDivision; x++) {
+                for (var y = 0; y < subDivision; y++) {
                     var offsetPosition = new Vector2(x - subDivision * 0.5f + 0.5f, y - subDivision * 0.5f + 0.5f) / subDivision * w.transform.lossyScale;
                     var resultPosition = (Vector2)w.transform.position + offsetPosition;
 
@@ -62,7 +56,7 @@ public class NavigationManager : MonoBehaviour {
 
         UnityEngine.Debug.LogFormat("Generated navigation grid in {0}ms", timeTaken);
     }
-
+   
     void OnDrawGizmosSelected() {
         foreach (var v in grid) {
             Gizmos.color = new Color(1, 0, 0, 0.5f);
