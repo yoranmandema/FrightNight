@@ -21,7 +21,5 @@ class LookForPlayerState : StateMachineBehaviour {
         } else {
             animator.SetBool("CanSeePlayer", false);
         }
-
-        Debug.Log(animator.GetBool("CanSeePlayer"));
     }
 }
