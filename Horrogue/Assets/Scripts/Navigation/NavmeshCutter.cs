@@ -18,18 +18,20 @@ public class NavmeshCutter : MonoBehaviour {
     }
 
     public void CutNavmesh () {
-        if (lastBounds != null) {
+        if (AstarPath.active != null) {
+            if (lastBounds != null) {
+                // change some settings on the object
+                AstarPath.active.UpdateGraphs(new GraphUpdateObject(lastBounds));
+            }
+
+            var bounds = GetComponent<Collider2D>().bounds;
+            // Expand the bounds along the Z axis
+            bounds.Expand(Vector3.forward * 1000);
+            var guo = new GraphUpdateObject(bounds);
             // change some settings on the object
-            AstarPath.active.UpdateGraphs(new GraphUpdateObject(lastBounds));
+            AstarPath.active.UpdateGraphs(guo);
+
+            lastBounds = bounds;
         }
-
-        var bounds = GetComponent<Collider2D>().bounds;
-        // Expand the bounds along the Z axis
-        bounds.Expand(Vector3.forward * 1000);
-        var guo = new GraphUpdateObject(bounds);
-        // change some settings on the object
-        AstarPath.active.UpdateGraphs(guo);
-
-        lastBounds = bounds;
     }
 }

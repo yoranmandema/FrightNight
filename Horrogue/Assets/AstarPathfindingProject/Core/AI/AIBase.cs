@@ -367,6 +367,8 @@ namespace Pathfinding {
 			Vector3 start, end;
 			CalculatePathRequestEndpoints(out start, out end);
 
+            Debug.Log(end);
+
 			// Alternative way of requesting the path
 			//ABPath p = ABPath.Construct(start, end, null);
 			//seeker.StartPath(p);
