@@ -4,10 +4,10 @@ using UnityEngine;
 
 class LookForPlayerState : StateMachineBehaviour {
     [Tooltip("Determins how far the enemy can sense the player.")]
-    [SerializeField] private float _lookRadius = 10.0f;
+    [SerializeField] private float _lookRadius = 5.0f;
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        var player = GameObject.Find("Player");
+        var player = GameObject.FindGameObjectWithTag("Player");
         var gameObject = animator.gameObject;
 
         RaycastHit2D rayResult = Physics2D.Raycast(
@@ -17,9 +17,9 @@ class LookForPlayerState : StateMachineBehaviour {
             );
 
         if (rayResult.collider != null) {
-            animator.SetBool("CanSeePlayer", rayResult.collider.gameObject == player);
+            animator.SetBool("Can See Player", rayResult.collider.gameObject == player);
         } else {
-            animator.SetBool("CanSeePlayer", false);
+            animator.SetBool("Can See Player", false);
         }
     }
 }
