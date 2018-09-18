@@ -14,20 +14,11 @@ public class Billboard : MonoBehaviour {
         material.SetTexture("_MainTex",Diffuse);
         material.SetTexture("_BumpMap", Normal);
 
-        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        renderer.receiveShadows = true;
-
         LookAtCamera();
     }
 
     void Update () {
         LookAtCamera();
-    }
-
-    void Start() {
-        var renderer = GetComponent<Renderer>();
-        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        renderer.receiveShadows = true;
     }
 
     void LookAtCamera () {
