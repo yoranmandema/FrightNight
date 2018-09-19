@@ -23,6 +23,13 @@ public class SpriteLightReciever : MonoBehaviour {
 
             //averageColor /= lightColors.Count;
 
+            averageColor = new Color(
+                Mathf.Clamp01(averageColor.r),
+                Mathf.Clamp01(averageColor.g),
+                Mathf.Clamp01(averageColor.b),
+                1
+            );
+
             r.material.color = averageColor;
         }
 
@@ -31,9 +38,9 @@ public class SpriteLightReciever : MonoBehaviour {
 
     public void Illuminate(Color color) {
         var newColor = new Color(
-                Mathf.Clamp(color.r, 0, 1f),
-                Mathf.Clamp(color.g, 0, 1f),
-                Mathf.Clamp(color.b, 0, 1f),
+                Mathf.Clamp(color.r, 0, 10f),
+                Mathf.Clamp(color.g, 0, 10f),
+                Mathf.Clamp(color.b, 0, 10f),
                 1
             );
 

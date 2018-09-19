@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class SpriteLightCaster : MonoBehaviour {
 
     public float Distance = 3;
@@ -34,6 +35,10 @@ public class SpriteLightCaster : MonoBehaviour {
         return new List<GameObject>();
     }
 
+    void OnValidate() {
+        Illuminate();
+    }
+
     void Update() {
         Illuminate();
     }
@@ -50,7 +55,7 @@ public class SpriteLightCaster : MonoBehaviour {
 
                 if (shadowCast.collider != null) {
                     if (shadowCast.collider.gameObject == tile) {
-                        shadowColor = reference;
+                        shadowColor = reference* ShadowFiltering;
                     } else {
                         shadowColor += Color.black;
                     }
