@@ -36,8 +36,6 @@ public class SpriteLightCaster : MonoBehaviour
                     }
                 }
 
-                //color = Color.red;
-
                 if (distanceToReciever <= Distance)
                     r.Illuminate(color);
             }

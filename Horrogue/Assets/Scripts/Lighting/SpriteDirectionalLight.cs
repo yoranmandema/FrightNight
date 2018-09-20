@@ -30,6 +30,8 @@ public class SpriteDirectionalLight : SpriteLightCaster {
         for (var i = 0; i < cast.Length; i++) {
             var t = cast[i].collider.gameObject;
 
+            if (t.GetComponent<SpriteLightReciever>() == null) continue;
+
             float inDirectionMultiplier = 0;
 
             for (var x = 0; x < ShadowFiltering; x++) {
@@ -37,7 +39,7 @@ public class SpriteDirectionalLight : SpriteLightCaster {
                     var offset = new Vector3(x - ShadowFiltering * 0.5f + 0.5f, y - ShadowFiltering * 0.5f + 0.5f,0) / ShadowFiltering / 2;
                     var direction = (transform.position - (t.transform.position + offset)).normalized;
 
-                    var angle = Vector3.Angle(transform.up, direction);
+                    var angle = Vector3.Angle(-transform.up, direction);
 
                     if (angle < Angle)
                         inDirectionMultiplier += 1/ (float)(ShadowFiltering*ShadowFiltering);

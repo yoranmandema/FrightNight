@@ -55,8 +55,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4757616119345538}
+  - component: {fileID: 114219817635813764}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,6 +257,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxVelocity: 2
   Accelaration: 0.5
+--- !u!114 &114219817635813764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1751469801945576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1e52d8f238d42459d1ed524e4ca1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Distance: 3
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  CastShadows: 1
+  ShadowFiltering: 2
+  UseJobSystem: 0
+  Angle: 35
 --- !u!114 &114487652483050002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Light: {fileID: 1751469801945576}
   Cam: {fileID: 1730257978766906}
-  LightRotateSpeed: 0
+  LightRotateSpeed: 8
 --- !u!114 &114909628973045348
 MonoBehaviour:
   m_ObjectHideFlags: 1
