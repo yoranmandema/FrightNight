@@ -14,7 +14,8 @@ public class AIPlayerSensor : AIBehaviour {
         RaycastHit2D rayResult = Physics2D.Raycast(
                 gameObject.transform.position,
                 player.transform.position - gameObject.transform.position,
-                _lookRadius
+                _lookRadius,
+                ~LayerMask.GetMask(new[] { "Sprite" , "Floor", "Enemy" })
             );
 
         //var pixelate = Camera.main.GetComponent<Pixelate>();

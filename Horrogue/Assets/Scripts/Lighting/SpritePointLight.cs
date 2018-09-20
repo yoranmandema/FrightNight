@@ -8,7 +8,8 @@ public class SpritePointLight : SpriteLightCaster {
         var tiles = new List<GameObject>();
 
         for (var i = 0; i < cast.Length; i++) {
-            tiles.Add(cast[i].collider.gameObject);
+            if (cast[i].collider.gameObject.GetComponent<SpriteLightReciever>() != null) 
+                tiles.Add(cast[i].collider.gameObject);
         }
 
         return tiles;
