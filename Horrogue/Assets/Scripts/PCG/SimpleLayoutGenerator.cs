@@ -13,6 +13,21 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 		Wall,
 	}
 
+	public enum RegionType
+	{
+		None,
+		MainCorridor,
+		Corridor,
+		Cafeteria,
+		Nursery,
+		MusicRoom,
+		ArtRoom,
+		SmallRoom,
+		MediumRoom,
+		LargeRoom,
+		Storage,
+	}
+
     [Serializable]
     public struct TileSprites
     {
@@ -26,17 +41,34 @@ public class SimpleLayoutGenerator : MonoBehaviour {
         public List<GameObject> tilePrefabs;
     }
 
+	[Serializable]
+	public struct PremadeLayoutObject
+	{
+		public PremadeLayoutObject (Vector3 center)
+		{
+			this.name = "New Premade Layout Object";
+			this.regionType = RegionType.None;
+			Vector3Int approximateCenter = new Vector3Int(Mathf.RoundToInt(center.x) - 5, Mathf.RoundToInt(center.y) - 5, Mathf.RoundToInt(center.z));
+			this.regionBounds = new BoundsInt(approximateCenter, new Vector3Int(10, 10, 0));
+		}
+
+		public string name;
+		public RegionType regionType;
+		public BoundsInt regionBounds;
+	}
+
 	#region Public Variables
-	public bool useRandomSeed;
+	public bool useRandomSeed = false;
 	public string seed = "elementary";
-	public BoundsInt generationBounds;
+	public BoundsInt generationBounds = new BoundsInt(-50, -50, 0, 100, 100, 0);
     public int tileSize = 1;
-    public List<TileSprites> tileSprites = new List<TileSprites>()
+    public List<TileSprites> tileSprites = new List<TileSprites>(3)
     {
         new TileSprites(TileType.Air),
         new TileSprites(TileType.Ground),
-        new TileSprites(TileType.Wall),
+        new TileSprites(TileType.Wall)
     };
+	public List<PremadeLayoutObject> premadeLayoutObjects;
 	#endregion
 
 	#region Private Variables
@@ -116,96 +148,68 @@ public class SimpleLayoutGenerator : MonoBehaviour {
     {
         // First place a main corridor if none are placed
         // Some temporary parameters
-        int mainCorridorHalf = 3;
-        int numSubCorridors = 2;
+        int mainCorridorHalf = 2;
+        int numSubCorridors = 4;
 
         // Pick random spot inside given bounds and extend a corridor in one direction to its maximum length
         // Also give the generation some padding so the corridor generates with it's full width
         Vector2Int mainCorridorSpawn = new Vector2Int(Random.Range(mainCorridorHalf, generationBounds.size.x - mainCorridorHalf), 
             Random.Range(mainCorridorHalf, generationBounds.size.y - mainCorridorHalf));
 
-        Vector2Int[] subSpawns = new Vector2Int[numSubCorridors];
         BoundsInt[] corridors = new BoundsInt[numSubCorridors + 1];
 
         // Temporary direction choosing, 0 is horizontal, 1 is vertical
         bool isVertical = Mathf.RoundToInt(Random.value) == 1;
 
-        // Determine bounds for main corridor
-        int aMin = 0;
-        int aMax = 0;
-        int bMin = 0;
-        int bMax = 0;
-        
-
-        for (int i = 0; i < numSubCorridors + 1; i++)
+		Vector2Int corridorSpawn = new Vector2Int();
+		for (int i = 0; i < numSubCorridors + 1; i++)
         {
-            corridors[i] = new BoundsInt();
-            if (i == 0) {
-                corridors[i].xMin = (isVertical) ? mainCorridorSpawn.x - mainCorridorHalf 
-                    : mainCorridorHalf;
-                corridors[i].yMin = (!isVertical) ? mainCorridorSpawn.y - mainCorridorHalf 
-                    : mainCorridorHalf;
-                corridors[i].xMax = (isVertical) ? mainCorridorSpawn.x + mainCorridorHalf 
-                    : generationBounds.size.x - mainCorridorHalf;
-                corridors[i].yMax = (!isVertical) ? mainCorridorSpawn.y + mainCorridorHalf 
-                    : generationBounds.size.y - mainCorridorHalf;
+			// Place the main corridor first
+			// Then determine if the other corridors are supposed to be horizontal or vertical to be orthogonal
+			// to the first (main) corridor
+			if (i == 0)
+			{
+				corridorSpawn = mainCorridorSpawn;
+			}
+			else if (isVertical)
+			{
+				corridorSpawn.x = Random.Range(mainCorridorHalf, generationBounds.size.x - mainCorridorHalf);
+				corridorSpawn.y = mainCorridorSpawn.y;
+			}
+			else
+			{
+				corridorSpawn.x = mainCorridorSpawn.x;
+				corridorSpawn.y = Random.Range(mainCorridorHalf, generationBounds.size.y - mainCorridorHalf);
+			}
 
-                isVertical = !isVertical;
+			// Calculate the corridor bounds
+			corridors[i] = new BoundsInt();
+			corridors[i].xMin = (isVertical) ? corridorSpawn.x - mainCorridorHalf
+					: mainCorridorHalf;
+			corridors[i].yMin = (!isVertical) ? corridorSpawn.y - mainCorridorHalf
+				: mainCorridorHalf;
+			corridors[i].xMax = (isVertical) ? corridorSpawn.x + mainCorridorHalf
+				: generationBounds.size.x - mainCorridorHalf;
+			corridors[i].yMax = (!isVertical) ? corridorSpawn.y + mainCorridorHalf
+				: generationBounds.size.y - mainCorridorHalf;
+
+			if (i == 0) {
+				isVertical = !isVertical;
             }
-            else
-            {
-                corridors[i].xMin = (isVertical) ? mainCorridorSpawn.x - mainCorridorHalf 
-                    : mainCorridorHalf;
-                corridors[i].yMin = (!isVertical) ? mainCorridorSpawn.y - mainCorridorHalf 
-                    : mainCorridorHalf;
-                corridors[i].xMax = (isVertical) ? mainCorridorSpawn.x + mainCorridorHalf 
-                    : generationBounds.size.x - mainCorridorHalf;
-                corridors[i].yMax = (!isVertical) ? mainCorridorSpawn.y + mainCorridorHalf 
-                    : generationBounds.size.y - mainCorridorHalf;
-            }
-            if (isVertical)
-            {
-                subSpawns[i] = new Vector2Int(mainCorridorSpawn.x, Random.Range(mainCorridorHalf, generationBounds.size.y - mainCorridorHalf));
-            }
-            else
-            {
-                subSpawns[i] = new Vector2Int(Random.Range(mainCorridorHalf, generationBounds.size.x - mainCorridorHalf), mainCorridorSpawn.y);
-            }
 
-
-            //if (isVertical)
-            //{
-            //    aMin = mainCorridorSpawn.x - mainCorridorHalf;
-            //    aMax = mainCorridorSpawn.x + mainCorridorHalf;
-
-            //    bMin = mainCorridorHalf;
-            //    bMax = generationBounds.size.y - mainCorridorHalf;
-            //}
-            //else
-            //{
-            //    aMin = mainCorridorHalf;
-            //    aMax = generationBounds.size.x - mainCorridorHalf;
-
-            //    bMin = mainCorridorSpawn.y - mainCorridorHalf;
-            //    bMax = mainCorridorSpawn.y + mainCorridorHalf;
-            //}
-
-
-        }
-
-        for (int x = aMin; x < aMax; x++)
-        {
-            for (int y = bMin; y < bMax; y++)
-            {
-                TileType tile = TileType.Ground;
-                if (x == aMin || x == aMax - 1 || y == bMin || y == bMax - 1)
-                {
-                    tile = TileType.Wall;
-                }
-                map[x, y] = (int) tile;
-            }
-        }
-
+			for (int x = corridors[i].xMin; x <= corridors[i].xMax; x++)
+			{
+				for (int y = corridors[i].yMin; y <= corridors[i].yMax; y++)
+				{
+					TileType tile = TileType.Ground;
+					if (map[x,y] != (int)TileType.Ground && (x == corridors[i].xMin || x == corridors[i].xMax || y == corridors[i].yMin || y == corridors[i].yMax))
+					{
+						tile = TileType.Wall;
+					}
+					map[x, y] = (int)tile;
+				}
+			}
+		}
     }
 
     private void MapRooms()

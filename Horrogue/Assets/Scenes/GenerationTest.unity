@@ -409,7 +409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1205937886
 Transform:
   m_ObjectHideFlags: 0
@@ -507,38 +507,8 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: tileSprites.Array.data[0].sprites.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: tileSprites.Array.data[1].sprites.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: tileSprites.Array.data[2].sprites.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: tileSprites.Array.data[1].tilePrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: tileSprites.Array.data[2].tilePrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: tileSprites.Array.data[0].tilePrefabs.Array.size
-      value: 1
+      propertyPath: premadeLayoutObjects.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4041915422278414, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
       propertyPath: m_LocalPosition.x
@@ -599,44 +569,174 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[1].tileType
+      propertyPath: tileSize
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[2].tileType
-      value: 2
+      propertyPath: premadeLayoutObjects.Array.data[0].name
+      value: New Premade Layout Object
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[0].sprites.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: bf51b8bd609221d40ba75811f82d2a6a,
-        type: 3}
+      propertyPath: premadeLayoutObjects.Array.data[0].regionBounds.m_Position.x
+      value: -45
+      objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[1].tilePrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1643195200226460, guid: e739b1bb84b357344824f4e88e2fcd05,
-        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[0].regionBounds.m_Position.y
+      value: -45
+      objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[2].tilePrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1766542563614916, guid: d07d2e075b4739c499d9132f80cc7ebb,
-        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[0].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[0].tilePrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 1766542563614916, guid: d07d2e075b4739c499d9132f80cc7ebb,
-        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[0].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: tileSprites.Array.data[0].tilePrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1766542563614916, guid: 145bfa72ed3e4cf43a08ab32cb50cedd,
+      propertyPath: premadeLayoutObjects.Array.data[1].name
+      value: New Premade Layout Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[1].regionBounds.m_Position.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[1].regionBounds.m_Position.y
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[1].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[1].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[2].name
+      value: New Premade Layout Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[2].regionBounds.m_Position.x
+      value: -33
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[2].regionBounds.m_Position.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[2].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[2].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[3].name
+      value: New Premade Layout Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[3].regionBounds.m_Position.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[3].regionBounds.m_Position.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[3].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[3].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[4].name
+      value: New Premade Layout Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[4].regionBounds.m_Position.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[4].regionBounds.m_Position.y
+      value: -26
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[4].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[4].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[5].name
+      value: New Premade Layout Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[5].regionBounds.m_Position.x
+      value: -23
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[5].regionBounds.m_Position.y
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[5].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[5].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[6].name
+      value: New Premade Layout Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[6].regionBounds.m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: premadeLayoutObjects.Array.data[6].regionBounds.m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
   m_IsPrefabAsset: 0
