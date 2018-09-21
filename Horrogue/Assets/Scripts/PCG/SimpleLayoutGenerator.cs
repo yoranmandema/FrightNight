@@ -4,63 +4,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+public enum TileType
+{
+	Air,
+	Ground,
+	Wall,
+}
+
+public enum RegionType
+{
+	None,
+	MainCorridor,
+	Corridor,
+	Cafeteria,
+	Nursery,
+	MusicRoom,
+	ArtRoom,
+	SmallRoom,
+	MediumRoom,
+	LargeRoom,
+	Storage,
+}
+
+[Serializable]
+public struct TileSprites
+{
+	public TileSprites(TileType type)
+	{
+		this.tileType = type;
+		this.tilePrefabs = new List<GameObject>(1);
+	}
+
+	public TileType tileType;
+	public List<GameObject> tilePrefabs;
+}
+
+[Serializable]
+public struct PremadeLayoutObject
+{
+	public PremadeLayoutObject(Vector3 center)
+	{
+		this.name = "New Premade Layout Object";
+		this.regionType = RegionType.None;
+		Vector3Int bottomLeft = Vector3Int.RoundToInt(center) - new Vector3Int(5, 5, 0);
+		this.regionBounds = new BoundsInt(bottomLeft, new Vector3Int(10, 10, 1));
+	}
+
+	public string name;
+	public RegionType regionType;
+	public BoundsInt regionBounds;
+}
+
 public class SimpleLayoutGenerator : MonoBehaviour {
-
-	public enum TileType
-	{
-		Air,
-		Ground,
-		Wall,
-	}
-
-	public enum RegionType
-	{
-		None,
-		MainCorridor,
-		Corridor,
-		Cafeteria,
-		Nursery,
-		MusicRoom,
-		ArtRoom,
-		SmallRoom,
-		MediumRoom,
-		LargeRoom,
-		Storage,
-	}
-
-    [Serializable]
-    public struct TileSprites
-    {
-        public TileSprites(TileType type)
-        {
-            this.tileType = type;
-            this.tilePrefabs = new List<GameObject>(1);
-        }
-
-        public TileType tileType;
-        public List<GameObject> tilePrefabs;
-    }
-
-	[Serializable]
-	public struct PremadeLayoutObject
-	{
-		public PremadeLayoutObject (Vector3 center)
-		{
-			this.name = "New Premade Layout Object";
-			this.regionType = RegionType.None;
-			Vector3Int approximateCenter = new Vector3Int(Mathf.RoundToInt(center.x) - 5, Mathf.RoundToInt(center.y) - 5, Mathf.RoundToInt(center.z));
-			this.regionBounds = new BoundsInt(approximateCenter, new Vector3Int(10, 10, 0));
-		}
-
-		public string name;
-		public RegionType regionType;
-		public BoundsInt regionBounds;
-	}
 
 	#region Public Variables
 	public bool useRandomSeed = false;
 	public string seed = "elementary";
-	public BoundsInt generationBounds = new BoundsInt(-50, -50, 0, 100, 100, 0);
+	public BoundsInt generationBounds = new BoundsInt(-50, -50, 0, 100, 100, 1);
     public int tileSize = 1;
     public List<TileSprites> tileSprites = new List<TileSprites>(3)
     {
@@ -68,7 +69,7 @@ public class SimpleLayoutGenerator : MonoBehaviour {
         new TileSprites(TileType.Ground),
         new TileSprites(TileType.Wall)
     };
-	public List<PremadeLayoutObject> premadeLayoutObjects;
+	public List<PremadeLayoutObject> premadeObjects;
 	#endregion
 
 	#region Private Variables
