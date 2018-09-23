@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
+// Types of tiles that are available
 public enum TileType
 {
 	Air,
@@ -12,6 +12,8 @@ public enum TileType
 	Wall,
 }
 
+
+// Types of regions that can be generated
 public enum RegionType
 {
 	None,
@@ -27,6 +29,7 @@ public enum RegionType
 	Storage,
 }
 
+// Container for sprites to be used for a certain tile type
 [Serializable]
 public struct TileSprites
 {
@@ -40,36 +43,79 @@ public struct TileSprites
 	public List<GameObject> tilePrefabs;
 }
 
+// Container for regions that are placed beforehand
 [Serializable]
-public struct PremadeLayoutObject
+public struct PremadeRegion
 {
-	public PremadeLayoutObject(Vector3 center)
+	public PremadeRegion(Vector3 center)
 	{
-		this.name = "New Premade Layout Object";
-		this.regionType = RegionType.None;
+		this.name = "New Region";
+		this.type = RegionType.None;
 		Vector3Int bottomLeft = Vector3Int.RoundToInt(center) - new Vector3Int(5, 5, 0);
-		this.regionBounds = new BoundsInt(bottomLeft, new Vector3Int(10, 10, 1));
+		this.bounds = new BoundsInt(bottomLeft, new Vector3Int(10, 10, 1));
 	}
 
 	public string name;
-	public RegionType regionType;
-	public BoundsInt regionBounds;
+	public RegionType type;
+	public BoundsInt bounds;
+}
+
+[Serializable]
+public struct Range
+{
+	public int min;
+	public int max;
+	
+	public Range(int min, int max)
+	{
+		this.min = min;
+		
+		this.max = max;
+	}
 }
 
 public class SimpleLayoutGenerator : MonoBehaviour {
 
 	#region Public Variables
-	public bool useRandomSeed = false;
-	public string seed = "elementary";
+	// Generation options
+	public bool useRandomSeed = false;	// Should a seed be generated
+	public string seed = "elementary";  // The current seed used for generation
+
+	// The bounds where and how big the region generation is going to be
 	public BoundsInt generationBounds = new BoundsInt(-50, -50, 0, 100, 100, 1);
-    public int tileSize = 1;
+
+	// Premade objects and regions
+	public List<PremadeRegion> premadeRegions;
+
+	public bool spawnCorridors = true;
+	public Range corridorAmount;
+	public Range corridorWidth;
+	public Range corridorLength;
+
+	public bool spawnSpecialRooms = true;
+	public bool spawnSmallRooms = true;
+	public Range smallRoomAmount;
+	public Range smallRoomWidth;
+	public Range smallRoomHeight;
+
+	public bool spawnMediumRooms = true;
+	public Range mediumRoomAmount;
+	public Range mediumRoomWidth;
+	public Range mediumRoomHeight;
+
+	public bool spawnLargeRooms = true;
+	public Range largeRoomAmount;
+	public Range largeRoomWidth;
+	public Range largeRoomHeight;
+
+	// Tile prefabs and settings
+	public int tileSize = 1;
     public List<TileSprites> tileSprites = new List<TileSprites>(3)
     {
         new TileSprites(TileType.Air),
         new TileSprites(TileType.Ground),
         new TileSprites(TileType.Wall)
     };
-	public List<PremadeLayoutObject> premadeObjects;
 	#endregion
 
 	#region Private Variables
