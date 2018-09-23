@@ -18,12 +18,10 @@ public class AIPlayerSensor : AIBehaviour {
                 ~LayerMask.GetMask(new[] { "Sprite" , "Floor", "Enemy" })
             );
 
-        //var pixelate = Camera.main.GetComponent<Pixelate>();
+        StateMachine.SetFloat("Distance To Player", Vector2.Distance(player.transform.position, gameObject.transform.position));
 
         if (rayResult.collider != null)
         {
-            //pixelate.pixelSizeX = (5 - (int)Vector2.Distance(player.transform.position, gameObject.transform.position));
-
             StateMachine.SetBool("Can See Player", rayResult.collider.gameObject == player);
         }
         else

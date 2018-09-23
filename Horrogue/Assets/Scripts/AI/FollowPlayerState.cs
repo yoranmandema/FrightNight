@@ -5,9 +5,11 @@ using Pathfinding;
 
 public class FollowPlayerState : StateMachineBehaviour {
     private AIDestinationSetter destinationSetter;
+    private AIPath aiPath;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         destinationSetter = animator.gameObject.GetComponent<AIDestinationSetter>();
+        aiPath = animator.gameObject.GetComponent<AIPath>();
 
         animator.SetBool("Is Following Player", true);
     }
