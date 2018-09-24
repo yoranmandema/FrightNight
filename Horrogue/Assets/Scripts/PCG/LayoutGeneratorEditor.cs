@@ -3,6 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomPropertyDrawer(typeof(SpawnOptions))]
+public class SpawnOptionsDrawer : PropertyDrawer
+{
+	SerializedProperty enableSpawning;
+	bool folded = false;
+
+	public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+	{
+		float height = 17f;
+
+		if (folded && enableSpawning.boolValue)
+		{
+			height *= 11;
+		}
+
+		return height;
+	}
+
+	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+	{
+		enableSpawning = property.FindPropertyRelative("enableSpawning");
+
+		EditorGUI.BeginProperty(position, label, property);
+		Rect labelRect = new Rect(position.x, position.y, position.width / 2, 17);
+		Rect enableRect = new Rect(position.x + position.width / 2, position.y, 
+			position.width / 2, position.height);
+
+		if (enableSpawning.boolValue)
+		{
+			folded = EditorGUI.Foldout(labelRect, folded, label, true);
+			if (folded)
+			{
+				Rect typeRect = new Rect(position.x, position.y + 17, position.width, 17);
+				Rect amountRect = new Rect(position.x, position.y + 17 * 2, position.width, 17*3);
+				Rect widthRect = new Rect(position.x, position.y + 17 * 5, position.width, 17*3);
+				Rect lengthRect = new Rect(position.x, position.y + 17 * 8, position.width, 17*3);
+
+				EditorGUI.PropertyField(typeRect, property.FindPropertyRelative("type"));
+				EditorGUI.PropertyField(amountRect, property.FindPropertyRelative("amount"));
+				EditorGUI.PropertyField(widthRect, property.FindPropertyRelative("width"));
+				EditorGUI.PropertyField(lengthRect, property.FindPropertyRelative("length"));
+			}
+		}
+		else
+		{
+			EditorGUI.LabelField(labelRect, label);
+		}
+		
+		EditorGUI.PropertyField(enableRect, enableSpawning);
+		EditorGUI.EndProperty();
+	}
+}
+
+
 [CustomPropertyDrawer(typeof(Range))]
 public class RangeDrawer : PropertyDrawer
 {
@@ -23,7 +77,7 @@ public class RangeDrawer : PropertyDrawer
 		EditorGUI.BeginProperty(position, label, property);
 
 		var indent = EditorGUI.indentLevel;
-		EditorGUI.indentLevel = 0;
+		//EditorGUI.indentLevel = 0;
 
 		EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 		var minRect = new Rect(position.x, position.y + 17, position.width, 16);
@@ -163,7 +217,6 @@ public class LayoutGeneratorEditor : Editor {
 	{
 		if (selectionInfo.regionIsSelected)
 		{
-			Debug.Log(selectionInfo.previousObject.ToString());
 			layoutGenerator.premadeRegions[selectionInfo.regionIndex] = selectionInfo.previousObject;
 			Undo.RecordObject(layoutGenerator, "Move Premade Object");
 

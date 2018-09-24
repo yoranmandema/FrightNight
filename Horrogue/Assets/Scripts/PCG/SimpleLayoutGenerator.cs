@@ -74,10 +74,20 @@ public struct Range
 	}
 }
 
+[Serializable]
+public struct SpawnOptions
+{
+	public RegionType type;
+	public bool enableSpawning;
+	public Range amount;
+	public Range width;
+	public Range length;
+}
+
 public class SimpleLayoutGenerator : MonoBehaviour {
 
 	#region Public Variables
-	// Generation options
+	[Header("General")]
 	public bool useRandomSeed = false;	// Should a seed be generated
 	public string seed = "elementary";  // The current seed used for generation
 
@@ -85,30 +95,19 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 	public BoundsInt generationBounds = new BoundsInt(-50, -50, 0, 100, 100, 1);
 
 	// Premade objects and regions
+	[Header("Custom Content")]
 	public List<PremadeRegion> premadeRegions;
 
-	public bool spawnCorridors = true;
-	public Range corridorAmount;
-	public Range corridorWidth;
-	public Range corridorLength;
-
+	[Header("Spawning Behaviour")]
 	public bool spawnSpecialRooms = true;
-	public bool spawnSmallRooms = true;
-	public Range smallRoomAmount;
-	public Range smallRoomWidth;
-	public Range smallRoomHeight;
+	public SpawnOptions corridor;
+	public SpawnOptions smallRooms;
+	public SpawnOptions mediumRooms;
+	public SpawnOptions largeRooms;
 
-	public bool spawnMediumRooms = true;
-	public Range mediumRoomAmount;
-	public Range mediumRoomWidth;
-	public Range mediumRoomHeight;
-
-	public bool spawnLargeRooms = true;
-	public Range largeRoomAmount;
-	public Range largeRoomWidth;
-	public Range largeRoomHeight;
 
 	// Tile prefabs and settings
+	[Header("Generator Tiles")]
 	public int tileSize = 1;
     public List<TileSprites> tileSprites = new List<TileSprites>(3)
     {
@@ -191,7 +190,17 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 		}
 	}
 
-    private void MapCorridors()
+	private void MapPremadeRegions()
+	{
+
+	}
+
+	private void MapCorridors()
+	{
+
+	}
+
+    private void MapCorridorsOld()
     {
         // First place a main corridor if none are placed
         // Some temporary parameters
