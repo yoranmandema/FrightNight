@@ -28,9 +28,6 @@ public class PlayerHealth : CharacterAttribute {
         var movement = GetComponent<PlayerMovement>();
         movement.enabled = false;
 
-        var aim = GetComponent<LightAim>();
-        aim.enabled = false;
-
         IsAlive = false;
     }
 
