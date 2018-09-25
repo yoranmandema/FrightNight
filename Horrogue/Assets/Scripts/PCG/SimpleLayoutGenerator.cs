@@ -82,6 +82,15 @@ public struct SpawnOptions
 	public Range amount;
 	public Range width;
 	public Range length;
+
+	public SpawnOptions(RegionType type)
+	{
+		this.type = type;
+		this.enableSpawning = false;
+		this.amount = new Range(0, 1);
+		this.width = new Range(0, 1);
+		this.length = new Range(0, 1);
+	}
 }
 
 public class SimpleLayoutGenerator : MonoBehaviour {
@@ -100,10 +109,10 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 
 	[Header("Spawning Behaviour")]
 	public bool spawnSpecialRooms = true;
-	public SpawnOptions corridor;
-	public SpawnOptions smallRooms;
-	public SpawnOptions mediumRooms;
-	public SpawnOptions largeRooms;
+	public SpawnOptions corridor = new SpawnOptions(RegionType.Corridor);
+	public SpawnOptions smallRooms = new SpawnOptions(RegionType.SmallRoom);
+	public SpawnOptions mediumRooms = new SpawnOptions(RegionType.MediumRoom);
+	public SpawnOptions largeRooms = new SpawnOptions(RegionType.LargeRoom);
 
 
 	// Tile prefabs and settings

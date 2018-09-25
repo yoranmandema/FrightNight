@@ -40,7 +40,7 @@ public class SpawnOptionsDrawer : PropertyDrawer
 				Rect widthRect = new Rect(position.x, position.y + 17 * 5, position.width, 17*3);
 				Rect lengthRect = new Rect(position.x, position.y + 17 * 8, position.width, 17*3);
 
-				EditorGUI.PropertyField(typeRect, property.FindPropertyRelative("type"));
+				EditorGUI.SelectableLabel(typeRect, ((RegionType) property.FindPropertyRelative("type").enumValueIndex).ToString());
 				EditorGUI.PropertyField(amountRect, property.FindPropertyRelative("amount"));
 				EditorGUI.PropertyField(widthRect, property.FindPropertyRelative("width"));
 				EditorGUI.PropertyField(lengthRect, property.FindPropertyRelative("length"));
