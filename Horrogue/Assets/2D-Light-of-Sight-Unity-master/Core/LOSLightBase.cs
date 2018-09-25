@@ -39,11 +39,11 @@ namespace LOS {
 		public Color color = Color.yellow;
 		public Material material;
 		public int orderInLayer;
-		public int sortingLayer;
+		public string sortingLayer;
 
 		protected Color _previousColor;
 		protected int _previousOrderInLayer;
-		protected int _previousSortingLayer;
+		protected string _previousSortingLayer;
 
 
 		// Cache
@@ -343,7 +343,8 @@ namespace LOS {
 		}
 
 		protected void UpdateSortingLayer () {
-			GetComponent<Renderer>().sortingLayerID = sortingLayer;
+			GetComponent<Renderer>().sortingLayerName = sortingLayer;
+            print(SortingLayer.NameToID(sortingLayer));
 			_previousSortingLayer = sortingLayer;
 		}
 
