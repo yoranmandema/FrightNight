@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114338077440161870}
   - component: {fileID: 114369136083909070}
   - component: {fileID: 114382126767483010}
+  - component: {fileID: 114153529211148398}
   m_Layer: 16
   m_Name: Enemy
   m_TagString: Enemy
@@ -110,6 +111,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114153529211148398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425832975854152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a0cb6c5aedf4b22a2e7102a5e65fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114190896358945340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,7 +174,7 @@ MonoBehaviour:
   repathRate: 0.5
   canSearch: 1
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 2
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -191,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateMachine: {fileID: 95595547117565288}
-  _lookRadius: 5
+  _lookRadius: 3
 --- !u!114 &114382126767483010
 MonoBehaviour:
   m_ObjectHideFlags: 1

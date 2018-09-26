@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIPlayerSensor : AIBehaviour {
+public class AIBase : AIBehaviour {
     [Tooltip("Determins how far the enemy can sense the player.")]
     [SerializeField] private float _lookRadius = 5.0f;
 
@@ -29,5 +29,7 @@ public class AIPlayerSensor : AIBehaviour {
             //pixelate.pixelSizeX = 0;
             StateMachine.SetBool("Can See Player", false);
         }
+
+        StateMachine.SetFloat("Random Number", Random.Range(0f,1f));
     }
 }

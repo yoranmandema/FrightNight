@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : CharacterAttribute {
+    public GameObject BloodHitAnimation;
     public bool IsAlive = true;
     public GUIStyle style;
 
@@ -33,6 +34,13 @@ public class PlayerHealth : CharacterAttribute {
         IsAlive = false;
 
         timeOfDeath = Time.realtimeSinceStartup;
+    }
+
+    public override void OnChanged()
+    {
+        base.OnChanged();
+
+        
     }
 
     void OnGUI () {
