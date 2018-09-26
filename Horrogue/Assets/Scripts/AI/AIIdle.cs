@@ -40,14 +40,10 @@ public class AIIdle : StateMachineBehaviour {
 
                 if (ChanceForBigMovements > Random.Range(0f, 1f)) {
                     closest = GetRandomNode();
-                    Debug.Log("Big Movement");
                 } else {
-                    Debug.Log("Small Movement");
                     var graph = AstarPath.active.data.gridGraph;
                     closest = AstarPath.active.GetNearest(animator.gameObject.transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0) * MoveDistance);
                 }
-
-                Debug.Log(closest.position);
 
                 Seeker seeker = animator.gameObject.GetComponent<Seeker>();
                 seeker.StartPath(animator.gameObject.transform.position, closest.position);
