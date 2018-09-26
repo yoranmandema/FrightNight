@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 58566324070933758}
   - component: {fileID: 50705450818260064}
   - component: {fileID: 114950442674318584}
+  - component: {fileID: 114767132668067668}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -496,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 0
-  coneAngle: 0
+  coneAngle: 45
   faceAngle: 0
   degreeStep: 0.2
   invertMode: 0
@@ -507,7 +508,7 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: c800755629e765446aa6faded5ba754e, type: 2}
   orderInLayer: 0
   sortingLayer: 
-  radius: 3
+  radius: 5
   flashFrequency: 0
   flashOffset: 0
 --- !u!114 &114340683280334444
@@ -542,6 +543,18 @@ MonoBehaviour:
   isSPSR: 0
   pipelineFoldout: 1
   aboutFoldout: 0
+--- !u!114 &114767132668067668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875424871731584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf957108c196a6e4886e8ba6c0a5b3cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Light: {fileID: 114268799658185548}
 --- !u!114 &114933872919766322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,6 +584,7 @@ MonoBehaviour:
   Default: 100
   Max: 100
   Min: 0
+  BloodHitAnimation: {fileID: 0}
   IsAlive: 1
   style:
     m_Name: 

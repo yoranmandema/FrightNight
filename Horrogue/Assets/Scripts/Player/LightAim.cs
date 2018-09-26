@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LightAim : MonoBehaviour {
 
-    public LOS.LOSRadialLight Shadow;
     public LOS.LOSRadialLight Light;
 
     private float AngleTo(Vector2 pos, Vector2 target) {
@@ -19,7 +18,6 @@ public class LightAim : MonoBehaviour {
 
         var angle = AngleTo(transform.position, cursorPos);
 
-        Shadow.faceAngle = angle + 180;
         Light.faceAngle = angle;
     }
 }
