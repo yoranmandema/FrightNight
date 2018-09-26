@@ -344,7 +344,6 @@ namespace LOS {
 
 		protected void UpdateSortingLayer () {
 			GetComponent<Renderer>().sortingLayerName = sortingLayer;
-            print(SortingLayer.NameToID(sortingLayer));
 			_previousSortingLayer = sortingLayer;
 		}
 
