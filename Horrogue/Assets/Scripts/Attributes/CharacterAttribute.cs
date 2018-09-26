@@ -10,6 +10,11 @@ public class CharacterAttribute : MonoBehaviour {
             return _value;
         }
         set {
+            if (_value != value)
+            {
+                OnChanged();
+            }
+
             if (value <= Min) {
                 _value = Min;
                 OnValueDepleted();
@@ -31,10 +36,10 @@ public class CharacterAttribute : MonoBehaviour {
         Initialise();
     }
 
-    public virtual void Initialise() { }
+    public virtual void Initialise() {}
     public virtual void OnValueDepleted () {}
-
     public virtual void OnValueMaxed() {}
+    public virtual void OnChanged() {}
 
     public void Reset() {
         Value = Default;

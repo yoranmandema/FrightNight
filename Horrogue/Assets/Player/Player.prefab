@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 0
-  halfViewboxSize: {x: 4.488889, y: 2.525}
+  halfViewboxSize: {x: 3.899367, y: 2.525}
 --- !u!114 &114060083000119230
 MonoBehaviour:
   m_ObjectHideFlags: 1
