@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
+[RequireComponent(typeof(AIPath)), RequireComponent(typeof(AIDestinationSetter)), RequireComponent(typeof(Animator))]
 public class AIBase : AIBehaviour {
     [Tooltip("Determins how far the enemy can sense the player.")]
     [SerializeField] private float _lookRadius = 5.0f;

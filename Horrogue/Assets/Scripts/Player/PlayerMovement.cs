@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
     public float Accelaration;
     public Animator Animator;
 
+    public bool IsMoving;
     private Rigidbody2D rb;
     private string playerAnimationDirection = "Left";
 
@@ -20,33 +21,43 @@ public class PlayerMovement : MonoBehaviour {
 
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, MaxVelocity);
 
-        if (rb.velocity.magnitude > 0.25f) {
-            if (Mathf.Abs(rb.velocity.x) > 0.1f) {
-                if (rb.velocity.x > 0) {
+        if (rb.velocity.magnitude > 0.25f)
+        {
+            if (Mathf.Abs(rb.velocity.x) > 0.1f)
+            {
+                if (rb.velocity.x > 0)
+                {
                     playerAnimationDirection = "Right";
                     PlayAnimation("Walk", playerAnimationDirection);
                 }
-                else {
+                else
+                {
                     playerAnimationDirection = "Left";
                     PlayAnimation("Walk", playerAnimationDirection);
                 }
             }
-            else {
-                if (rb.velocity.y > 0) {
+            else
+            {
+                if (rb.velocity.y > 0)
+                {
                     playerAnimationDirection = "Up";
                     PlayAnimation("Walk", playerAnimationDirection);
                 }
-                else {
+                else
+                {
                     playerAnimationDirection = "Down";
                     PlayAnimation("Walk", playerAnimationDirection);
                 }
             }
-        } else {
-            PlayAnimation("Idle", playerAnimationDirection);
+
+            IsMoving = true;
+        }
+        else { 
+            IsMoving = false;
         }
     }
 
-    void PlayAnimation (string name, string direction) {
+    public void PlayAnimation (string name, string direction) {
         Animator.Play(name + " " + direction, 0);
     }
 }
