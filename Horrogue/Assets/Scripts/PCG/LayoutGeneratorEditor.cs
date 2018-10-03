@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(SpawnOptions))]
+[CustomPropertyDrawer(typeof(SimpleLayoutGenerator.SpawnOptions))]
 public class SpawnOptionsDrawer : PropertyDrawer
 {
 	SerializedProperty enableSpawning;
@@ -57,7 +57,7 @@ public class SpawnOptionsDrawer : PropertyDrawer
 }
 
 
-[CustomPropertyDrawer(typeof(Range))]
+[CustomPropertyDrawer(typeof(SimpleLayoutGenerator.Range))]
 public class RangeDrawer : PropertyDrawer
 {
 
@@ -90,7 +90,7 @@ public class RangeDrawer : PropertyDrawer
 	}
 }
 
-[CustomPropertyDrawer(typeof(PremadeRegion))]
+[CustomPropertyDrawer(typeof(CustomRegion))]
 public class PremadeRegionsDrawer : PropertyDrawer
 {
 	public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -115,7 +115,7 @@ public class PremadeRegionsDrawer : PropertyDrawer
 
 		// Draw fields - pass GUIContent.nonr to each so no labels are drawn
 		//EditorGUI.LabelField(position, label);
-		EditorGUI.PropertyField(nameRect, property.FindPropertyRelative("name"), GUIContent.none);
+		//EditorGUI.PropertyField(nameRect, property.FindPropertyRelative("name"), GUIContent.none);
 		EditorGUI.PropertyField(typeRect, property.FindPropertyRelative("type"), GUIContent.none);
 		EditorGUI.PropertyField(boundRect, property.FindPropertyRelative("bounds"), GUIContent.none);
 
@@ -205,11 +205,11 @@ public class LayoutGeneratorEditor : Editor {
 		if (!selectionInfo.mouseIsOverRegion)
 		{
 			Undo.RecordObject(layoutGenerator, "Add Premade Object");
-			layoutGenerator.premadeRegions.Add(new PremadeRegion(mousePosition));
-			selectionInfo.regionIndex = layoutGenerator.premadeRegions.Count - 1;
+			layoutGenerator.customRegions.Add(new CustomRegion(mousePosition));
+			selectionInfo.regionIndex = layoutGenerator.customRegions.Count - 1;
 		}
 		selectionInfo.regionIsSelected = true;
-		selectionInfo.previousObject = layoutGenerator.premadeRegions[selectionInfo.regionIndex];
+		selectionInfo.previousObject = layoutGenerator.customRegions[selectionInfo.regionIndex];
 		needsRepaint = true;
 	}
 
@@ -217,12 +217,12 @@ public class LayoutGeneratorEditor : Editor {
 	{
 		if (selectionInfo.regionIsSelected)
 		{
-			layoutGenerator.premadeRegions[selectionInfo.regionIndex] = selectionInfo.previousObject;
+			layoutGenerator.customRegions[selectionInfo.regionIndex] = selectionInfo.previousObject;
 			Undo.RecordObject(layoutGenerator, "Move Premade Object");
 
-			PremadeRegion obj = selectionInfo.previousObject;
+			CustomRegion obj = selectionInfo.previousObject;
 			obj.bounds.position += Vector3Int.RoundToInt(mousePosition - obj.bounds.center);
-			layoutGenerator.premadeRegions[selectionInfo.regionIndex] = obj;
+			layoutGenerator.customRegions[selectionInfo.regionIndex] = obj;
 
 			selectionInfo.regionIsSelected = false;
 			selectionInfo.regionIndex = -1;
@@ -234,9 +234,9 @@ public class LayoutGeneratorEditor : Editor {
 	{
 		if (selectionInfo.regionIsSelected)
 		{
-			PremadeRegion obj = layoutGenerator.premadeRegions[selectionInfo.regionIndex];
+			CustomRegion obj = layoutGenerator.customRegions[selectionInfo.regionIndex];
 			obj.bounds.position += Vector3Int.RoundToInt(mousePosition - obj.bounds.center);
-			layoutGenerator.premadeRegions[selectionInfo.regionIndex] = obj;
+			layoutGenerator.customRegions[selectionInfo.regionIndex] = obj;
 
 			needsRepaint = true;
 		}
@@ -245,9 +245,9 @@ public class LayoutGeneratorEditor : Editor {
 	void UpdateMouseOverInfo(Vector3Int mousePosition)
 	{
 		int mouseOverPointIndex = -1;
-		for (int i = 0; i < layoutGenerator.premadeRegions.Count; i++)
+		for (int i = 0; i < layoutGenerator.customRegions.Count; i++)
 		{
-			if (layoutGenerator.premadeRegions[i].bounds.Contains(mousePosition))
+			if (layoutGenerator.customRegions[i].bounds.Contains(mousePosition))
 			{
 				mouseOverPointIndex = i;
 				break;
@@ -265,9 +265,9 @@ public class LayoutGeneratorEditor : Editor {
 
 	void Draw()
 	{
-		for (int i = 0; i < layoutGenerator.premadeRegions.Count; i++)
+		for (int i = 0; i < layoutGenerator.customRegions.Count; i++)
 		{
-			PremadeRegion obj = layoutGenerator.premadeRegions[i];
+			CustomRegion obj = layoutGenerator.customRegions[i];
 			Rect rect = new Rect(new Vector2(obj.bounds.xMin, obj.bounds.yMin), 
 				new Vector2(obj.bounds.size.x, obj.bounds.size.y));
 			Color fill = Color.green;
@@ -287,7 +287,7 @@ public class LayoutGeneratorEditor : Editor {
 		public int regionIndex = -1;
 		public bool mouseIsOverRegion;
 		public bool regionIsSelected;
-		public PremadeRegion previousObject;
+		public CustomRegion previousObject;
 
 		public override string ToString()
 		{

@@ -4,163 +4,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-// Types of tiles that are available
-public enum TileType
-{
-	Air,
-	Ground,
-	Wall,
-    Doorway
-}
 
-
-// Types of regions that can be generated
-public enum RegionType
-{
-	None,
-	MainCorridor,
-	Corridor,
-	SpecialRoom,
-	SmallRoom,
-	MediumRoom,
-	LargeRoom,
-	Storage,
-    Toilet
-}
-
-// Container for sprites to be used for a certain tile type
-[Serializable]
-public struct TileSprites
-{
-	public TileSprites(TileType type)
-	{
-		this.tileType = type;
-		this.tilePrefabs = new List<GameObject>(1);
-	}
-
-	public TileType tileType;
-	public List<GameObject> tilePrefabs;
-}
-
-[Serializable]
-public struct Object
-{
-    public string name;
-    public GameObject prefab;
-    public Direction facing;
-}
-
-// Container for regions that are placed beforehand
-[Serializable]
-public struct PremadeRegion
-{
-	public PremadeRegion(Vector3 center)
-	{
-		this.name = "New Region";
-		this.type = RegionType.None;
-		Vector3Int bottomLeft = Vector3Int.RoundToInt(center) - new Vector3Int(5, 5, 0);
-		this.bounds = new BoundsInt(bottomLeft, new Vector3Int(10, 10, 1));
-        this.usePrefab = false;
-        this.prefab = null;
-	}
-
-	public string name;
-	public RegionType type;
-	public BoundsInt bounds;
-    public bool usePrefab;
-    public GameObject prefab;
-}
-
-[Serializable]
-public struct Wall
-{
-    public Direction facing;
-    public BoundsInt bounds;
-
-    public Wall(Direction facing, BoundsInt bounds)
-    {
-        this.facing = facing;
-        this.bounds = bounds;
-    }
-}
-
-[Serializable]
-public struct Region
-{
-    public bool isConnected;
-    public List<Region> connectedRooms;
-    public Wall[] walls;
-    public BoundsInt bounds;
-    public RegionType type;
-
-    public Region(BoundsInt bounds, RegionType type)
-    {
-        this.isConnected = false;
-        this.connectedRooms = new List<Region>();
-        this.walls = new Wall[4];
-        this.bounds = bounds;
-        this.type = type;
-        GenerateWallsFromBounds();
-    }
-
-    public Wall GetWall(Direction dir)
-    {
-        return new Wall();
-    }
-
-    private void GenerateWallsFromBounds()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-
-        }
-    }
-}
-
-[Serializable]
-public struct Range
-{
-	public int min;
-	public int max;
-	
-	public Range(int min, int max)
-	{
-		this.min = min;
-		this.max = max;
-	}
-}
-
-[Serializable]
-public struct SpawnOptions
-{
-	public RegionType type;
-	public bool enableSpawning;
-	public Range amount;
-	public Range width;
-	public Range length;
-
-	public SpawnOptions(RegionType type)
-	{
-		this.type = type;
-		this.enableSpawning = false;
-		this.amount = new Range(0, 1);
-		this.width = new Range(0, 1);
-		this.length = new Range(0, 1);
-	}
-}
-
-// Directions
-[Serializable]
-public class Direction
-{
-    public static Vector2Int 
-        NORTH = new Vector2Int(0, 1),
-        WEST = new Vector2Int(1, 0),
-        SOUTH = new Vector2Int(0, -1),
-        EAST = new Vector2Int(-1, 0);
-}
 
 public class SimpleLayoutGenerator : MonoBehaviour {
+
+	#region Structs
+	[Serializable]
+	public struct Range
+	{
+		public int min;
+		public int max;
+
+		public Range(int min, int max)
+		{
+			this.min = min;
+			this.max = max;
+		}
+	}
+
+	[Serializable]
+	public struct SpawnOptions
+	{
+		public RegionType type;
+		public bool enableSpawning;
+		public Range amount;
+		public Range width;
+		public Range length;
+
+		public SpawnOptions(RegionType type)
+		{
+			this.type = type;
+			this.enableSpawning = false;
+			this.amount = new Range(0, 1);
+			this.width = new Range(0, 1);
+			this.length = new Range(0, 1);
+		}
+	}
+	#endregion
 
 	#region Public Variables
 	[Header("General")]
@@ -172,29 +52,29 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 
 	// Premade objects and regions
 	[Header("Custom Content")]
-	public List<PremadeRegion> premadeRegions;
+	public List<CustomRegion> customRegions;
 
 	[Header("Spawning Behaviour")]
-	public bool spawnSpecialRooms = true;
-    //public int wallThickness = 1;
-    public SpawnOptions corridorRegions;
-    public SpawnOptions classRegions;
-    public SpawnOptions facultyRegions;
-    public SpawnOptions outsideRegions;
-    public SpawnOptions administrativeRegions;
-    public SpawnOptions utilityRegions;
+	public int additionalCorridorAmount = 2;
+
+	public Range spawnAreaSize;
+
+	public Range corridorWidth;
+	public Range corridorLength;
+
+	public Range classAreaSize;
 
 
     // Tile prefabs and settings
     [Header("Generator Tiles")]
 	public int tileSize = 1;
     public List<TileSprites> tileSprites;
-    #endregion
+	#endregion
 
-    #region Private Variables
-    private Region regions;
+	#region Private Variables
+    private List<Region> regions;
 	private int[,] map;
-    private Object[,,] objectmap;
+    private Furniture[,,] furnituremap;
     private GameObject[,] tilemap;
     private GameObject parent;
     #endregion
@@ -213,43 +93,100 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 		InitializeMap();
 
         SetupCustomRegions();
-        GenerateRandomRegions(false);
 
         ConnectRegions();
 
-        GenerateRandomRegions(true);
+        GenerateRandomRegions();
 
         PlaceRegionContent();
 
         PlaceTiles();
 	}
 
-    private void PlaceRegionContent()
+	private void PlaceRegionContent()
     {
-        throw new NotImplementedException();
+
     }
 
-    private void GenerateRandomRegions(bool forceConnection)
+	private void ConnectRegions()
+	{
+		// Find Spawn Region or create a new one
+		Region spawnRegion = regions.Find(x => x.isSpawn);
+		if (spawnRegion == null)
+		{
+			Vector3Int size = new Vector3Int(
+				Mathf.RoundToInt(Random.Range(spawnAreaSize.min, spawnAreaSize.max + 1)), 
+				Mathf.RoundToInt(Random.Range(spawnAreaSize.min, spawnAreaSize.max + 1)), 
+				1);
+			Vector3Int position = GetRandomPositionInsideBounds(size);
+			customRegions.Add(new CustomRegion(position, size, RegionType.Toilet, true));
+			regions.Add(new Region(new BoundsInt(position, size), RegionType.Toilet));
+		}
+		else
+		{
+			regions.Remove(spawnRegion);
+		}
+
+		// Find Main Corridor or create a new one
+		Region mainCorridor = regions.Find(x => x.type == RegionType.MainCorridor);
+		if (mainCorridor == null)
+		{
+			Range vert, hor;
+			if (Random.value > 0.5f)
+			{
+				vert = corridorLength;
+				hor = corridorWidth;
+			} else
+			{
+				vert = corridorWidth;
+				hor = corridorLength;
+			}
+
+			Vector3Int size = new Vector3Int(
+				Mathf.RoundToInt(Random.Range(vert.min, vert.max + 1)),
+				Mathf.RoundToInt(Random.Range(hor.min, hor.max + 1)),
+				1);
+			Vector3Int position = GetRandomPositionInsideBounds(size);
+		}
+		else
+		{
+			regions.Remove(mainCorridor);
+		}
+
+
+		for (int i = 0; i < regions.Count; i++)
+		{
+			Region r = regions[i];
+			if (!r.isConnected)
+			{
+
+			}
+		}
+	}
+
+	private Vector3Int GetRandomPositionInsideBounds(Vector3Int targetSize)
+	{
+		Vector2 rand = new Vector2(Random.value, Random.value);
+		int x = Mathf.RoundToInt(rand.x * (generationBounds.size.x - targetSize.x) + generationBounds.position.x);
+		int y = Mathf.RoundToInt(rand.y * (generationBounds.size.y - targetSize.y) + generationBounds.position.y);
+
+		return new Vector3Int(x, y, 0);
+	}
+
+	private void GenerateRandomRegions()
     {
-        throw new NotImplementedException();
+        
     }
 
-    private void ConnectRegions()
+	private void SetupCustomRegions()
     {
-        throw new NotImplementedException();
-    }
-
-    private void SetupCustomRegions()
-    {
-        for (int i = 0; i < premadeRegions.Count; i++)
+        for (int i = 0; i < customRegions.Count; i++)
         {
-            PremadeRegion reg = premadeRegions[i];
+            CustomRegion reg = customRegions[i];
             BoundsInt bounds = new BoundsInt(Vector3Int.RoundToInt(reg.bounds.position + generationBounds.center 
                 + Vector3.Scale(generationBounds.size, new Vector3(.5f, .5f))), reg.bounds.size);
 
-            regions = new Region(false, )
-
-            
+			regions.Add(new Region(bounds, reg.type));
         }
     }
 
@@ -288,10 +225,15 @@ public class SimpleLayoutGenerator : MonoBehaviour {
             Destroy(parent);
             parent = null;
         }
-        parent = new GameObject("Tile Map");
-        map = new int[generationBounds.size.x, generationBounds.size.y];
+
+		parent = new GameObject("Tile Map");
+
+		regions = new List<Region>();
+
+		map = new int[generationBounds.size.x, generationBounds.size.y];
 		tilemap = new GameObject[generationBounds.size.x, generationBounds.size.y];
-        for (int x = 0; x < generationBounds.size.x; x++)
+
+		for (int x = 0; x < generationBounds.size.x; x++)
 		{
 			for (int y = 0; y < generationBounds.size.y; y++)
 			{
@@ -303,9 +245,9 @@ public class SimpleLayoutGenerator : MonoBehaviour {
 
 	private void MapPremadeRegions()
 	{
-        for (int i = 0; i < premadeRegions.Count; i++)
+        for (int i = 0; i < customRegions.Count; i++)
         {
-            PremadeRegion reg = premadeRegions[i];
+            CustomRegion reg = customRegions[i];
             BoundsInt bounds = new BoundsInt(Vector3Int.RoundToInt(reg.bounds.position + generationBounds.center + Vector3.Scale(generationBounds.size, new Vector3(.5f, .5f))), reg.bounds.size);
             Debug.Log(bounds);
             for (int x = bounds.xMin; x < bounds.xMax; x++)
