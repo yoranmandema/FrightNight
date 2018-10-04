@@ -7,10 +7,10 @@ public class PlayerMovement : MonoBehaviour {
     public float MaxVelocity;
     public float Accelaration;
     public Animator Animator;
+    public AnimationController AnimationController;
 
     public bool IsMoving;
     private Rigidbody2D rb;
-    private string playerAnimationDirection = "Left";
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -27,27 +27,27 @@ public class PlayerMovement : MonoBehaviour {
             {
                 if (rb.velocity.x > 0)
                 {
-                    playerAnimationDirection = "Right";
-                    PlayAnimation("Walk", playerAnimationDirection);
+                    AnimationController.Direction = "Right";
                 }
                 else
                 {
-                    playerAnimationDirection = "Left";
-                    PlayAnimation("Walk", playerAnimationDirection);
+                    AnimationController.Direction = "Left";
                 }
+
+                AnimationController.Play("Walk");
             }
             else
             {
                 if (rb.velocity.y > 0)
                 {
-                    playerAnimationDirection = "Up";
-                    PlayAnimation("Walk", playerAnimationDirection);
+                    AnimationController.Direction = "Up";
                 }
                 else
                 {
-                    playerAnimationDirection = "Down";
-                    PlayAnimation("Walk", playerAnimationDirection);
+                    AnimationController.Direction = "Down";
                 }
+
+                AnimationController.Play("Walk");
             }
 
             IsMoving = true;
@@ -55,9 +55,5 @@ public class PlayerMovement : MonoBehaviour {
         else { 
             IsMoving = false;
         }
-    }
-
-    public void PlayAnimation (string name, string direction) {
-        Animator.Play(name + " " + direction, 0);
     }
 }

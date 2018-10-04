@@ -5,6 +5,8 @@ using UnityEngine;
 public class LightAim : MonoBehaviour {
 
     public LOS.LOSRadialLight Light;
+    public AnimationController AnimationController;
+
     private PlayerMovement movement;
 
     private float AngleTo(Vector2 pos, Vector2 target) {
@@ -32,24 +34,26 @@ public class LightAim : MonoBehaviour {
             {
                 if (direction.x > 0)
                 {
-                    movement.PlayAnimation("Idle", "Right");
+                    AnimationController.Direction = "Right";
                 }
                 else
                 {
-                    movement.PlayAnimation("Idle", "Left");
+                    AnimationController.Direction = "Left";
                 }
             }
             else
             {
                 if (direction.y > 0)
                 {
-                    movement.PlayAnimation("Idle", "Up");
+                    AnimationController.Direction = "Up";
                 }
                 else
                 {
-                    movement.PlayAnimation("Idle", "Down");
+                    AnimationController.Direction = "Down";
                 }
             }
+
+            AnimationController.Play("Idle");
         }
     }
 }
