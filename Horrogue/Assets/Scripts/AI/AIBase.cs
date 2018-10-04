@@ -8,6 +8,12 @@ public class AIBase : AIBehaviour {
     [Tooltip("Determins how far the enemy can sense the player.")]
     [SerializeField] private float _lookRadius = 5.0f;
 
+    public AnimationController AnimationController;
+
+    void Start () {
+        AnimationController.Play("Idle");
+    }
+
     void Update()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
@@ -33,5 +39,13 @@ public class AIBase : AIBehaviour {
         }
 
         StateMachine.SetFloat("Random Number", Random.Range(0f,1f));
-    }
+
+        var direction = transform.rotation * Vector3.up;
+
+        if (direction.x > 0) {
+            AnimationController.Direction = "Right";
+        } else {
+            AnimationController.Direction = "Left";
+        }
+    } 
 }

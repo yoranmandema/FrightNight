@@ -9,7 +9,7 @@ public class AnimationController : MonoBehaviour {
     private Animator animator;
 
     public void Play (string type) {
-        animator.Play(type + " " + Direction);
+        animator.Play(type + " " + Direction, 0);
     }
 
 	void Start () {

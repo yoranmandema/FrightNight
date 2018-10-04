@@ -13,25 +13,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Walking Right
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Walking Up
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Walking Down
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -255,28 +255,28 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102357606890186214}
-    m_Position: {x: 252, y: 108, z: 0}
+    m_Position: {x: 276, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102811723516753932}
-    m_Position: {x: 984, y: 108, z: 0}
+    m_Position: {x: 732, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102098064759964280}
-    m_Position: {x: 624, y: -192, z: 0}
+    m_Position: {x: 504, y: -72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102527488029771702}
-    m_Position: {x: 624, y: 408, z: 0}
+    m_Position: {x: 504, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102041638158112976}
-    m_Position: {x: 492, y: 108, z: 0}
+    m_Position: {x: 276, y: 108, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102521454072448526}
-    m_Position: {x: 744, y: 108, z: 0}
+    m_Position: {x: 732, y: 108, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102241795392140220}
-    m_Position: {x: 624, y: -48, z: 0}
+    m_Position: {x: 504, y: -24, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102655260899172178}
-    m_Position: {x: 624, y: 264, z: 0}
+    m_Position: {x: 504, y: 252, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

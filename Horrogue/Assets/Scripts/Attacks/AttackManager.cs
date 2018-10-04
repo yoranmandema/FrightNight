@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackSettings : MonoBehaviour {
+public class AttackManager : MonoBehaviour {
+    public AnimationController AnimationController;
     public Attack[] Attacks;
 
     private Animator stateMachine;
@@ -20,6 +21,9 @@ public class AttackSettings : MonoBehaviour {
 
         stateMachine.SetBool("Is Attacking", true);
         stateMachine.SetBool("Has Finished Attack", false);
+
+        AnimationController.Play(attack.Name);
+
         StartCoroutine(DoAttack(attack));
     }
 
@@ -29,5 +33,6 @@ public class AttackSettings : MonoBehaviour {
         yield return new WaitForSeconds(attack.AfterDelay);
         stateMachine.SetBool("Is Attacking", false);
         stateMachine.SetBool("Has Finished Attack", true);
+        AnimationController.Play("Idle");
     }
 }

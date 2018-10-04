@@ -8,7 +8,7 @@ public class AttackPlayerState : StateMachineBehaviour {
     private Attack attack;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        var attackSettings = animator.gameObject.GetComponent<AttackSettings>();
+        var attackSettings = animator.gameObject.GetComponent<AttackManager>();
 
         attackSettings.StartAttack();
     }

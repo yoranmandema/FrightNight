@@ -7,6 +7,7 @@ public class Attack {
     public float Damage;
     public float BeforeDelay;
     public float AfterDelay;
+    public string Name;
 
     [HideInInspector]
     public GameObject Parent;
