@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(SimpleLayoutGenerator.SpawnOptions))]
+/*[CustomPropertyDrawer(typeof(SimpleLayoutGenerator.SpawnOptions))]
 public class SpawnOptionsDrawer : PropertyDrawer
 {
 	SerializedProperty enableSpawning;
@@ -297,4 +297,4 @@ public class LayoutGeneratorEditor : Editor {
 		}
 	}
 	#endregion
-}
+}*/

@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 
 	#region Public Variables
 	// Reference to layout generator
-	public SimpleLayoutGenerator generator;
+	public LayoutGenerator generator;
 
 	#endregion
 
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		if (generator == null)
 		{
-			generator = GetComponent<SimpleLayoutGenerator>();
+			generator = GetComponent<LayoutGenerator>();
 		}
 
 		generator.GenerateLayout();
