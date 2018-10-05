@@ -7,16 +7,20 @@ public class CameraController : MonoBehaviour {
     public float Scale = 2f;
     public float MaxDistance = 1f;
     public float Smoothness = 0.5f;
-    public GameObject Player;
 
+    private GameManager GameManager;
     private Vector3 desired;
+
+    void Start () {
+        GameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+    }
 
 	void Update () {
         var cursorPos = Camera.main.ScreenToViewportPoint(Input.mousePosition - new Vector3(Screen.width,Screen.height,0)/2);
-        var direction = (cursorPos - transform.position).normalized;
+        var direction = (cursorPos - GameManager.ControlledObject.transform.position).normalized;
 
-        desired = Vector3.ClampMagnitude(cursorPos, MaxDistance) * Scale + new Vector3(0,0,-10);
+        desired = (GameManager.ControlledObject.transform.position + Vector3.ClampMagnitude(cursorPos, MaxDistance) * Scale) + new Vector3(0,0,-10);
 
-        transform.localPosition = transform.localPosition * Smoothness + desired * (1 - Smoothness);
+        transform.position = transform.position * Smoothness + desired * (1 - Smoothness);
     }
 }

@@ -31,7 +31,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1368447780334320
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 114933872919766322}
   - component: {fileID: 114027767834387262}
   - component: {fileID: 114340683280334444}
+  - component: {fileID: 114705985000614568}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -194,7 +195,6 @@ Transform:
   - {fileID: 4518310782611934}
   - {fileID: 4109319946219868}
   - {fileID: 4027787381543706}
-  - {fileID: 4307308674450362}
   - {fileID: 4806183183878876}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -219,13 +219,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1368447780334320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.373501, y: -1.4686067, z: -9.788112}
+  m_LocalPosition: {x: 6.373501, y: -1.4686067, z: 0.21188831}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4490783709347168}
   - {fileID: 4275693186081058}
-  m_Father: {fileID: 4190254728470334}
-  m_RootOrder: 3
+  m_Father: {fileID: 4806183183878876}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4490783709347168
 Transform:
@@ -262,9 +262,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4307308674450362}
   m_Father: {fileID: 4190254728470334}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20031201146326516
 Camera:
@@ -290,7 +291,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 2
   m_Depth: -2
   m_CullingMask:
     serializedVersion: 2
@@ -330,7 +331,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -565,7 +566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 0
-  halfViewboxSize: {x: 4.488889, y: 2.525}
+  halfViewboxSize: {x: 3.5911112, y: 2.02}
 --- !u!114 &114060083000119230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -652,6 +653,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Direction: Left
+--- !u!114 &114705985000614568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730257978766906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60318cef8dfa14f438c72d93599ba97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 2
+  MaxDistance: 1
+  Smoothness: 0.8
+  Player: {fileID: 1875424871731584}
 --- !u!114 &114743896285987862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -677,6 +693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Light: {fileID: 114268799658185548}
   AnimationController: {fileID: 114562100785381896}
+  Smoothness: 0.85
 --- !u!114 &114933872919766322
 MonoBehaviour:
   m_ObjectHideFlags: 1

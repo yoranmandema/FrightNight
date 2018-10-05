@@ -13,8 +13,6 @@ public class Interact : MonoBehaviour {
 
             var hit = Physics2D.CircleCast(transform.position, 0.2f, direction, InteractDistance, ~LayerMask.GetMask("Player"));
 
-            print(hit.distance);
-
             if (hit.collider != null)
             {
                 var component = hit.collider.gameObject.GetComponent<Interactable>();
