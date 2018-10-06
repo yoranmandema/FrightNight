@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Base Wall
   m_EditorClassIdentifier: Assembly-CSharp::TileSprites
-  tileType: 0
+  tileType: 2
   tilePrefabs:
   - {fileID: 1766542563614916, guid: d07d2e075b4739c499d9132f80cc7ebb, type: 2}

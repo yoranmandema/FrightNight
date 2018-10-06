@@ -789,11 +789,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: corridorLength.min
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
       propertyPath: spawnSpecialRooms
       value: 0
       objectReference: {fileID: 0}
@@ -836,11 +831,6 @@ Prefab:
         type: 2}
       propertyPath: largeRoomHeight.max
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: corridorLength.max
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
@@ -986,19 +976,19 @@ Prefab:
         type: 2}
       propertyPath: tileSprites.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 6251228d7ca999644b7dcdc6dbfcaa8c,
+      objectReference: {fileID: 11400000, guid: e1d59ca625b3c9f42bde6533f329059a,
         type: 2}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: tileSprites.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: e1d59ca625b3c9f42bde6533f329059a,
+      objectReference: {fileID: 11400000, guid: 7f28163562828a546a3048ede1e54757,
         type: 2}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: tileSprites.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 7f28163562828a546a3048ede1e54757,
+      objectReference: {fileID: 11400000, guid: 6251228d7ca999644b7dcdc6dbfcaa8c,
         type: 2}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
@@ -1012,23 +1002,43 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: corridorWidth.max
-      value: 6
+      propertyPath: corridorLength.min
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: corridorLength.max
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: corridorWidth.min
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: classAreaSize.max
-      value: 10
+      propertyPath: corridorWidth.max
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: classAreaSize.min
-      value: 4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: classAreaSize.max
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: mainCorridorWidth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: mainCorridorHeight
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
