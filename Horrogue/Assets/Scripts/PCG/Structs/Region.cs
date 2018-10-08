@@ -155,6 +155,8 @@ public class Region
 
 	private void SplitWall(Region region, Wall wall, BoundsInt splitSize)
 	{
+		Debug.Log("Original Wall " + wall.bounds);
+
 		Wall wallA = wall, wallB = wall;
 
 		region.walls.Remove(wall);
@@ -167,13 +169,24 @@ public class Region
 		{
 			dirOffset.y = cornerThreshold;
 		}
-		
 
 		wallA.bounds.max = splitSize.min + dirOffset;
 		wallB.bounds.min = splitSize.max - dirOffset;
 
-		region.walls.Add(wallA);
-		region.walls.Add(wallB);
+		wallA.bounds.size += new Vector3Int(0, 0, 1);
+		wallB.bounds.size += new Vector3Int(0, 0, 1);
+		Debug.Log("Wall A " + wallA.bounds + "; Wall B " + wallB.bounds);
+
+		if (wallA.bounds.size.x > 0 && wallA.bounds.size.y > 0)
+		{
+			region.walls.Add(wallA);
+			Debug.Log("Wall A added");
+		}
+		if (wallB.bounds.size.x > 0 && wallB.bounds.size.y > 0)
+		{
+			region.walls.Add(wallB);
+			Debug.Log("Wall B added");
+		}
 	}
 
 	private BoundsInt CalculateOverlap (BoundsInt a, BoundsInt b)

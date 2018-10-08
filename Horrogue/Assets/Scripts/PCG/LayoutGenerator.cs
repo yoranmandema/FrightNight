@@ -171,7 +171,7 @@ public class LayoutGenerator : MonoBehaviour {
         return false;
     }
 
-	private void CreateRandomRegion(Region region, bool createCorridor)
+	private void CreateRandomRegion(Region region, bool createCorridor = false)
 	{
 		// Create a list of all possible walls
 		List<Region.Wall> walls = (createCorridor) ? region.GetPerpendicularWalls() : region.walls;
@@ -191,7 +191,8 @@ public class LayoutGenerator : MonoBehaviour {
 	private void PlaceRegionAtRandomSpot(Region region, Region.Wall wall, bool createCorridor)
 	{
 		// Test region min width against height or against width of wall
-		Vector2Int axis = Vector2Int.one - Region.GetAbsoluteDirectionVector(region.orientation);
+		Vector2Int xAxis = Vector2Int.one - Region.GetAbsoluteDirectionVector(region.orientation);
+		Debug.Log("X axis for wall: " + xAxis.ToString());
 
 		int minWidth = 0, 
 			minHeight = 0, 
@@ -200,17 +201,24 @@ public class LayoutGenerator : MonoBehaviour {
 
 		if (createCorridor)
 		{
-			if (axis.x == 0)
+			if (xAxis.x == 0)
 			{
-
+				minWidth = corridorLength.min;
+				minHeight = corridorWidth.min;
+				maxWidth = corridorLength.max;
+				maxHeight = corridorWidth.max;
 			}
-			minWidth = corridorWidth.min;
-			minHeight = corridorLength.min;
-			maxWidth = corridorWidth.max;
-			maxHeight = corridorLength.max;
+			else
+			{
+				minWidth = corridorWidth.min;
+				minHeight = corridorLength.min;
+				maxWidth = corridorWidth.max;
+				maxHeight = corridorLength.max;
+			}
 		}
 		else
 		{
+			// TODO
 			minWidth = classAreaSize.min;
 			minHeight = classAreaSize.min;
 			maxWidth = classAreaSize.max;
@@ -218,7 +226,7 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 
 		// Test if there is enough space for the smallest possible region
-		if (wall.bounds.size.x >= minWidth || wall.bounds.size.y >= maxWidth)
+		if (wall.bounds.size.x * xAxis.x >= minWidth || wall.bounds.size.y * xAxis.y >= minWidth)
 		{
 			// Add all spots to a list
 			List<Vector3Int> spots = new List<Vector3Int>();
@@ -226,10 +234,11 @@ public class LayoutGenerator : MonoBehaviour {
 
 			Vector3Int spot;
 			// Include corner positions
-			Vector3Int minPos = wall.bounds.min - new Vector3Int(axis.x * Region.cornerThreshold, axis.y * Region.cornerThreshold, 0),
-				maxPos = wall.bounds.max + new Vector3Int(axis.x * Region.cornerThreshold, axis.y * Region.cornerThreshold, 0);
+			Vector3Int minPos = wall.bounds.min - new Vector3Int(xAxis.x * Region.cornerThreshold, xAxis.y * Region.cornerThreshold, 0),
+				maxPos = wall.bounds.max - new Vector3Int(xAxis.y * Region.cornerThreshold, xAxis.x * Region.cornerThreshold, 1);
 
 			spots.Add(minPos);
+			Debug.Log("min" + minPos);
 			// Iterate over all spots and add them to he list
 			while (positions.MoveNext())
 			{
@@ -238,6 +247,7 @@ public class LayoutGenerator : MonoBehaviour {
 				spots.Add(spot);
 			}
 			spots.Add(maxPos);
+			Debug.Log("max" + maxPos);
 
 			while (spots.Count > 0)
 			{
@@ -254,7 +264,6 @@ public class LayoutGenerator : MonoBehaviour {
 					case Region.Direction.NORTH:
 						pX = s.x - maxWidth;
 						if (pX < minPos.x) pX = minPos.x;
-
 						pY = s.y;
 						break;
 
@@ -284,6 +293,10 @@ public class LayoutGenerator : MonoBehaviour {
 					}
 				}
 			}
+		}
+		else
+		{
+			Debug.LogWarning("Wall is not eligable! " + wall.bounds.ToString() + " does not meet " + minHeight + " or " + minWidth);
 		}
 
 	}
@@ -494,12 +507,6 @@ public class LayoutGenerator : MonoBehaviour {
             {
                 foreach (Region r in regions)
                 {
-					Gizmos.color = Color.yellow;
-
-					Gizmos.DrawLine(new Vector3(r.bounds.xMin, r.bounds.yMin), new Vector3(r.bounds.xMin, r.bounds.yMax));
-                    Gizmos.DrawLine(new Vector3(r.bounds.xMin, r.bounds.yMin), new Vector3(r.bounds.xMax, r.bounds.yMin));
-                    Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMin, r.bounds.yMax));
-                    Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMax, r.bounds.yMin));
 					foreach (Region.Wall w in r.walls)
 					{
 						Gizmos.color = Color.red;
@@ -518,7 +525,12 @@ public class LayoutGenerator : MonoBehaviour {
 						Gizmos.DrawLine(new Vector3(b.xMax, b.yMax), new Vector3(b.xMin, b.yMax));
 						Gizmos.DrawLine(new Vector3(b.xMax, b.yMax), new Vector3(b.xMax, b.yMin));
 					}
+					Gizmos.color = Color.yellow;
 
+					Gizmos.DrawLine(new Vector3(r.bounds.xMin, r.bounds.yMin), new Vector3(r.bounds.xMin, r.bounds.yMax));
+					Gizmos.DrawLine(new Vector3(r.bounds.xMin, r.bounds.yMin), new Vector3(r.bounds.xMax, r.bounds.yMin));
+					Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMin, r.bounds.yMax));
+					Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMax, r.bounds.yMin));
 				}
 			}
         }
