@@ -142,7 +142,7 @@ public class Region
 		otherRegion.connections.Add(connectionBounds);
 
 		// Get wall overlap with corners
-		Vector2Int dir = GetDirectionVector(thisWall.dir);
+		Vector2Int dir = GetAbsoluteDirectionVector(thisWall.dir);
 		Vector3Int corner = new Vector3Int(cornerThreshold * dir.x, cornerThreshold * dir.y, 0);
 		BoundsInt overlap = CalculateOverlap(thisWall.bounds, otherWall.bounds);
 		overlap.min -= corner * 2;	// times two to add a new corner
@@ -221,7 +221,7 @@ public class Region
 		}
 	}
 
-	public bool ArePerpendicual(Direction a, Direction b)
+	public static bool ArePerpendicual(Direction a, Direction b)
 	{
 		if (a == Direction.NORTH || a == Direction.SOUTH)
 		{
@@ -279,8 +279,22 @@ public class Region
 		return overlappingWalls;
 	}
 
-	public Vector2Int GetDirectionVector(Direction dir)
+	public static Vector2Int GetAbsoluteDirectionVector(Direction dir)
 	{
 		return ((dir == Direction.NORTH || dir == Direction.SOUTH) ? new Vector2Int(1, 0) : new Vector2Int(0, 1));
+	}
+
+	public static Vector2Int GetDirectionVector(Direction dir)
+	{
+		return (
+			(dir == Direction.NORTH) ? new Vector2Int(0, 1) :	// North -> y + 1
+			(dir == Direction.EAST) ? new Vector2Int(1, 0) :	// East -> x + 1 
+			(dir == Direction.SOUTH) ? new Vector2Int(0, -1) :	// South -> y - 1
+			new Vector2Int(-1, 0)								// West -> x - 1
+			);
+	}
+	public static Direction GetVectorDirection(Vector2Int dir)
+	{
+		return Direction.NORTH;
 	}
 }

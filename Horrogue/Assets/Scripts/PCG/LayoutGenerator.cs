@@ -164,54 +164,129 @@ public class LayoutGenerator : MonoBehaviour {
             Region c = cors[cIndex];
             cors.RemoveAt(cIndex);
 
-            // Create a list of all possible walls
-            List<Region.Wall> walls = c.GetPerpendicularWalls();
-
-            // Test corridor min width against height or against width of wall
-            Vector2Int widthAxis = (c.orientation == Region.Direction.NORTH || c.orientation == Region.Direction.SOUTH) ?
-                new Vector2Int(0, 1) : new Vector2Int(1, 0);
-            while (walls.Count > 0)
-            {
-                // Get and remove random wall from list
-                int wIndex = Random.Range(0, walls.Count);
-                Region.Wall w = walls[wIndex];
-                walls.RemoveAt(wIndex);
-
-                // Quick access parameters
-                Vector3Int wSize = w.bounds.size;
-
-                // Test if there is enough space for the smallest possible corridor
-                if (wSize.x * widthAxis.x >= corridorWidth.min || wSize.y * widthAxis.y >= corridorWidth.min)
-                {
-                    // Add all spots to a list
-                    List<Vector3Int> spots = new List<Vector3Int>();
-					BoundsInt.PositionEnumerator positions = w.bounds.allPositionsWithin;
-					while (positions.MoveNext())
-					{
-                        // Avoid any spots too close to the edge for proper corridors
-                        Vector3Int spot = positions.Current;
-                        Vector3Int minPos = w.bounds.min, maxPos = w.bounds.max;
-                        //if (true)
-                        spots.Add(spot);
-                        Debug.Log(spot);
-                    }
-					
-					while (spots.Count > 0)
-                    {
-                        // Get and remove random spot from list
-                        int sIndex = Random.Range(0, spots.Count);
-                        Vector3Int s = spots[sIndex];
-                        spots.RemoveAt(sIndex);
-
-                        // Test
-
-                    }
-                }
-            }
+			// Create a randomly attached region
+			CreateRandomRegion(c, true);
         }
 
         return false;
     }
+
+	private void CreateRandomRegion(Region region, bool createCorridor)
+	{
+		// Create a list of all possible walls
+		List<Region.Wall> walls = (createCorridor) ? region.GetPerpendicularWalls() : region.walls;
+
+		// iterating over all walls in random order
+		while (walls.Count > 0)
+		{
+			// Get and remove random wall from list
+			int wIndex = Random.Range(0, walls.Count);
+			Region.Wall w = walls[wIndex];
+			walls.RemoveAt(wIndex);
+
+			PlaceRegionAtRandomSpot(region, w, createCorridor);
+		}
+	}
+
+	private void PlaceRegionAtRandomSpot(Region region, Region.Wall wall, bool createCorridor)
+	{
+		// Test region min width against height or against width of wall
+		Vector2Int axis = Vector2Int.one - Region.GetAbsoluteDirectionVector(region.orientation);
+
+		int minWidth = 0, 
+			minHeight = 0, 
+			maxWidth = 0, 
+			maxHeight = 0;
+
+		if (createCorridor)
+		{
+			if (axis.x == 0)
+			{
+
+			}
+			minWidth = corridorWidth.min;
+			minHeight = corridorLength.min;
+			maxWidth = corridorWidth.max;
+			maxHeight = corridorLength.max;
+		}
+		else
+		{
+			minWidth = classAreaSize.min;
+			minHeight = classAreaSize.min;
+			maxWidth = classAreaSize.max;
+			maxHeight = classAreaSize.max;
+		}
+
+		// Test if there is enough space for the smallest possible region
+		if (wall.bounds.size.x >= minWidth || wall.bounds.size.y >= maxWidth)
+		{
+			// Add all spots to a list
+			List<Vector3Int> spots = new List<Vector3Int>();
+			BoundsInt.PositionEnumerator positions = wall.bounds.allPositionsWithin;
+
+			Vector3Int spot;
+			// Include corner positions
+			Vector3Int minPos = wall.bounds.min - new Vector3Int(axis.x * Region.cornerThreshold, axis.y * Region.cornerThreshold, 0),
+				maxPos = wall.bounds.max + new Vector3Int(axis.x * Region.cornerThreshold, axis.y * Region.cornerThreshold, 0);
+
+			spots.Add(minPos);
+			// Iterate over all spots and add them to he list
+			while (positions.MoveNext())
+			{
+				spot = positions.Current;
+				Debug.Log(spot);
+				spots.Add(spot);
+			}
+			spots.Add(maxPos);
+
+			while (spots.Count > 0)
+			{
+				// Get and remove random spot from list
+				int sIndex = Random.Range(0, spots.Count);
+				Vector3Int s = spots[sIndex];
+				spots.RemoveAt(sIndex);
+
+				// Check if region could be placed at spot
+				int pX = 0,
+					pY = 0;
+				switch (wall.dir)
+				{
+					case Region.Direction.NORTH:
+						pX = s.x - maxWidth;
+						if (pX < minPos.x) pX = minPos.x;
+
+						pY = s.y;
+						break;
+
+					case Region.Direction.EAST:
+
+						break;
+
+					case Region.Direction.SOUTH:
+
+						break;
+
+					case Region.Direction.WEST:
+
+						break;
+
+				}
+				BoundsInt newBounds = new BoundsInt(pX,pY,0,0,0,1);
+				
+
+				// Check if every width with any height would overlap another region
+				// If not, place region with spot as connection
+				for (int w = maxWidth; w >= minWidth; w--)
+				{
+					for (int h = maxHeight; h >= minHeight; h--)
+					{
+
+					}
+				}
+			}
+		}
+
+	}
 
 	private void AddRegion(Region region)
 	{
@@ -310,6 +385,7 @@ public class LayoutGenerator : MonoBehaviour {
 
             AddRegion(mainCorridor);
 			regions.Add(mainCorridor);
+			corridors.Add(mainCorridor);
         }
 
 		// Connect rooms
