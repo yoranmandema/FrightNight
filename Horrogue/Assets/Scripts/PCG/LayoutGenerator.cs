@@ -91,6 +91,8 @@ public class LayoutGenerator : MonoBehaviour {
 
     Region spawnRegion, mainCorridor;
     int numAddCor = 0, numAddReg = 0;
+
+    BoundsInt DebugBounds = new BoundsInt();
     #endregion
 
     private void Update()
@@ -184,11 +186,11 @@ public class LayoutGenerator : MonoBehaviour {
 			Region.Wall w = walls[wIndex];
 			walls.RemoveAt(wIndex);
 
-			PlaceRegionAtRandomSpot(region, w, createCorridor);
+            StartCoroutine(PlaceRegionAtRandomSpot(region, w, createCorridor));
 		}
 	}
 
-	private void PlaceRegionAtRandomSpot(Region region, Region.Wall wall, bool createCorridor)
+	private IEnumerator PlaceRegionAtRandomSpot(Region region, Region.Wall wall, bool createCorridor)
 	{
 		// Test region min width against height or against width of wall
 		Vector2Int xAxis = Vector2Int.one - Region.GetAbsoluteDirectionVector(region.orientation);
@@ -259,37 +261,42 @@ public class LayoutGenerator : MonoBehaviour {
 				// Check if region could be placed at spot
 				int pX = 0,
 					pY = 0;
-				switch (wall.dir)
-				{
-					case Region.Direction.NORTH:
-						pX = s.x - maxWidth;
-						if (pX < minPos.x) pX = minPos.x;
-						pY = s.y;
-						break;
 
-					case Region.Direction.EAST:
-
-						break;
-
-					case Region.Direction.SOUTH:
-
-						break;
-
-					case Region.Direction.WEST:
-
-						break;
-
-				}
-				BoundsInt newBounds = new BoundsInt(pX,pY,0,0,0,1);
-				
-
-				// Check if every width with any height would overlap another region
-				// If not, place region with spot as connection
-				for (int w = maxWidth; w >= minWidth; w--)
+                // Check if every width with any height would overlap another region
+                // If not, place region with spot as connection
+                BoundsInt newBounds = new BoundsInt();
+                for (int w = maxWidth; w >= minWidth; w--)
 				{
 					for (int h = maxHeight; h >= minHeight; h--)
 					{
+                        switch (wall.dir)
+                        {
+                            case Region.Direction.NORTH:
+                                pX = s.x - w;
+                                pY = s.y;
+                                break;
 
+                            case Region.Direction.EAST:
+                                pX = s.x;
+                                pY = s.y - h;
+                                break;
+
+                            case Region.Direction.SOUTH:
+                                pX = s.x - w;
+                                pY = s.y - h;
+                                break;
+
+                            case Region.Direction.WEST:
+                                pX = s.x - w;
+                                pY = s.y - h;
+                                break;
+
+                        }
+
+                        newBounds.position = new Vector3Int(pX, pY, 0);
+                        newBounds.size = new Vector3Int(w, h, 1);
+                        DebugBounds = newBounds;
+                        yield return new WaitForSeconds(.05f);
 					}
 				}
 			}
@@ -533,6 +540,16 @@ public class LayoutGenerator : MonoBehaviour {
 					Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMax, r.bounds.yMin));
 				}
 			}
+        }
+
+        if (DebugBounds != null)
+        {
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawLine(new Vector3(DebugBounds.xMin, DebugBounds.yMin), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
+            Gizmos.DrawLine(new Vector3(DebugBounds.xMin, DebugBounds.yMin), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
+            Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
+            Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
         }
     }
 }
