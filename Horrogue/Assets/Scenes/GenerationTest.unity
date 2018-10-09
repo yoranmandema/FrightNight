@@ -570,22 +570,22 @@ Prefab:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: generationBounds.m_Position.x
-      value: -50
+      value: -125
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: generationBounds.m_Position.y
-      value: -50
+      value: -125
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: generationBounds.m_Size.x
-      value: 100
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: generationBounds.m_Size.y
-      value: 100
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
@@ -1023,12 +1023,12 @@ Prefab:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: classAreaSize.min
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: classAreaSize.max
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
@@ -1038,7 +1038,17 @@ Prefab:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: mainCorridorHeight
-      value: 80
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: additionalCorridorAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: maxGenerationAttempts
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}

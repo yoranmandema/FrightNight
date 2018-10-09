@@ -8,12 +8,9 @@ public enum RegionType
 	None,
 	MainCorridor,
 	Corridor,
-	SpecialRoom,
-	SmallRoom,
-	MediumRoom,
-	LargeRoom,
+	Toilet,
+	ClassRoom,
 	Storage,
-	Toilet
 }
 
 [Serializable]
@@ -85,7 +82,7 @@ public class Region
 		}
 	}
 
-	public Region(BoundsInt bounds, RegionType type)
+	public Region(BoundsInt bounds, RegionType type, Direction orientation = Direction.NORTH)
 	{
 		id = NEXT_ID++;
 		//Debug.Log("New region id = " + Id + " (next = " + NEXT_ID + ")");
@@ -96,12 +93,14 @@ public class Region
 		this.walls = new List<Wall>();
 		this.bounds = bounds;
 		this.type = type;
+		this.orientation = orientation;
 		GenerateWallsFromBounds();
 	}
 
 	// Returns wall overlap
 	public BoundsInt ConnectToRegion (Region otherRegion)
 	{
+		Debug.Log("Connecting " + this.ToString() + " to " + otherRegion.ToString());
 		Dictionary<Wall, Wall> overlappingWalls = GetOverlappingWalls(otherRegion);
 		
 		// owe -> overlapping walls enumerator
@@ -142,7 +141,7 @@ public class Region
 		otherRegion.connections.Add(connectionBounds);
 
 		// Get wall overlap with corners
-		Vector2Int dir = GetAbsoluteDirectionVector(thisWall.dir);
+		Vector2Int dir = GetPerpendicularDirectionVector(thisWall.dir);
 		Vector3Int corner = new Vector3Int(cornerThreshold * dir.x, cornerThreshold * dir.y, 0);
 		BoundsInt overlap = CalculateOverlap(thisWall.bounds, otherWall.bounds);
 		overlap.min -= corner * 2;	// times two to add a new corner
@@ -155,7 +154,7 @@ public class Region
 
 	private void SplitWall(Region region, Wall wall, BoundsInt splitSize)
 	{
-		Debug.Log("Original Wall " + wall.bounds);
+		//Debug.Log("Original Wall " + wall.bounds);
 
 		Wall wallA = wall, wallB = wall;
 
@@ -175,17 +174,17 @@ public class Region
 
 		wallA.bounds.size += new Vector3Int(0, 0, 1);
 		wallB.bounds.size += new Vector3Int(0, 0, 1);
-		Debug.Log("Wall A " + wallA.bounds + "; Wall B " + wallB.bounds);
+		//Debug.Log("Wall A " + wallA.bounds + "; Wall B " + wallB.bounds);
 
 		if (wallA.bounds.size.x > 0 && wallA.bounds.size.y > 0)
 		{
 			region.walls.Add(wallA);
-			Debug.Log("Wall A added");
+			//Debug.Log("Wall A added");
 		}
 		if (wallB.bounds.size.x > 0 && wallB.bounds.size.y > 0)
 		{
 			region.walls.Add(wallB);
-			Debug.Log("Wall B added");
+			//Debug.Log("Wall B added");
 		}
 	}
 
@@ -198,6 +197,22 @@ public class Region
 			maxY = (a.yMax < b.yMax) ? a.yMax : b.yMax;
 
 		return new BoundsInt(minX, minY, 0, maxX - minX, maxY - minY, 1);
+	}
+	public static bool BoundsOverlap(BoundsInt a, BoundsInt b, int overlapThreshhold = 0)
+	{
+		// Convert IntBounds to Bounds to use Bounds.Intersects()
+		Bounds boundsA = new Bounds(a.center, a.size);
+		Bounds boundsB = new Bounds(b.center, b.size);
+
+		// Apply threshhold
+		boundsA.size -= new Vector3(overlapThreshhold * 2, overlapThreshhold * 2);
+		boundsB.size -= new Vector3(overlapThreshhold * 2, overlapThreshhold * 2);
+		boundsA.min += new Vector3(overlapThreshhold, overlapThreshhold);
+		boundsB.min += new Vector3(overlapThreshhold, overlapThreshhold);
+
+		//Debug.Log(boundsA.min.ToString() + " and " + boundsB.min.ToString() + " are intersecting? " + boundsA.Intersects(boundsB));
+
+		return boundsA.Intersects(boundsB);
 	}
 
 	private void GenerateWallsFromBounds()
@@ -265,10 +280,7 @@ public class Region
 
 	public bool OverlapsRegion(Region otherRegion)
 	{
-		Bounds thisBounds = new Bounds(bounds.center, bounds.size);
-		Bounds otherBounds = new Bounds(otherRegion.bounds.center, otherRegion.bounds.size);
-
-		return thisBounds.Intersects(otherBounds);
+		return BoundsOverlap(bounds, otherRegion.bounds);
 	}
 
 	public Dictionary<Wall, Wall> GetOverlappingWalls(Region otherRegion)
@@ -292,9 +304,21 @@ public class Region
 		return overlappingWalls;
 	}
 
+	public static Vector2Int GetPerpendicularDirectionVector(Direction dir)
+	{
+		return ((dir == Direction.NORTH || dir == Direction.SOUTH) 
+			? new Vector2Int(1, 0) : new Vector2Int(0, 1));
+	}
+	public static Direction GetPerpendicularDirection(Direction dir)
+	{
+		return ((dir == Direction.NORTH || dir == Direction.SOUTH)
+			? Direction.EAST : Direction.NORTH);
+	}
+
 	public static Vector2Int GetAbsoluteDirectionVector(Direction dir)
 	{
-		return ((dir == Direction.NORTH || dir == Direction.SOUTH) ? new Vector2Int(1, 0) : new Vector2Int(0, 1));
+		return ((dir == Direction.NORTH || dir == Direction.SOUTH)
+			? new Vector2Int(0, 1) : new Vector2Int(1, 0));
 	}
 
 	public static Vector2Int GetDirectionVector(Direction dir)
@@ -308,6 +332,16 @@ public class Region
 	}
 	public static Direction GetVectorDirection(Vector2Int dir)
 	{
-		return Direction.NORTH;
+		return (
+			(dir == new Vector2Int(0, 1)) ? Direction.NORTH :   // North -> y + 1
+			(dir == new Vector2Int(1, 0)) ? Direction.EAST :    // East -> x + 1 
+			(dir == new Vector2Int(0, -1)) ? Direction.SOUTH :  // South -> y - 1
+			(dir == new Vector2Int(0, -1)) ? Direction.WEST :	// West -> x - 1
+			Direction.NORTH);   
+	}
+
+	public override string ToString()
+	{
+		return ("[" + Id + ". " + orientation.ToString() + " | " + bounds.ToString() + "]");
 	}
 }
