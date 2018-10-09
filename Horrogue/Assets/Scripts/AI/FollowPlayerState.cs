@@ -4,6 +4,8 @@ using UnityEngine;
 using Pathfinding;
 
 public class FollowPlayerState : StateMachineBehaviour {
+    public float StopDistance = 1f;
+
     private AIDestinationSetter destinationSetter;
     private AIPath aiPath;
 

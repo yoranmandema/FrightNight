@@ -11,7 +11,9 @@ public class AIBase : AIBehaviour {
     public AnimationController AnimationController;
 
     void Start () {
-        AnimationController.Play("Idle");
+
+        if (AnimationController != null)
+            AnimationController.Play("Idle");
     }
 
     void Update()
@@ -42,7 +44,7 @@ public class AIBase : AIBehaviour {
 
         var direction = transform.rotation * Vector3.up;
 
-        if (direction.x > 0) {
+        if (direction.x > 0 && AnimationController != null) {
             AnimationController.Direction = "Right";
         } else {
             AnimationController.Direction = "Left";
