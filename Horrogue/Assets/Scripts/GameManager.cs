@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour {
 	#region Public Variables
 	// Reference to layout generator
 	public LayoutGenerator generator;
-
+	public GameObject ControlledObject;
+	public GameObject CameraObject;
 	#endregion
 
 	#region Private Variables
@@ -18,6 +19,9 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		ControlledObject = GameObject.FindGameObjectWithTag("Player");
+		CameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+
 		if (generator == null)
 		{
 			generator = GetComponent<LayoutGenerator>();
@@ -25,9 +29,12 @@ public class GameManager : MonoBehaviour {
 
 		generator.GenerateLayout();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.G))
+		{
+			generator.GenerateLayout();
+		}
 	}
 }

@@ -101,14 +101,6 @@ public class LayoutGenerator : MonoBehaviour {
     BoundsInt DebugBounds = new BoundsInt();
     #endregion
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            GenerateLayout();
-        }
-    }
-
     public void GenerateLayout()
 	{
 		InitializeRandom();
@@ -193,8 +185,6 @@ public class LayoutGenerator : MonoBehaviour {
          * 3 Create Corridor Region
          * */
         List<Region> cors = new List<Region>(corridors);
-		Debug.Log(cors.Count);
-		Debug.Log(corridors.Count);
 		// New corridor params
 		int cMaxW = corridorWidth.max, cMaxL = corridorLength.max;
 		bool corridorWasCreated = false;
@@ -204,9 +194,6 @@ public class LayoutGenerator : MonoBehaviour {
             int cIndex = Random.Range(0, cors.Count);
             Region c = cors[cIndex];
             cors.RemoveAt(cIndex);
-
-			Debug.Log(cors.Count);
-			Debug.Log(corridors.Count);
 
 			// Create a randomly attached region
 			if (CreateRandomRegion(c, true))
