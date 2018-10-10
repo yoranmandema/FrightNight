@@ -100,7 +100,7 @@ public class Region
 	// Returns wall overlap
 	public BoundsInt ConnectToRegion (Region otherRegion)
 	{
-		Debug.Log("Connecting " + this.ToString() + " to " + otherRegion.ToString());
+		//Debug.Log("Connecting " + this.ToString() + " to " + otherRegion.ToString());
 		Dictionary<Wall, Wall> overlappingWalls = GetOverlappingWalls(otherRegion);
 		
 		// owe -> overlapping walls enumerator

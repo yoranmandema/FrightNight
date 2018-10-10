@@ -1,40 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
+using System;
 
 public class GameManager : MonoBehaviour {
 
-	#region Public Variables
+    #region Public Variables
+    // Player and NPC Prefabs
+    public GameObject playerPrefab;
+    public GameObject clownPrefab;
+
+    //TODO Children
+
 	// Reference to layout generator
-	public LayoutGenerator generator;
 	public GameObject ControlledObject;
 	public GameObject CameraObject;
-	#endregion
+    #endregion
 
-	#region Private Variables
+    #region Private Variables
+    private LayoutGenerator generator;
+    private GameObject player;
+    private GameObject clown;
+    #endregion
 
-
-
-	#endregion
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		ControlledObject = GameObject.FindGameObjectWithTag("Player");
 		CameraObject = GameObject.FindGameObjectWithTag("MainCamera");
 
-		if (generator == null)
-		{
-			generator = GetComponent<LayoutGenerator>();
-		}
+        generator = GetComponent<LayoutGenerator>();
 
-		generator.GenerateLayout();
+        GenerateLayout();
+        SpawnCharacters();
 	}
 
-	private void Update()
+    private void SpawnCharacters()
+    {
+        Vector3 playerSpawn = generator.GetPlayerSpawnPoint();
+        Vector3 clownSpawn = generator.GetRandomSpawnPoint();
+
+        Destroy(player);
+        Destroy(clown);
+
+        player = ControlledObject = (GameObject) Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
+        clown = (GameObject) Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+    }
+
+    private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.G))
 		{
-			generator.GenerateLayout();
+            GenerateLayout();
+            SpawnCharacters();
 		}
 	}
+
+    void GenerateLayout()
+    {
+        // Generate Layout
+        generator.GenerateLayout();
+
+        // Scan Generated Layout
+        AstarPath.active.Scan();
+    }
 }

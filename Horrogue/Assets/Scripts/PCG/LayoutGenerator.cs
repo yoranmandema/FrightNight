@@ -126,7 +126,18 @@ public class LayoutGenerator : MonoBehaviour {
 
 	}
 
-	private void CreateAdditionalRegions()
+    public Vector3 GetPlayerSpawnPoint()
+    {
+        return spawnRegion.bounds.center;
+    }
+
+    public Vector3 GetRandomSpawnPoint()
+    {
+        Region r = regions[Random.Range(2, regions.Count)];
+        return r.bounds.center;
+    }
+
+    private void CreateAdditionalRegions()
 	{
 		for (int i = 0; numAddReg < additionalRegionAmount; i++)
 		{
@@ -155,7 +166,7 @@ public class LayoutGenerator : MonoBehaviour {
 			if (CreateRandomCorridor())
 			{
 				i = 0;
-				Debug.Log(i + " New corridor was created. Number of Additional C.: " + numAddCor + " of " + additionalCorridorAmount);
+				//Debug.Log(i + " New corridor was created. Number of Additional C.: " + numAddCor + " of " + additionalCorridorAmount);
 			}
 
 			// Cancel generation process of no corridor could be created within x attempts
@@ -421,7 +432,7 @@ public class LayoutGenerator : MonoBehaviour {
 		int sX = Random.Range(width.min, width.max + 1);
 		int sY = Random.Range(length.min, length.max + 1);
 
-		Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
+		//Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
 
 		int pX = 0,
 			pY = 0;
@@ -630,7 +641,7 @@ public class LayoutGenerator : MonoBehaviour {
 		numAddCor = 0;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if (generationBounds != null)
         {
@@ -711,5 +722,5 @@ public class LayoutGenerator : MonoBehaviour {
             Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
             Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
         }
-    }
+    }*/
 }
