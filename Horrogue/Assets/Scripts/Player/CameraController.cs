@@ -16,8 +16,10 @@ public class CameraController : MonoBehaviour {
     }
 
 	void FixedUpdate () {
+        if (GameManager.ControlledObject == null) return;
+
         var cursorPos = Camera.main.ScreenToViewportPoint(Input.mousePosition - new Vector3(Screen.width,Screen.height,0)/2);
-        var direction = (cursorPos - GameManager.ControlledObject.transform.position).normalized;
+    
 
         desired = (GameManager.ControlledObject.transform.position + Vector3.ClampMagnitude(cursorPos, MaxDistance) * Scale) + new Vector3(0,0,-10);
 
