@@ -23,7 +23,7 @@ public class FollowPlayerState : StateMachineBehaviour {
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        var player = GameObject.Find("Player");
+        var player = GameObject.FindGameObjectWithTag("Player");
 
         destinationSetter.target = player.transform;
     }
