@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
     private LayoutGenerator generator;
     private GameObject player;
     private GameObject clown;
-    private GameObject friend;
+    private List<GameObject> friends = new List<GameObject>();
     #endregion
 
     // Use this for initialization
@@ -41,15 +41,23 @@ public class GameManager : MonoBehaviour {
     {
         Vector3 playerSpawn = generator.GetPlayerSpawnPoint();
         Vector3 clownSpawn = generator.GetRandomSpawnPoint();
-        Vector3 friendSpawn = generator.GetRandomSpawnPoint();
 
         Destroy(player);
         Destroy(clown);
-        Destroy(friend);
+
+        foreach (var friend in friends) {
+            Destroy(friend);
+        }
 
         player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
         clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
-        friend = Instantiate(friendPrefab, friendSpawn, Quaternion.identity);
+
+        for (int i = 0; i < 3; i++) {
+            Vector3 friendSpawn = generator.GetRandomSpawnPoint();
+            var friend = Instantiate(friendPrefab, friendSpawn, Quaternion.identity);
+
+            friends.Add(friend);
+        }
     }
 
     private void Update()

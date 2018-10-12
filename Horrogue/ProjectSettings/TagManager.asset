@@ -8,6 +8,7 @@ TagManager:
   - NavigationManager
   - Enemy
   - GameManager
+  - Friend
   layers:
   - Default
   - TransparentFX
