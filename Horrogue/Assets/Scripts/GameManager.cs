@@ -10,11 +10,12 @@ public class GameManager : MonoBehaviour {
     // Player and NPC Prefabs
     public GameObject playerPrefab;
     public GameObject clownPrefab;
+    public GameObject friendPrefab;
 
     //TODO Children
 
-	// Reference to layout generator
-	public GameObject ControlledObject;
+    // Reference to layout generator
+    public GameObject ControlledObject;
 	public GameObject CameraObject;
     #endregion
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour {
     private LayoutGenerator generator;
     private GameObject player;
     private GameObject clown;
+    private GameObject friend;
     #endregion
 
     // Use this for initialization
@@ -39,12 +41,15 @@ public class GameManager : MonoBehaviour {
     {
         Vector3 playerSpawn = generator.GetPlayerSpawnPoint();
         Vector3 clownSpawn = generator.GetRandomSpawnPoint();
+        Vector3 friendSpawn = generator.GetRandomSpawnPoint();
 
         Destroy(player);
         Destroy(clown);
+        Destroy(friend);
 
-        player = ControlledObject = (GameObject) Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
-        clown = (GameObject) Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+        player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
+        clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+        friend = Instantiate(friendPrefab, friendSpawn, Quaternion.identity);
     }
 
     private void Update()

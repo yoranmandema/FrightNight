@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4923cc98a60f24849a7dcf9577e7622d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicsOpt: 0
+  physicsOpt: 1
   viewboxExtension: 1.01
   debugMode: 0
 --- !u!4 &1722986300
@@ -420,7 +420,7 @@ Prefab:
     - target: {fileID: 114198062469927730, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: showNavGraphs
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114150000751926110, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
