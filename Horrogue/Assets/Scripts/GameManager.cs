@@ -46,8 +46,11 @@ public class GameManager : MonoBehaviour {
         Destroy(clown);
 
         foreach (var friend in friends) {
-            Destroy(friend);
+            if (friend != null)
+                Destroy(friend);
         }
+
+        friends.Clear();
 
         player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
         clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);

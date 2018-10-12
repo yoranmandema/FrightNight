@@ -26,12 +26,24 @@ GameObject:
   - component: {fileID: 114325625302128046}
   - component: {fileID: 114770731321791106}
   - component: {fileID: 114870310439321538}
-  - component: {fileID: 114527492532206432}
-  - component: {fileID: 114945675267715850}
-  - component: {fileID: 114393990077643828}
   m_Layer: 16
   m_Name: Clown
   m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1580803101079072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4627021361986296}
+  m_Layer: 16
+  m_Name: DestinationSlave
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,12 +88,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1301524832831452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -2.09, z: 0}
+  m_LocalPosition: {x: -2.1082819, y: -2.7672112, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4046309807386752}
+  - {fileID: 4627021361986296}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4627021361986296
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1580803101079072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4212307248337362}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &58772048803333192
 CircleCollider2D:
@@ -200,28 +226,6 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!114 &114393990077643828
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301524832831452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4715bcf4e46bc740ab396f827a443ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114527492532206432
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301524832831452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a0cb6c5aedf4b22a2e7102a5e65fe6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114567391931732678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,8 +277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateMachine: {fileID: 95194139039941718}
-  _lookRadius: 3
+  _lookRadius: 5
   AnimationController: {fileID: 114231648671915144}
+  ClosestFriend: {fileID: 0}
+  DestinationSlave: {fileID: 1580803101079072}
 --- !u!114 &114870310439321538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,20 +299,6 @@ MonoBehaviour:
     AfterDelay: 0.5
     Name: Attack
     Parent: {fileID: 0}
---- !u!114 &114945675267715850
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1301524832831452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26515f7fe4216ff42b2a8faa7474d89c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransformsTo: {fileID: 1691979777961060, guid: a5cf0466a32d9d74e810440747963000,
-    type: 2}
-  Interactable: {fileID: 114393990077643828}
 --- !u!212 &212554786243332544
 SpriteRenderer:
   m_ObjectHideFlags: 1

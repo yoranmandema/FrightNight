@@ -5,10 +5,11 @@ using Pathfinding;
 
 public enum FriendStatus {
     Kidnapped,
-    Following
+    FollowingPlayer,
+    FollowingKiller,  
 }
 
-public class FriendInteractable : MonoBehaviour {
+public class Friend : MonoBehaviour {
     public FriendStatus Status = FriendStatus.Kidnapped;
 
     private Interactable interactable;
@@ -22,10 +23,21 @@ public class FriendInteractable : MonoBehaviour {
         interactable.OnInteract += OnInteract;
     }
 	
-	void OnInteract () {
+    public void OnGetKidnapped () {
+        GetComponent<NPC>().StateMachine.Play("Following Clown");
+    }
+
+    public void OnKidnapped() {
+        GetComponent<NPC>().StateMachine.Play("Idle");
+
+        Status = FriendStatus.Kidnapped;
+        aiPath.canMove = false;
+    }
+
+    void OnInteract () {
 		switch (Status) {
             case FriendStatus.Kidnapped:
-                Status = FriendStatus.Following;
+                Status = FriendStatus.FollowingPlayer;
 
                 aiPath.canMove = true;
                 break;
