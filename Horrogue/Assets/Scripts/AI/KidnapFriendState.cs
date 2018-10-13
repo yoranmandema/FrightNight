@@ -39,17 +39,15 @@ public class KidnapFriendState : StateMachineBehaviour {
         destinationSetter.target = npc.DestinationSlave.transform;
 
         if (Vector2.Distance(gameObject.transform.position, npc.DestinationSlave.transform.position) < 1) {
-            OnArrived();
-
-            animator.SetBool("Is Kidnapping", false);
+            OnArrived(animator);
         }
     }
 
-    void OnArrived() {
-        Debug.Log("Clown arrived");
-
+    void OnArrived(Animator animator) {
         destinationSetter.target = null;
 
         friend.GetComponent<Friend>().OnKidnapped();
+
+        animator.SetBool("Is Kidnapping", false);
     }
 }

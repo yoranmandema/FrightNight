@@ -41,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4627021361986296}
+  - component: {fileID: 114310501123347978}
   m_Layer: 16
   m_Name: DestinationSlave
   m_TagString: Untagged
@@ -194,6 +195,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Direction: Left
+--- !u!114 &114310501123347978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1580803101079072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e5cd26643ab1e42bd8644c456694c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114325625302128046
 MonoBehaviour:
   m_ObjectHideFlags: 1

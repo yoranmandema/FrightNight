@@ -185,9 +185,6 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Can See Friend
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: Distance To Closest Friend
     m_EventTreshold: 4
