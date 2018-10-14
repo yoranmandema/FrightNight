@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 95346646153280420}
   - component: {fileID: 114231648671915144}
   - component: {fileID: 114212857236523070}
+  - component: {fileID: 114912777561518944}
   m_Layer: 15
   m_Name: Sprite
   m_TagString: Untagged
@@ -305,12 +306,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationController: {fileID: 114231648671915144}
-  Attacks:
-  - Damage: 25
-    BeforeDelay: 0.5
-    AfterDelay: 0.5
-    Name: Attack
-    Parent: {fileID: 0}
+--- !u!114 &114912777561518944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1845595875902080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa1fc930dc24b643a8575cdaffd0067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212554786243332544
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -343,9 +349,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1596970241
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayerID: 708529773
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b4719a40facedd842962860a2d32f96c, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
