@@ -4,14 +4,17 @@ using UnityEngine;
 using Pathfinding;
 
 public class KidnapFriendState : StateMachineBehaviour {
-    private GameObject gameObject;
-
+    #region Private Variables
     private AIDestinationSetter destinationSetter;
     private AIPath aiPath;
+
     private GameManager gameManager;
     private LayoutGenerator layoutManager;
     private NPC npc;
+
     private GameObject friend;
+    private GameObject gameObject;
+    #endregion
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         gameObject = animator.gameObject;

@@ -4,9 +4,11 @@ using UnityEngine;
 using Pathfinding;
 
 public class FollowClownState : StateMachineBehaviour {
+    #region Private Variables
     private Vector3 oldPos;
     private Vector3 addPos;
     private GameObject clown;
+    #endregion
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         clown = GameObject.FindGameObjectWithTag("Enemy");

@@ -4,13 +4,13 @@ using UnityEngine;
 using Pathfinding;
 
 public class FollowFriendState : StateMachineBehaviour {
+    #region Private Variables
     private AIDestinationSetter destinationSetter;
-    private AIPath aiPath;
     private GameObject friend;
+    #endregion
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         destinationSetter = animator.gameObject.GetComponent<AIDestinationSetter>();
-        aiPath = animator.gameObject.GetComponent<AIPath>();
 
         friend = animator.gameObject.GetComponent<NPC>().ClosestFriend;
 

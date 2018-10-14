@@ -10,11 +10,15 @@ public enum FriendStatus {
 }
 
 public class Friend : MonoBehaviour {
+    #region Public Variables
     public FriendStatus Status = FriendStatus.Kidnapped;
+    #endregion
 
+    #region Private Variables
     private Interactable interactable;
     private AIPath aiPath;
     private GameManager gameManager;
+    #endregion
 
     void Start () {
         aiPath = GetComponent<AIPath>();
