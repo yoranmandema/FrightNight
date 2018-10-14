@@ -8,11 +8,15 @@ public class NPC : AIBehaviour {
     [Tooltip("Determins how far the enemy can sense the player.")]
     [SerializeField] private float _lookRadius = 5.0f;
 
+    #region Public Variables
     public AnimationController AnimationController;
     public GameObject ClosestFriend;
     public GameObject DestinationSlave;
+    #endregion
 
+    #region Private Variables
     private GameManager gameManager;
+    #endregion
 
     void Start () {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -21,8 +25,7 @@ public class NPC : AIBehaviour {
             AnimationController.Play("Idle");
     }
 
-    void Update()
-    {
+    void Update() {
         LookForPlayer();
         LookForFriends();
         SetDirection();
@@ -92,7 +95,6 @@ public class NPC : AIBehaviour {
                 StateMachine.SetBool("Can See Player", rayResult.collider.gameObject == player);
             }
             else {
-                //pixelate.pixelSizeX = 0;
                 StateMachine.SetBool("Can See Player", false);
             }
         }
