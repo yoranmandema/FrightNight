@@ -8,6 +8,7 @@ public class SpriteOrder : MonoBehaviour {
 
     void Start () {
         parentTransform = transform.parent;
+        transform.localPosition = new Vector3(0, 0, (parentTransform.position.y / 50 + 10));
     }
 
 	void Update () {

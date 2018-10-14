@@ -128,13 +128,14 @@ public class LayoutGenerator : MonoBehaviour {
 
     public Vector3 GetPlayerSpawnPoint()
     {
-        return spawnRegion.bounds.center;
+        return new Vector3(spawnRegion.bounds.center.x, spawnRegion.bounds.center.y, 0);
     }
 
     public Vector3 GetRandomSpawnPoint()
     {
         Region r = regions[Random.Range(2, regions.Count)];
-        return r.bounds.center;
+
+        return new Vector3(r.bounds.center.x, r.bounds.center.y, 0);
     }
 
     private void CreateAdditionalRegions()
