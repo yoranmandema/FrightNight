@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114231074544239058}
   - component: {fileID: 114703525414172094}
   - component: {fileID: 114306670261343948}
+  - component: {fileID: 114163153408369438}
   m_Layer: 20
   m_Name: Friend
   m_TagString: Friend
@@ -189,6 +190,17 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask: -1
+--- !u!114 &114163153408369438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407853565990524}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d6f600582833e41a63a4d75db2989b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114231074544239058
 MonoBehaviour:
   m_ObjectHideFlags: 1
