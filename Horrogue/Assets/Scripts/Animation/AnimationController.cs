@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour {
 
     public string Direction = "Left";
+
     private Animator animator;
 
     public void Play (string type) {

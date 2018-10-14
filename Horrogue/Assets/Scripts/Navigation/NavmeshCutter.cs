@@ -19,14 +19,16 @@ public class NavmeshCutter : MonoBehaviour {
 
     public void CutNavmesh () {
         if (AstarPath.active != null) {
-            AstarPath.active.UpdateGraphs(new GraphUpdateObject(lastBounds));
+            //if (lastBounds != null)
+            //    AstarPath.active.UpdateGraphs(new GraphUpdateObject(lastBounds));
 
             var bounds = GetComponent<Collider2D>().bounds;
-            print(bounds);
 
+            bounds.center = new Vector3(bounds.center.x, bounds.center.y, 10);
             // Expand the bounds along the Z axis
             bounds.Expand(Vector3.forward * 1000);
             var guo = new GraphUpdateObject(bounds);
+            guo.updatePhysics = false;
             // change some settings on the object
             AstarPath.active.UpdateGraphs(guo);
 
