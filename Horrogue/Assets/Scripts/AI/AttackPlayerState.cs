@@ -4,12 +4,11 @@ using UnityEngine;
 using Pathfinding;
 
 public class AttackPlayerState : StateMachineBehaviour {
-    private AIDestinationSetter destinationSetter;
-    private Attack attack;
+    public Attack attack;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         var attackSettings = animator.gameObject.GetComponent<AttackManager>();
 
-        attackSettings.StartAttack();
+        attackSettings.StartAttack(attack);
     }
 }

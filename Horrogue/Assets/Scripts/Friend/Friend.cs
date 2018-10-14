@@ -10,10 +10,15 @@ public enum FriendStatus {
 }
 
 public class Friend : MonoBehaviour {
+    #region Public Variables
     public FriendStatus Status = FriendStatus.Kidnapped;
+    #endregion
 
+    #region Private Variables
     private Interactable interactable;
     private AIPath aiPath;
+    private GameManager gameManager;
+    #endregion
 
     void Start () {
         aiPath = GetComponent<AIPath>();
@@ -21,6 +26,8 @@ public class Friend : MonoBehaviour {
 
         interactable = GetComponent<Interactable>();
         interactable.OnInteract += OnInteract;
+
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 	
     public void OnGetKidnapped () {

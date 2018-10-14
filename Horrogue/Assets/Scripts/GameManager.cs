@@ -14,16 +14,17 @@ public class GameManager : MonoBehaviour {
 
     //TODO Children
 
-    // Reference to layout generator
+    // References
     public GameObject ControlledObject;
 	public GameObject CameraObject;
+
+    [HideInInspector] public GameObject Player;
+    [HideInInspector] public List<GameObject> Friends = new List<GameObject>();
     #endregion
 
     #region Private Variables
     private LayoutGenerator generator;
-    private GameObject player;
     private GameObject clown;
-    private List<GameObject> friends = new List<GameObject>();
     #endregion
 
     // Use this for initialization
@@ -42,25 +43,41 @@ public class GameManager : MonoBehaviour {
         Vector3 playerSpawn = generator.GetPlayerSpawnPoint();
         Vector3 clownSpawn = generator.GetRandomSpawnPoint();
 
-        Destroy(player);
+        Destroy(Player);
         Destroy(clown);
 
-        foreach (var friend in friends) {
+        Player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
+        clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+
+        SpawnFriends();
+    }
+
+    private void SpawnFriends () {
+        foreach (var friend in Friends) {
             if (friend != null)
                 Destroy(friend);
         }
 
-        friends.Clear();
-
-        player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
-        clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+        Friends.Clear();
 
         for (int i = 0; i < 3; i++) {
             Vector3 friendSpawn = generator.GetRandomSpawnPoint();
             var friend = Instantiate(friendPrefab, friendSpawn, Quaternion.identity);
 
-            friends.Add(friend);
+            Friends.Add(friend);
         }
+    }
+
+    public bool PlayerFollowedByFriends () {
+        bool isBeingFollowed = false;
+
+        foreach (var friend in Friends) {
+            if (friend.GetComponent<Friend>().Status == FriendStatus.FollowingPlayer) {
+                isBeingFollowed = true;
+            }
+        }
+
+        return isBeingFollowed;
     }
 
     private void Update()

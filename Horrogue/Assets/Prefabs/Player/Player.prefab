@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 212973219583411934}
   - component: {fileID: 95355093203377842}
   - component: {fileID: 114562100785381896}
+  - component: {fileID: 114733314223135626}
   m_Layer: 15
   m_Name: Sprite
   m_TagString: Untagged
@@ -312,7 +313,7 @@ MonoBehaviour:
   invertMode: 0
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 10240
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   material: {fileID: 2100000, guid: c800755629e765446aa6faded5ba754e, type: 2}
   orderInLayer: 1000
@@ -332,6 +333,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Direction: Left
+--- !u!114 &114733314223135626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646329043729662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa1fc930dc24b643a8575cdaffd0067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114743896285987862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -376,7 +388,7 @@ MonoBehaviour:
   invertMode: 0
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 8448
   color: {r: 1, g: 1, b: 1, a: 1}
   material: {fileID: 2100000, guid: c800755629e765446aa6faded5ba754e, type: 2}
   orderInLayer: 1000
@@ -501,7 +513,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 708529773
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300006, guid: 6179068d146c4774c923a2066bb0f3b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
