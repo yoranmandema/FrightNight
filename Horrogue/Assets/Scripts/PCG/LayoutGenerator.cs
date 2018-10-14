@@ -90,7 +90,7 @@ public class LayoutGenerator : MonoBehaviour {
 	private RegionSpot[,] regionMap;
 
 	private List<Region> corridors;
-	private int[,] map;
+	private TileType[,] map;
     private Furniture[,,] furnituremap;
     private GameObject[,] tilemap;
     private GameObject parent;
@@ -196,8 +196,6 @@ public class LayoutGenerator : MonoBehaviour {
          * 3 Create Corridor Region
          * */
         List<Region> cors = new List<Region>(corridors);
-		// New corridor params
-		int cMaxW = corridorWidth.max, cMaxL = corridorLength.max;
 		bool corridorWasCreated = false;
         while (cors.Count > 0)
         {
@@ -497,7 +495,7 @@ public class LayoutGenerator : MonoBehaviour {
 				{
 					type = TileType.Wall;
 				}
-				map[x, y] = (int)type;
+				map[x, y] = type;
 			}
 		}
 
@@ -516,7 +514,7 @@ public class LayoutGenerator : MonoBehaviour {
 		{
 			for (int y = translatedY; y < translatedY + overlap.size.y; y++)
 			{
-				map[x, y] = (int)TileType.Doorway;
+				map[x, y] = TileType.Doorway;
 			}
 		}
 	}
@@ -547,32 +545,6 @@ public class LayoutGenerator : MonoBehaviour {
 			AddRegion(mainCorridor);
 			corridors.Add(mainCorridor);
 		}
-		/*
-		// Find Spawn Region or create a new one
-		spawnRegion = regions.Find(x => x.isSpawn);
-		if (spawnRegion == null)
-		{
-			Vector3Int size = new Vector3Int(spawnAreaHeight, spawnAreaWidth, 1);
-			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
-			spawnRegion = new Region(new BoundsInt(position, size), RegionType.Toilet);
-			spawnRegion.isSpawn = true;
-
-			AddRegion(spawnRegion);
-		}
-
-		// Find Main Corridor or create a new one
-		mainCorridor = regions.Find(x => x.type == RegionType.MainCorridor);
-		if (mainCorridor == null)
-		{
-			Vector3Int size = new Vector3Int(mainCorridorHeight, mainCorridorWidth, 1);
-			Region.Wall w = spawnRegion.walls.Find(x => x.dir == Region.Direction.SOUTH);
-			Vector3Int position = Vector3Int.RoundToInt(w.bounds.center - Vector3.Scale(size, new Vector3(.5f, 1f)));
-			mainCorridor = new Region(new BoundsInt(position, size), RegionType.MainCorridor, Region.Direction.EAST);
-
-			AddRegion(mainCorridor);
-			regions.Add(mainCorridor);
-			corridors.Add(mainCorridor);
-		}*/
 
 		// Connect rooms
 		if (!spawnRegion.isConnected)
@@ -587,17 +559,19 @@ public class LayoutGenerator : MonoBehaviour {
         {
             for (int y = 0; y < generationBounds.size.y; y++)
             {
-				if (map[x, y] == (int)TileType.Air) continue;
+				if (map[x, y] == TileType.Air) continue;
 
                 Vector3 position = new Vector3(generationBounds.xMin + (x + 0.5f) * tileSize,
                     generationBounds.yMin + (y + 0.5f * tileSize) * tileSize);
-                Vector3 size = Vector3.one * tileSize;
+                Vector3 size = Vector3.Scale(Vector3.one, new Vector3(tileSize, tileSize, 1f));
 
                 GameObject tilePrefab; 
-                TileType tileType = (TileType)map[x, y];
+                TileType tileType = map[x, y];
                 tilePrefab = tileSprites[(int)tileType].tilePrefabs[0];
 
                 tilemap[x, y] = Instantiate(tilePrefab, position, Quaternion.identity, parent.transform);
+				tilemap[x, y].transform.localScale = size;
+
             }
         }
     }
@@ -623,7 +597,7 @@ public class LayoutGenerator : MonoBehaviour {
         regions = new List<Region>();
         corridors = new List<Region>();
 
-        map = new int[generationBounds.size.x, generationBounds.size.y];
+        map = new TileType[generationBounds.size.x, generationBounds.size.y];
 		regionMap = new RegionSpot[generationBounds.size.x, generationBounds.size.y];
         tilemap = new GameObject[generationBounds.size.x, generationBounds.size.y];
 
@@ -631,7 +605,7 @@ public class LayoutGenerator : MonoBehaviour {
         {
             for (int y = 0; y < generationBounds.size.y; y++)
             {
-                map[x, y] = (int)TileType.Air;
+                map[x, y] = TileType.Air;
                 regionMap[x, y] = new RegionSpot(RegionType.None, -1);
 				tilemap[x, y] = null;
             }
@@ -641,7 +615,7 @@ public class LayoutGenerator : MonoBehaviour {
 		numAddCor = 0;
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (generationBounds != null)
         {
@@ -654,7 +628,7 @@ public class LayoutGenerator : MonoBehaviour {
                         Vector3 position = new Vector3(generationBounds.xMin + (x + 0.5f) * tileSize,
                             generationBounds.yMin + (y + 0.5f) * tileSize);
                         Vector3 size = Vector3.one * tileSize;
-                        TileType tile = (TileType)map[x, y];
+                        TileType tile = map[x, y];
                         switch (tile)
                         {
                             case TileType.Air:
@@ -722,5 +696,5 @@ public class LayoutGenerator : MonoBehaviour {
             Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
             Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
         }
-    }*/
+    }
 }

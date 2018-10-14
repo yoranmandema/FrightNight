@@ -200,6 +200,21 @@ public class Region
 	}
 	public static bool BoundsOverlap(BoundsInt a, BoundsInt b, int overlapThreshhold = 0)
 	{
+		/*
+				bool topRight = (b.x >= a.x + overlapThreshhold && b.y >= a.y + overlapThreshhold 
+					&& b.x <= a.xMax - overlapThreshhold && b.y <= a.yMax - overlapThreshhold);
+
+				bool bottomRight = (b.xMax >= a.x + overlapThreshhold && b.yMax >= a.yMax + overlapThreshhold
+					&& b.xMax <= a.xMax - overlapThreshhold && b.yMax <= a.yMax - overlapThreshhold);
+
+				bool bottomLeft = (a.x >= b.x + overlapThreshhold && a.y >= b.y + overlapThreshhold
+					&& a.x <= b.xMax - overlapThreshhold && a.y <= b.yMax - overlapThreshhold);
+
+				bool topLeft = (a.xMax >= a.x + overlapThreshhold && a.yMax >= a.yMax + overlapThreshhold
+					&& a.xMax <= a.xMax - overlapThreshhold && a.yMax <= a.yMax - overlapThreshhold);
+
+				return (topRight || topLeft || bottomRight || bottomLeft);
+				*/
 		// Convert IntBounds to Bounds to use Bounds.Intersects()
 		Bounds boundsA = new Bounds(a.center, a.size);
 		Bounds boundsB = new Bounds(b.center, b.size);
@@ -211,7 +226,7 @@ public class Region
 		boundsB.min += new Vector3(overlapThreshhold, overlapThreshhold);
 
 		//Debug.Log(boundsA.min.ToString() + " and " + boundsB.min.ToString() + " are intersecting? " + boundsA.Intersects(boundsB));
-
+		
 		return boundsA.Intersects(boundsB);
 	}
 
