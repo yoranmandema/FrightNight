@@ -12,7 +12,10 @@ public class NPC : AIBehaviour {
     public GameObject ClosestFriend;
     public GameObject DestinationSlave;
 
+    private GameManager gameManager;
+
     void Start () {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         if (AnimationController != null)
             AnimationController.Play("Idle");
@@ -23,6 +26,8 @@ public class NPC : AIBehaviour {
         LookForPlayer();
         LookForFriends();
         SetDirection();
+
+        StateMachine.SetBool("Player is being followed by friends", gameManager.PlayerFollowedByFriends());
     }
 
     void SetDirection() {

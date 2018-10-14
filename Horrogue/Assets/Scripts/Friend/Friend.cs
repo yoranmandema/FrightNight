@@ -14,6 +14,7 @@ public class Friend : MonoBehaviour {
 
     private Interactable interactable;
     private AIPath aiPath;
+    private GameManager gameManager;
 
     void Start () {
         aiPath = GetComponent<AIPath>();
@@ -21,6 +22,8 @@ public class Friend : MonoBehaviour {
 
         interactable = GetComponent<Interactable>();
         interactable.OnInteract += OnInteract;
+
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 	
     public void OnGetKidnapped () {

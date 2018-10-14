@@ -20,7 +20,6 @@ public class AttackManager : MonoBehaviour {
         var attack = Attacks[0];
 
         stateMachine.SetBool("Is Attacking", true);
-        stateMachine.SetBool("Has Finished Attack", false);
 
         AnimationController.Play(attack.Name);
 
@@ -32,7 +31,7 @@ public class AttackManager : MonoBehaviour {
         attack.TryDoDamage();
         yield return new WaitForSeconds(attack.AfterDelay);
         stateMachine.SetBool("Is Attacking", false);
-        stateMachine.SetBool("Has Finished Attack", true);
+
         AnimationController.Play("Idle");
     }
 }
