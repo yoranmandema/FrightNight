@@ -36,8 +36,9 @@ public class Region
         NORTH,
         EAST,
         SOUTH,
-        WEST
-    }
+        WEST,
+		UNKOWN
+	}
 
     [Serializable]
 	public struct Wall
@@ -220,10 +221,10 @@ public class Region
 		Bounds boundsB = new Bounds(b.center, b.size);
 
 		// Apply threshhold
-		boundsA.size -= new Vector3(overlapThreshhold * 2, overlapThreshhold * 2);
-		boundsB.size -= new Vector3(overlapThreshhold * 2, overlapThreshhold * 2);
-		boundsA.min += new Vector3(overlapThreshhold, overlapThreshhold);
-		boundsB.min += new Vector3(overlapThreshhold, overlapThreshhold);
+		boundsA.size -= new Vector3(overlapThreshhold * 2 + 1, overlapThreshhold * 2 + 1);
+		boundsB.size -= new Vector3(overlapThreshhold * 2 + 1, overlapThreshhold * 2 + 1);
+		boundsA.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
+		boundsB.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
 
 		//Debug.Log(boundsA.min.ToString() + " and " + boundsB.min.ToString() + " are intersecting? " + boundsA.Intersects(boundsB));
 		
@@ -339,8 +340,8 @@ public class Region
 	public static Vector2Int GetDirectionVector(Direction dir)
 	{
 		return (
-			(dir == Direction.NORTH) ? new Vector2Int(0, 1) :	// North -> y + 1
-			(dir == Direction.EAST) ? new Vector2Int(1, 0) :	// East -> x + 1 
+			(dir == Direction.NORTH) ? new Vector2Int(0, 1)  :	// North -> y + 1
+			(dir == Direction.EAST) ? new Vector2Int(1, 0)   :	// East -> x + 1 
 			(dir == Direction.SOUTH) ? new Vector2Int(0, -1) :	// South -> y - 1
 			new Vector2Int(-1, 0)								// West -> x - 1
 			);
@@ -348,11 +349,32 @@ public class Region
 	public static Direction GetVectorDirection(Vector2Int dir)
 	{
 		return (
-			(dir == new Vector2Int(0, 1)) ? Direction.NORTH :   // North -> y + 1
-			(dir == new Vector2Int(1, 0)) ? Direction.EAST :    // East -> x + 1 
+			(dir == new Vector2Int(0, 1)) ? Direction.NORTH  :  // North -> y + 1
+			(dir == new Vector2Int(1, 0)) ? Direction.EAST   :  // East -> x + 1 
 			(dir == new Vector2Int(0, -1)) ? Direction.SOUTH :  // South -> y - 1
-			(dir == new Vector2Int(0, -1)) ? Direction.WEST :	// West -> x - 1
-			Direction.NORTH);   
+			(dir == new Vector2Int(0, -1)) ? Direction.WEST  :	// West -> x - 1
+			Direction.UNKOWN);   
+	}
+
+	public static Vector2 GetOppositeDirectionVector(Direction dir)
+	{
+		return (
+			(dir == Direction.NORTH) ? new Vector2Int(0, -1) :  // South -> y - 1
+			(dir == Direction.EAST) ? new Vector2Int(-1, 0)  :  // West -> x - 1
+			(dir == Direction.SOUTH) ? new Vector2Int(0, 1)  :  // North -> y + 1
+			(dir == Direction.WEST) ? new Vector2Int(1, 0)   :  // East -> x + 1 
+			new Vector2Int(0, 0)
+			);
+	}
+	public static Direction GetOppositeDirection(Direction dir)
+	{
+		return (
+			(dir == Direction.NORTH) ? Direction.SOUTH :	// South -> y - 1
+			(dir == Direction.EAST) ? Direction.WEST :		// West -> x - 1
+			(dir == Direction.SOUTH) ? Direction.NORTH :	// North -> y + 1
+			(dir == Direction.WEST) ? Direction.EAST :		// East -> x + 1 
+			Direction.UNKOWN
+			);
 	}
 
 	public override string ToString()

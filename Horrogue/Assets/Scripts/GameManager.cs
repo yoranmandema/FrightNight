@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
         Friends.Clear();
 
         for (int i = 0; i < 3; i++) {
-            Vector3 friendSpawn = generator.GetRandomSpawnPoint();
+            Vector3 friendSpawn = generator.GetRandomSpawnPoint(true);
             var friend = Instantiate(friendPrefab, friendSpawn, Quaternion.identity);
 
             Friends.Add(friend);
