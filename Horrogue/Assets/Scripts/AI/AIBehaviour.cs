@@ -9,4 +9,8 @@ public class AIBehaviour : MonoBehaviour {
     {
         StateMachine = GetComponent<Animator>();
     }
+
+    void Update () {
+        StateMachine.SetFloat("Random Number", Random.Range(0f, 1f));
+    }
 }

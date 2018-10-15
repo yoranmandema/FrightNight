@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4276898789781010}
   - component: {fileID: 212068739180178186}
   - component: {fileID: 61446692752963874}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Basic Floor Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

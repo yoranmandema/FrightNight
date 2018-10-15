@@ -8,6 +8,7 @@ TagManager:
   - NavigationManager
   - Enemy
   - GameManager
+  - Friend
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - Light
   - Mask
   - Friend
-  - 
+  - Obstacle
   - 
   - 
   - 

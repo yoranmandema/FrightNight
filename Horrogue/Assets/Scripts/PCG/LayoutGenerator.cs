@@ -81,7 +81,7 @@ public class LayoutGenerator : MonoBehaviour {
 
     // Tile prefabs and settings
     [Header("Generator Tiles")]
-	public int tileSize = 1;
+	public int tileSize = 2;
     public List<TileSprites> tileSprites;
 	#endregion
 
@@ -89,14 +89,17 @@ public class LayoutGenerator : MonoBehaviour {
     private List<Region> regions;
 	private RegionSpot[,] regionMap;
 
+	private List<Region> rooms;
 	private List<Region> corridors;
-	private int[,] map;
-    private Furniture[,,] furnituremap;
-    private GameObject[,] tilemap;
-    private GameObject parent;
 
-    Region spawnRegion, mainCorridor;
-    int numAddCor, numAddReg;
+	private TileType[,] map;
+    private Furniture[,] obstacleMap;
+    private GameObject[,] tilemap;
+
+	private GameObject parent;
+
+    Region spawnRoom, mainCorridor;
+    int numAddCor, numAddRoom;
 
     BoundsInt DebugBounds = new BoundsInt();
     #endregion
@@ -110,7 +113,7 @@ public class LayoutGenerator : MonoBehaviour {
 
         CreateAdditionalCorridors();
         GenerateRegions();
-		CreateAdditionalRegions();
+		CreateAdditionalRooms();
 		RandomizeRegionContent();
 
         CreateTileMap();
@@ -119,6 +122,12 @@ public class LayoutGenerator : MonoBehaviour {
 	private void GenerateRegions()
 	{
 		//throw new NotImplementedException();
+
+		// Add a principals office
+		// Add a gym
+		// Add a music room
+		// Add a chemistry room
+
 	}
 
 	private void RandomizeRegionContent()
@@ -128,24 +137,33 @@ public class LayoutGenerator : MonoBehaviour {
 
     public Vector3 GetPlayerSpawnPoint()
     {
-        return spawnRegion.bounds.center;
+        return new Vector3(spawnRoom.bounds.center.x, spawnRoom.bounds.center.y, 0);
     }
 
-    public Vector3 GetRandomSpawnPoint()
+    public Vector3 GetRandomSpawnPoint(bool excludeCorridors = false)
     {
-        Region r = regions[Random.Range(2, regions.Count)];
-        return r.bounds.center;
+		Region r;
+		if (excludeCorridors)
+		{
+			r = rooms[Random.Range(2, rooms.Count)];
+		}
+		else
+		{
+			r = regions[Random.Range(2, regions.Count)];
+		}
+
+        return new Vector3(r.bounds.center.x, r.bounds.center.y, 0);
     }
 
-    private void CreateAdditionalRegions()
+    private void CreateAdditionalRooms()
 	{
-		for (int i = 0; numAddReg < additionalRegionAmount; i++)
+		for (int i = 0; numAddRoom < additionalRegionAmount; i++)
 		{
 			// If a corridor was created, reset counter
-			if (CreateRandomRegion())
+			if (CreateRandomRoom())
 			{
 				i = 0;
-				Debug.Log(i + " New region was created. Number of Additional R.: " + numAddReg + " of " + additionalRegionAmount);
+				//Debug.Log(i + " New region was created. Number of Additional R.: " + numAddReg + " of " + additionalRegionAmount);
 			}
 
 			// Cancel generation process of no corridor could be created within x attempts
@@ -155,7 +173,7 @@ public class LayoutGenerator : MonoBehaviour {
 				break;
 			}
 		}
-		Debug.Log("Final Number of Additional R.: " + numAddReg + " of " + additionalRegionAmount);
+		Debug.Log("Final Number of Additional R.: " + numAddRoom + " of " + additionalRegionAmount);
 	}
 
 	private void CreateAdditionalCorridors()
@@ -181,23 +199,7 @@ public class LayoutGenerator : MonoBehaviour {
 
     private bool CreateRandomCorridor()
     {
-        /** To create a random corrdior iterate over all existing corridors ...
-         * 1 Take a random existing corridor
-         * 1.1 Check if corridor has "free" walls perpendicual to it's orientation
-         * 1.1.t Pick random "free" wall and carry on
-         * 1.1.f Try another corridor (Step 1)
-         * 2 Pick random spot on wall
-         * 2.1 Check if minimum width (TODO + spacing) is possible
-         * 2.1.t Get possible maximum width (TODO + spacing)
-         * 2.1.f Try another random spot (Step 2)
-         * 2.2 Check if minimum length is possible
-         * 2.2.t Get possible maximum length
-         * 2.2.f Try another random spot (Step 2)
-         * 3 Create Corridor Region
-         * */
         List<Region> cors = new List<Region>(corridors);
-		// New corridor params
-		int cMaxW = corridorWidth.max, cMaxL = corridorLength.max;
 		bool corridorWasCreated = false;
         while (cors.Count > 0)
         {
@@ -207,7 +209,7 @@ public class LayoutGenerator : MonoBehaviour {
             cors.RemoveAt(cIndex);
 
 			// Create a randomly attached region
-			if (CreateRandomRegion(c, true))
+			if (CreateRandomRoom(c, true))
 			{
 				corridorWasCreated = true;
 				numAddCor++;
@@ -218,9 +220,9 @@ public class LayoutGenerator : MonoBehaviour {
         return corridorWasCreated;
     }
 
-	private bool CreateRandomRegion(Region region = null, bool createCorridor = false)
+	private bool CreateRandomRoom(Region region = null, bool createCorridor = false)
 	{
-		// if no region is given, take a random corridor
+		// if no region is given, take a random corridor for connection
 		if (region == null)
 		{
 			region = corridors[Random.Range(0, corridors.Count)];
@@ -228,7 +230,7 @@ public class LayoutGenerator : MonoBehaviour {
 
 		// Create a list of all possible walls
 		List<Region.Wall> walls = new List<Region.Wall>((createCorridor) ? region.GetPerpendicularWalls() : region.walls);
-		bool regionWasCreated = false;
+		bool roomWasCreated = false;
 		// iterating over all walls in random order
 		while (walls.Count > 0)
 		{
@@ -237,30 +239,50 @@ public class LayoutGenerator : MonoBehaviour {
 			Region.Wall w = walls[wIndex];
 			walls.RemoveAt(wIndex);
 
-			if(PlaceRegionAtRandomSpot(region, w, createCorridor))
-			{
-				regionWasCreated = true;
+			Region newRoom = GenerateRegionAtRandomSpot(w, createCorridor);
 
-				if (!createCorridor) numAddReg++;
+			if (newRoom != null)
+			{
+				roomWasCreated = true;
+				AddRegion(newRoom, createCorridor);
+				ConnectRegions(region, newRoom);
+
+				if (!createCorridor)
+				{
+					numAddRoom++;
+				}
 				break;
 			}
 		}
 
-		return regionWasCreated;
+		return roomWasCreated;
 	}
 
-	private bool PlaceRegionAtRandomSpot(Region region, Region.Wall wall, bool createCorridor)
+	// Returns the new region
+	private Region GenerateRegionAtRandomSpot(Region.Wall wall, bool createCorridor)
 	{
-		// Test region min width against height or against width of wall
-		Vector2Int widthAxis = Region.GetAbsoluteDirectionVector(region.orientation);
-		//Debug.Log(numAddCor + " X axis for wall: " + widthAxis.ToString());
+		Vector2Int widthAxis = Region.GetPerpendicularDirectionVector(wall.dir);
 
 		int minWidth = 0, 
 			minLength = 0, 
 			maxWidth = 0, 
 			maxLength = 0;
 
+		// Determine RegionType and it's generation parameters
+		// For now there are only corridors and classrooms
+		//RegionType newRegionType = (RegionType) Random.Range((int)RegionType.ClassRoom, (int)RegionType.Storage);
+		RegionType newRegionType;
+
 		if (createCorridor)
+		{
+			newRegionType = RegionType.Corridor;
+		}
+		else
+		{
+			newRegionType = RegionType.ClassRoom;
+		}
+
+		if (newRegionType == RegionType.Corridor)
 		{
 			if (widthAxis.x == 0)
 			{
@@ -279,7 +301,7 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 		else
 		{
-			// TODO
+			// Width axis doesn't matter for class rooms
 			minWidth = classAreaSize.min;
 			minLength = classAreaSize.min;
 			maxWidth = classAreaSize.max;
@@ -297,12 +319,10 @@ public class LayoutGenerator : MonoBehaviour {
 			BoundsInt.PositionEnumerator positions = wall.bounds.allPositionsWithin;
 
 			Vector3Int spot;
-			// Include corner positions
+			// Determine first and last possible random spot
 			Vector3Int minPos = wall.bounds.min - new Vector3Int(widthAxis.x * (Region.cornerThreshold + minWidth), widthAxis.y * (Region.cornerThreshold + minWidth), 0),
-				maxPos = wall.bounds.max - new Vector3Int(widthAxis.y * Region.cornerThreshold, widthAxis.x * Region.cornerThreshold, 1);
+				maxPos = wall.bounds.max - new Vector3Int(widthAxis.y * Region.cornerThreshold - minWidth - 1, widthAxis.x * Region.cornerThreshold - minWidth - 1, 1);
 
-			//spots.Add(minPos);
-			//Debug.Log("min" + minPos);
 			// Iterate over all spots and add them to he list
 			while (positions.MoveNext())
 			{
@@ -311,8 +331,6 @@ public class LayoutGenerator : MonoBehaviour {
 				if (spot.x <= maxPos.x && spot.y <= maxPos.y && spot.x >= minPos.x && spot.y >= minPos.y)
 					spots.Add(spot);
 			}
-			//spots.Add(maxPos);
-			//Debug.Log("max" + maxPos);
 
 			BoundsInt testBounds = new BoundsInt();
 
@@ -371,7 +389,7 @@ public class LayoutGenerator : MonoBehaviour {
 						testBounds.position = new Vector3Int(pX, pY, 0);
 						testBounds.size = new Vector3Int(sX, sY, 1);
 						DebugBounds = testBounds;
-
+						
 						bool isOverlapping = false;
 						for (int i = 0; i < regions.Count; i++)
 						{
@@ -385,7 +403,8 @@ public class LayoutGenerator : MonoBehaviour {
 						// Place region
 						if (!isOverlapping)
 						{
-							Debug.LogWarning(numAddCor + " Found possible bounds!");
+							Debug.Log("Testbounds " + testBounds.ToString());
+
 							Range width, length;
 
 							if (flip)
@@ -401,20 +420,11 @@ public class LayoutGenerator : MonoBehaviour {
 
 							// Create region at random spot with given tested parameters
 							Region newRegion = MakeRandomRegion(s, wall.dir, width, length);
-							newRegion.orientation = Region.GetPerpendicularDirection(region.orientation);
+							newRegion.orientation = Region.GetOppositeDirection(wall.dir);
 
-							if (createCorridor)
-							{
-								newRegion.type = RegionType.Corridor;
-							}
-							else
-							{
-								newRegion.type = RegionType.ClassRoom;
-							} 
+							newRegion.type = newRegionType;
 
-							AddRegion(newRegion, createCorridor);
-							ConnectRegions(newRegion, region);
-							return true;
+							return newRegion;
 						}
 					}
 				}
@@ -422,9 +432,9 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 		else
 		{
-			Debug.LogWarning("Wall is not eligable! " + wall.bounds.ToString() + " does not meet " + minWidth + " or " + minLength);
+			//Debug.LogWarning("Wall is not eligable! " + wall.bounds.ToString() + " does not meet " + minWidth + " or " + minLength);
 		}
-		return false;
+		return null;
 	}
 
 	private Region MakeRandomRegion(Vector3Int spot, Region.Direction dir, Range width, Range length)
@@ -469,6 +479,8 @@ public class LayoutGenerator : MonoBehaviour {
 		BoundsInt newBounds = new BoundsInt(pX, pY, 0, sX, sY, 1);
 		newBounds.ClampToBounds(generationBounds);
 		DebugBounds = newBounds;
+		Debug.Log("newBounds " + newBounds.ToString());
+
 		return new Region(newBounds, RegionType.None);
 	}
 
@@ -497,12 +509,13 @@ public class LayoutGenerator : MonoBehaviour {
 				{
 					type = TileType.Wall;
 				}
-				map[x, y] = (int)type;
+				map[x, y] = type;
 			}
 		}
 
 		regions.Add(region);
 		if (isCorrdior) corridors.Add(region);
+		else rooms.Add(region);
 	}
 
 	private void ConnectRegions(Region a, Region b)
@@ -516,7 +529,7 @@ public class LayoutGenerator : MonoBehaviour {
 		{
 			for (int y = translatedY; y < translatedY + overlap.size.y; y++)
 			{
-				map[x, y] = (int)TileType.Doorway;
+				map[x, y] = TileType.Doorway;
 			}
 		}
 	}
@@ -524,15 +537,15 @@ public class LayoutGenerator : MonoBehaviour {
 	private void SetupSpawn()
 	{
 		// Find Spawn Region or create a new one
-		spawnRegion = regions.Find(x => x.isSpawn);
-		if (spawnRegion == null)
+		spawnRoom = regions.Find(x => x.isSpawn);
+		if (spawnRoom == null)
 		{
 			Vector3Int size = new Vector3Int(spawnAreaWidth, spawnAreaHeight, 1);
 			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
-			spawnRegion = new Region(new BoundsInt(position, size), RegionType.Toilet);
-			spawnRegion.isSpawn = true;
+			spawnRoom = new Region(new BoundsInt(position, size), RegionType.Toilet);
+			spawnRoom.isSpawn = true;
 
-			AddRegion(spawnRegion);
+			AddRegion(spawnRoom);
 		}
 
 		// Find Main Corridor or create a new one
@@ -540,44 +553,18 @@ public class LayoutGenerator : MonoBehaviour {
 		if (mainCorridor == null)
 		{
 			Vector3Int size = new Vector3Int(mainCorridorWidth, mainCorridorHeight, 1);
-			Region.Wall w = spawnRegion.walls.Find(x => x.dir == Region.Direction.EAST);
+			Region.Wall w = spawnRoom.walls.Find(x => x.dir == Region.Direction.EAST);
 			Vector3Int position = Vector3Int.RoundToInt(w.bounds.center - Vector3.Scale(size, new Vector3(0, .5f)));
 			mainCorridor = new Region(new BoundsInt(position, size), RegionType.MainCorridor);
 
 			AddRegion(mainCorridor);
 			corridors.Add(mainCorridor);
 		}
-		/*
-		// Find Spawn Region or create a new one
-		spawnRegion = regions.Find(x => x.isSpawn);
-		if (spawnRegion == null)
-		{
-			Vector3Int size = new Vector3Int(spawnAreaHeight, spawnAreaWidth, 1);
-			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
-			spawnRegion = new Region(new BoundsInt(position, size), RegionType.Toilet);
-			spawnRegion.isSpawn = true;
-
-			AddRegion(spawnRegion);
-		}
-
-		// Find Main Corridor or create a new one
-		mainCorridor = regions.Find(x => x.type == RegionType.MainCorridor);
-		if (mainCorridor == null)
-		{
-			Vector3Int size = new Vector3Int(mainCorridorHeight, mainCorridorWidth, 1);
-			Region.Wall w = spawnRegion.walls.Find(x => x.dir == Region.Direction.SOUTH);
-			Vector3Int position = Vector3Int.RoundToInt(w.bounds.center - Vector3.Scale(size, new Vector3(.5f, 1f)));
-			mainCorridor = new Region(new BoundsInt(position, size), RegionType.MainCorridor, Region.Direction.EAST);
-
-			AddRegion(mainCorridor);
-			regions.Add(mainCorridor);
-			corridors.Add(mainCorridor);
-		}*/
 
 		// Connect rooms
-		if (!spawnRegion.isConnected)
+		if (!spawnRoom.isConnected)
 		{
-			ConnectRegions(spawnRegion, mainCorridor);
+			ConnectRegions(spawnRoom, mainCorridor);
 		}
 	}
 
@@ -587,17 +574,19 @@ public class LayoutGenerator : MonoBehaviour {
         {
             for (int y = 0; y < generationBounds.size.y; y++)
             {
-				if (map[x, y] == (int)TileType.Air) continue;
+				if (map[x, y] == TileType.Air) continue;
 
                 Vector3 position = new Vector3(generationBounds.xMin + (x + 0.5f) * tileSize,
                     generationBounds.yMin + (y + 0.5f * tileSize) * tileSize);
-                Vector3 size = Vector3.one * tileSize;
+                Vector3 size = Vector3.Scale(Vector3.one, new Vector3(tileSize, tileSize, 1f));
 
                 GameObject tilePrefab; 
-                TileType tileType = (TileType)map[x, y];
+                TileType tileType = map[x, y];
                 tilePrefab = tileSprites[(int)tileType].tilePrefabs[0];
 
                 tilemap[x, y] = Instantiate(tilePrefab, position, Quaternion.identity, parent.transform);
+				tilemap[x, y].transform.localScale = size;
+
             }
         }
     }
@@ -622,8 +611,9 @@ public class LayoutGenerator : MonoBehaviour {
 
         regions = new List<Region>();
         corridors = new List<Region>();
+        rooms = new List<Region>();
 
-        map = new int[generationBounds.size.x, generationBounds.size.y];
+		map = new TileType[generationBounds.size.x, generationBounds.size.y];
 		regionMap = new RegionSpot[generationBounds.size.x, generationBounds.size.y];
         tilemap = new GameObject[generationBounds.size.x, generationBounds.size.y];
 
@@ -631,48 +621,20 @@ public class LayoutGenerator : MonoBehaviour {
         {
             for (int y = 0; y < generationBounds.size.y; y++)
             {
-                map[x, y] = (int)TileType.Air;
+                map[x, y] = TileType.Air;
                 regionMap[x, y] = new RegionSpot(RegionType.None, -1);
 				tilemap[x, y] = null;
             }
         }
 
-		numAddReg = 0;
+		numAddRoom = 0;
 		numAddCor = 0;
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (generationBounds != null)
-        {
-            if (map != null)
-            {
-                for (int x = 0; x < generationBounds.size.x; x++)
-                {
-                    for (int y = 0; y < generationBounds.size.y; y++)
-                    {
-                        Vector3 position = new Vector3(generationBounds.xMin + (x + 0.5f) * tileSize,
-                            generationBounds.yMin + (y + 0.5f) * tileSize);
-                        Vector3 size = Vector3.one * tileSize;
-                        TileType tile = (TileType)map[x, y];
-                        switch (tile)
-                        {
-                            case TileType.Air:
-                                Gizmos.color = Color.grey;
-                                break;
-                            case TileType.Wall:
-                                Gizmos.color = Color.black;
-                                break;
-                            case TileType.Ground:
-                                Gizmos.color = Color.green;
-                                break;
-                            default: break;
-                        }
-                        Gizmos.DrawCube(position, size);
-                    }
-                }
-            }
-
+		{ 
             Gizmos.color = Color.green;
 
             Gizmos.DrawLine(new Vector3(generationBounds.xMin, generationBounds.yMin), new Vector3(generationBounds.xMin, generationBounds.yMax));
@@ -722,5 +684,5 @@ public class LayoutGenerator : MonoBehaviour {
             Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
             Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
         }
-    }*/
+    }
 }

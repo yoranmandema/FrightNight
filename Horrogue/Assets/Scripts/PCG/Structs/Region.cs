@@ -36,8 +36,9 @@ public class Region
         NORTH,
         EAST,
         SOUTH,
-        WEST
-    }
+        WEST,
+		UNKOWN
+	}
 
     [Serializable]
 	public struct Wall
@@ -200,18 +201,33 @@ public class Region
 	}
 	public static bool BoundsOverlap(BoundsInt a, BoundsInt b, int overlapThreshhold = 0)
 	{
+		/*
+				bool topRight = (b.x >= a.x + overlapThreshhold && b.y >= a.y + overlapThreshhold 
+					&& b.x <= a.xMax - overlapThreshhold && b.y <= a.yMax - overlapThreshhold);
+
+				bool bottomRight = (b.xMax >= a.x + overlapThreshhold && b.yMax >= a.yMax + overlapThreshhold
+					&& b.xMax <= a.xMax - overlapThreshhold && b.yMax <= a.yMax - overlapThreshhold);
+
+				bool bottomLeft = (a.x >= b.x + overlapThreshhold && a.y >= b.y + overlapThreshhold
+					&& a.x <= b.xMax - overlapThreshhold && a.y <= b.yMax - overlapThreshhold);
+
+				bool topLeft = (a.xMax >= a.x + overlapThreshhold && a.yMax >= a.yMax + overlapThreshhold
+					&& a.xMax <= a.xMax - overlapThreshhold && a.yMax <= a.yMax - overlapThreshhold);
+
+				return (topRight || topLeft || bottomRight || bottomLeft);
+				*/
 		// Convert IntBounds to Bounds to use Bounds.Intersects()
 		Bounds boundsA = new Bounds(a.center, a.size);
 		Bounds boundsB = new Bounds(b.center, b.size);
 
 		// Apply threshhold
-		boundsA.size -= new Vector3(overlapThreshhold * 2, overlapThreshhold * 2);
-		boundsB.size -= new Vector3(overlapThreshhold * 2, overlapThreshhold * 2);
-		boundsA.min += new Vector3(overlapThreshhold, overlapThreshhold);
-		boundsB.min += new Vector3(overlapThreshhold, overlapThreshhold);
+		boundsA.size -= new Vector3(overlapThreshhold * 2 + 1, overlapThreshhold * 2 + 1);
+		boundsB.size -= new Vector3(overlapThreshhold * 2 + 1, overlapThreshhold * 2 + 1);
+		boundsA.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
+		boundsB.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
 
 		//Debug.Log(boundsA.min.ToString() + " and " + boundsB.min.ToString() + " are intersecting? " + boundsA.Intersects(boundsB));
-
+		
 		return boundsA.Intersects(boundsB);
 	}
 
@@ -324,8 +340,8 @@ public class Region
 	public static Vector2Int GetDirectionVector(Direction dir)
 	{
 		return (
-			(dir == Direction.NORTH) ? new Vector2Int(0, 1) :	// North -> y + 1
-			(dir == Direction.EAST) ? new Vector2Int(1, 0) :	// East -> x + 1 
+			(dir == Direction.NORTH) ? new Vector2Int(0, 1)  :	// North -> y + 1
+			(dir == Direction.EAST) ? new Vector2Int(1, 0)   :	// East -> x + 1 
 			(dir == Direction.SOUTH) ? new Vector2Int(0, -1) :	// South -> y - 1
 			new Vector2Int(-1, 0)								// West -> x - 1
 			);
@@ -333,11 +349,32 @@ public class Region
 	public static Direction GetVectorDirection(Vector2Int dir)
 	{
 		return (
-			(dir == new Vector2Int(0, 1)) ? Direction.NORTH :   // North -> y + 1
-			(dir == new Vector2Int(1, 0)) ? Direction.EAST :    // East -> x + 1 
+			(dir == new Vector2Int(0, 1)) ? Direction.NORTH  :  // North -> y + 1
+			(dir == new Vector2Int(1, 0)) ? Direction.EAST   :  // East -> x + 1 
 			(dir == new Vector2Int(0, -1)) ? Direction.SOUTH :  // South -> y - 1
-			(dir == new Vector2Int(0, -1)) ? Direction.WEST :	// West -> x - 1
-			Direction.NORTH);   
+			(dir == new Vector2Int(0, -1)) ? Direction.WEST  :	// West -> x - 1
+			Direction.UNKOWN);   
+	}
+
+	public static Vector2 GetOppositeDirectionVector(Direction dir)
+	{
+		return (
+			(dir == Direction.NORTH) ? new Vector2Int(0, -1) :  // South -> y - 1
+			(dir == Direction.EAST) ? new Vector2Int(-1, 0)  :  // West -> x - 1
+			(dir == Direction.SOUTH) ? new Vector2Int(0, 1)  :  // North -> y + 1
+			(dir == Direction.WEST) ? new Vector2Int(1, 0)   :  // East -> x + 1 
+			new Vector2Int(0, 0)
+			);
+	}
+	public static Direction GetOppositeDirection(Direction dir)
+	{
+		return (
+			(dir == Direction.NORTH) ? Direction.SOUTH :	// South -> y - 1
+			(dir == Direction.EAST) ? Direction.WEST :		// West -> x - 1
+			(dir == Direction.SOUTH) ? Direction.NORTH :	// North -> y + 1
+			(dir == Direction.WEST) ? Direction.EAST :		// East -> x + 1 
+			Direction.UNKOWN
+			);
 	}
 
 	public override string ToString()
