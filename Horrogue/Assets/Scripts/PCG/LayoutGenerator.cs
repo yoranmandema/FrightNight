@@ -316,22 +316,44 @@ public class LayoutGenerator : MonoBehaviour {
 		{
 			// Add all spots to a list
 			List<Vector3Int> spots = new List<Vector3Int>();
-			BoundsInt.PositionEnumerator positions = wall.bounds.allPositionsWithin;
 
-			Vector3Int spot;
 			// Determine first and last possible random spot
-			Vector3Int minPos = wall.bounds.min - new Vector3Int(widthAxis.x * (Region.cornerThreshold + minWidth), widthAxis.y * (Region.cornerThreshold + minWidth), 0),
-				maxPos = wall.bounds.max - new Vector3Int(widthAxis.y * Region.cornerThreshold - minWidth - 1, widthAxis.x * Region.cornerThreshold - minWidth - 1, 1);
+			Vector3Int width3Axis  = new Vector3Int(widthAxis.x, widthAxis.y, 0);
+			Vector3Int length3Axis = new Vector3Int(1 - widthAxis.x, 1 - widthAxis.y, 0);
 
-			// Iterate over all spots and add them to he list
-			while (positions.MoveNext())
+			Vector3Int minPos = wall.bounds.min + new Vector3Int(Region.cornerThreshold, Region.cornerThreshold, 0) * width3Axis;
+			Vector3Int maxPos = wall.bounds.max	- new Vector3Int(Region.cornerThreshold, Region.cornerThreshold, 0) * width3Axis - new Vector3Int(length3Axis.x, length3Axis.y, 1);
+
+			Vector3Int minSpot = Vector3Int.Scale(minPos, width3Axis);
+			Vector3Int maxSpot = Vector3Int.Scale(maxPos, width3Axis);
+
+			int counter = minSpot.x + minSpot.y;
+			int maxCounter = maxSpot.x + maxSpot.y;
+
+			if (counter > maxCounter)
 			{
-				spot = positions.Current;
-				//Debug.Log(spot);
-				if (spot.x <= maxPos.x && spot.y <= maxPos.y && spot.x >= minPos.x && spot.y >= minPos.y)
-					spots.Add(spot);
+				maxCounter += counter;
+				counter = maxCounter - counter;
+				maxCounter = maxCounter - counter;
 			}
 
+			Debug.Log("Wall dir [" + wall.dir + "] Bounds: " + wall.bounds + " (min: " + wall.bounds.min + " | max: " + wall.bounds.max + ")");
+			Debug.Log("Spots: " + minSpot + " | " + maxSpot + " | " + minPos + " | " + maxPos);
+			Debug.Log("Counting: " + counter + " | " + maxCounter + " | " + widthAxis);
+
+			int stepSize = 2;
+
+			Vector3Int basePos = wall.bounds.min * (Vector3Int.one - width3Axis);
+
+			for (; counter <= maxCounter; counter += stepSize)
+			{
+				Vector3Int point = basePos;
+				point.x += widthAxis.x * counter;
+				point.y += widthAxis.y * counter;
+				Debug.Log("Point: " + point);
+
+				spots.Add(point);
+			}
 			BoundsInt testBounds = new BoundsInt();
 
 			while (spots.Count > 0)
@@ -385,7 +407,6 @@ public class LayoutGenerator : MonoBehaviour {
 								sY = w;
 								break;
 						}
-
 						testBounds.position = new Vector3Int(pX, pY, 0);
 						testBounds.size = new Vector3Int(sX, sY, 1);
 						DebugBounds = testBounds;
@@ -403,7 +424,7 @@ public class LayoutGenerator : MonoBehaviour {
 						// Place region
 						if (!isOverlapping)
 						{
-							Debug.Log("Testbounds " + testBounds.ToString());
+							Debug.Log("Test Region " + new Region(testBounds, RegionType.None, Region.GetOppositeDirection(wall.dir)).ToString());
 
 							Range width, length;
 
@@ -424,6 +445,8 @@ public class LayoutGenerator : MonoBehaviour {
 
 							newRegion.type = newRegionType;
 
+							Debug.Log("New Region " + newRegion.ToString());
+
 							return newRegion;
 						}
 					}
@@ -441,6 +464,8 @@ public class LayoutGenerator : MonoBehaviour {
 	{
 		int sX = Random.Range(width.min, width.max + 1);
 		int sY = Random.Range(length.min, length.max + 1);
+
+		Debug.Log(spot.ToString());
 
 		//Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
 
@@ -479,7 +504,6 @@ public class LayoutGenerator : MonoBehaviour {
 		BoundsInt newBounds = new BoundsInt(pX, pY, 0, sX, sY, 1);
 		newBounds.ClampToBounds(generationBounds);
 		DebugBounds = newBounds;
-		Debug.Log("newBounds " + newBounds.ToString());
 
 		return new Region(newBounds, RegionType.None);
 	}

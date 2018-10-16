@@ -227,8 +227,8 @@ public class Region
 		boundsB.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
 
 		//Debug.Log(boundsA.min.ToString() + " and " + boundsB.min.ToString() + " are intersecting? " + boundsA.Intersects(boundsB));
-		
-		return boundsA.Intersects(boundsB);
+
+		return (boundsA.Intersects(boundsB) || boundsB.Intersects(boundsA));
 	}
 
 	private void GenerateWallsFromBounds()
