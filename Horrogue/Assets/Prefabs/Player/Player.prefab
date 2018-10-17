@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 114950442674318584}
   - component: {fileID: 114767132668067668}
   - component: {fileID: 114743896285987862}
+  - component: {fileID: 114906768338203266}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -370,6 +371,7 @@ MonoBehaviour:
   Light: {fileID: 114268799658185548}
   AnimationController: {fileID: 114562100785381896}
   Smoothness: 0.85
+  Rotation: 0
 --- !u!114 &114792313505339216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -396,6 +398,19 @@ MonoBehaviour:
   radius: 0.75
   flashFrequency: 0
   flashOffset: 0
+--- !u!114 &114906768338203266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875424871731584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398f1e0f1b363104eb4753599269e169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Object: {fileID: 1047982217264552, guid: cc2cb2f7d04c8cc4d87bc2cbd74cfdcb, type: 2}
+  Aim: {fileID: 0}
 --- !u!114 &114950442674318584
 MonoBehaviour:
   m_ObjectHideFlags: 1

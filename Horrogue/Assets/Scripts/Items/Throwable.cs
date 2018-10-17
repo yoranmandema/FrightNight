@@ -25,7 +25,7 @@ public class Throwable : MonoBehaviour {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
 
-        rb.velocity = rb.transform.up * Velocity;
+        rb.velocity = rb.transform.right * Velocity;
 
         verticalSpeed = UpVelocity;
     }

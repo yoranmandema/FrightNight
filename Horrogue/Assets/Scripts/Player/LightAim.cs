@@ -8,6 +8,8 @@ public class LightAim : MonoBehaviour {
     public AnimationController AnimationController;
     public float Smoothness = 0.5f;
 
+    public float Rotation;
+
     private PlayerMovement movement;
     private Quaternion desiredRotation;
     private Quaternion smoothedRotation;
@@ -33,9 +35,9 @@ public class LightAim : MonoBehaviour {
 
         smoothedRotation = Quaternion.Slerp(desiredRotation, smoothedRotation, Smoothness);
 
-        var angle = smoothedRotation.eulerAngles.z;
+        Rotation = smoothedRotation.eulerAngles.z;
 
-        Light.faceAngle = angle;
+        Light.faceAngle = Rotation;
 
         if (!movement.IsMoving)
         {
