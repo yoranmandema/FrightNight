@@ -19,12 +19,12 @@ public class GameManager : MonoBehaviour {
 	public GameObject CameraObject;
 
     [HideInInspector] public GameObject Player;
+    [HideInInspector] public GameObject Clown;
     [HideInInspector] public List<GameObject> Friends = new List<GameObject>();
     #endregion
 
     #region Private Variables
     private LayoutGenerator generator;
-    private GameObject clown;
     #endregion
 
     // Use this for initialization
@@ -44,10 +44,10 @@ public class GameManager : MonoBehaviour {
         Vector3 clownSpawn = generator.GetRandomSpawnPoint();
 
         Destroy(Player);
-        Destroy(clown);
+        Destroy(Clown);
 
         Player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
-        clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+        Clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
 
         SpawnFriends();
     }

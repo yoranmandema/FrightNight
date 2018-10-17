@@ -8,14 +8,22 @@ public class SpriteOrder : MonoBehaviour {
 
     void Start () {
         parentTransform = transform.parent;
-        transform.localPosition = new Vector3(0, 0, (parentTransform.position.y / 50 + 10));
+
+        SetZ();
     }
 
 	void Update () {
 		if (parentTransform.hasChanged) {
-            transform.localPosition = new Vector3(0,0,(parentTransform.position.y/50 + 10));
+            SetZ();
 
             parentTransform.hasChanged = false;
         }
 	}
+
+    void SetZ() {
+        var currentPos = transform.localPosition;
+        currentPos.z = parentTransform.position.y / 50 + 10;
+
+        transform.localPosition = currentPos;
+    }
 }

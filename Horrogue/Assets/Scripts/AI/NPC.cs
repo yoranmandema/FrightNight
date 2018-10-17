@@ -12,6 +12,7 @@ public class NPC : AIBehaviour {
     public AnimationController AnimationController;
     public GameObject ClosestFriend;
     public GameObject DestinationSlave;
+    public Vector3 LastHeardSound;
     #endregion
 
     #region Private Variables
@@ -31,6 +32,7 @@ public class NPC : AIBehaviour {
         SetDirection();
 
         StateMachine.SetBool("Player is being followed by friends", gameManager.PlayerFollowedByFriends());
+        //StateMachine.SetBool("Heard Sound", false);
     }
 
     void SetDirection() {
@@ -98,5 +100,20 @@ public class NPC : AIBehaviour {
                 StateMachine.SetBool("Can See Player", false);
             }
         }
+    }
+
+    public void HearSound (Vector3 position) {
+        //AnimationController.Play("Check Sound");
+        StateMachine.SetBool("Heard Sound", true);
+    
+        LastHeardSound = position;
+
+        StartCoroutine(resetSoundState());
+    }
+
+    IEnumerator resetSoundState () {
+        yield return new WaitForSeconds(0.1f);
+
+        StateMachine.SetBool("Heard Sound", false);
     }
 }
