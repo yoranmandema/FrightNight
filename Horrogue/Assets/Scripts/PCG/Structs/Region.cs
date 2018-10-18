@@ -45,11 +45,13 @@ public class Region
 	{
 		public BoundsInt bounds;
 		public Direction dir;
+		public bool isVertical;
 
 		public Wall(Direction dir, BoundsInt bounds)
 		{
 			this.dir = dir;
 			this.bounds = bounds;
+			isVertical = (dir == Direction.EAST || dir == Direction.WEST);
 		}
 
 		public bool OverlapsWall(Wall otherWall)
@@ -74,6 +76,7 @@ public class Region
 	public RegionType type;
     public Direction orientation;
 	public const int cornerThreshold = 1; // may change to wall thickness, since it determines corner size
+	public const int minWallWidth = 2;
 
 	public int Id
 	{
@@ -99,7 +102,7 @@ public class Region
 	}
 
 	// Returns wall overlap
-	public BoundsInt ConnectToRegion (Region otherRegion)
+	public BoundsInt ConnectToRegion (Region otherRegion, int connectionSize = -1)
 	{
 		//Debug.Log("Connecting " + this.ToString() + " to " + otherRegion.ToString());
 		Dictionary<Wall, Wall> overlappingWalls = GetOverlappingWalls(otherRegion);
@@ -113,6 +116,22 @@ public class Region
 			Wall wallA = owe.Current.Key, 
 				wallB = owe.Current.Value;
 			BoundsInt overlap = CalculateOverlap(wallA.bounds, wallB.bounds);
+
+			if (connectionSize > 0)
+			{
+				Vector3Int pos, size;
+				if (wallA.isVertical) // | Vertical
+				{
+					pos = Vector3Int.RoundToInt(overlap.center - new Vector3Int(0, connectionSize / 2, 0));
+					size = new Vector3Int(1, connectionSize, 1);
+				}
+				else // __ Horizontal
+				{
+					pos = Vector3Int.RoundToInt(overlap.center - new Vector3Int(connectionSize / 2, 0, 0));
+					size = new Vector3Int(connectionSize, 1, 1);
+				}
+				overlap = new BoundsInt(pos, size);
+			}
 
 			ConnectToRegion(otherRegion, overlap, wallA, wallB);
 			return overlap;
@@ -155,17 +174,16 @@ public class Region
 
 	private void SplitWall(Region region, Wall wall, BoundsInt splitSize)
 	{
-		//Debug.Log("Original Wall " + wall.bounds);
-
 		Wall wallA = wall, wallB = wall;
 
 		region.walls.Remove(wall);
 
 		Vector3Int dirOffset = new Vector3Int();
-		if (wall.bounds.size.x == cornerThreshold)
+		if (!wall.isVertical)
 		{
 			dirOffset.x = cornerThreshold;
-		} else
+		}
+		else
 		{
 			dirOffset.y = cornerThreshold;
 		}
@@ -175,17 +193,14 @@ public class Region
 
 		wallA.bounds.size += new Vector3Int(0, 0, 1);
 		wallB.bounds.size += new Vector3Int(0, 0, 1);
-		//Debug.Log("Wall A " + wallA.bounds + "; Wall B " + wallB.bounds);
 
-		if (wallA.bounds.size.x > 0 && wallA.bounds.size.y > 0)
+		if ((wallA.isVertical && wallA.bounds.size.y >= minWallWidth) || (!wallA.isVertical && wallA.bounds.size.x >= minWallWidth))
 		{
 			region.walls.Add(wallA);
-			//Debug.Log("Wall A added");
 		}
-		if (wallB.bounds.size.x > 0 && wallB.bounds.size.y > 0)
+		if ((wallB.isVertical && wallB.bounds.size.y >= minWallWidth) || (!wallB.isVertical && wallB.bounds.size.x >= minWallWidth))
 		{
 			region.walls.Add(wallB);
-			//Debug.Log("Wall B added");
 		}
 	}
 
