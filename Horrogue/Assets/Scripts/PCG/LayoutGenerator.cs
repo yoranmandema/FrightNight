@@ -96,7 +96,7 @@ public class LayoutGenerator : MonoBehaviour {
 
 	//private TileType[,] map;
     private Furniture[,] obstacleMap;
-    private GameObject[,] tilemap;
+    private GameObject[,] tileMap;
 
 	private GameObject parent;
 
@@ -596,9 +596,6 @@ public class LayoutGenerator : MonoBehaviour {
 
 	private void CreateTileMap()
     {
-		// Tile Size
-		Vector3 size = Vector3.Scale(Vector3.one, new Vector3(tileSize, tileSize, 1f));
-
 		// Iterate over each region and instantiate it's tiles
 		for (int i = 0; i < regions.Count; i++)
 		{
@@ -652,11 +649,7 @@ public class LayoutGenerator : MonoBehaviour {
 						tilePrefab = floorTiles.Middle;
 					}
 
-					Vector3 pos = new Vector3(basePos.x + (x + 0.5f) * tileSize,
-						basePos.x + (x + 0.5f) * tileSize);
-
-					Instantiate(tilePrefab, pos, Quaternion.identity, parent.transform)
-						.transform.localScale = size;
+					SpawnTile(basePos, new Vector2Int(x, y), tilePrefab);
 				}
 			}
 			for (int j = 0; j < r.connections.Count; j++)
@@ -667,12 +660,9 @@ public class LayoutGenerator : MonoBehaviour {
 				{
 					for (int y = 0; y < con.size.y; y++)
 					{
-						Vector3 pos = new Vector3(conBasePos.x + (x + 0.5f) * tileSize,
-							conBasePos.x + (x + 0.5f) * tileSize);
 						GameObject tilePrefab = connectionTiles.Middle;
-
-						Instantiate(tilePrefab, pos, Quaternion.identity, parent.transform)
-							.transform.localScale = size;
+						SpawnTile(conBasePos, new Vector2Int(x, y), tilePrefab);
+						
 					}
 				}
 			}
@@ -699,15 +689,27 @@ public class LayoutGenerator : MonoBehaviour {
         }*/
     }
 
-	private void SpawnTile (Vector3 relativePos, GameObject tilePrefab)
+	private void SpawnTile (Vector3 basePosition, Vector2Int relativePosition, GameObject tilePrefab)
 	{
+		// Tile Size
+		Vector3 size = Vector3.Scale(Vector3.one, new Vector3(tileSize, tileSize, 1f));
+		Vector2Int mapPos = GetPositionInMap(basePosition) + relativePosition;
+		Vector3 pos = new Vector3(generationBounds.xMin + (mapPos.x + 0.5f) * tileSize,
+			generationBounds.yMin + (mapPos.y + 0.5f) * tileSize);
 
+		if (tileMap[mapPos.x, mapPos.y] != null)
+		{
+			Destroy(tileMap[mapPos.x, mapPos.y]);
+		}
+
+		tileMap[mapPos.x, mapPos.y] = Instantiate(tilePrefab, pos, Quaternion.identity, parent.transform);
+		tileMap[mapPos.x, mapPos.y].transform.localScale = size;
 	}
 
-	private Vector2Int GetPositionInBounds(Vector3 relativPosition)
+	private Vector2Int GetPositionInMap(Vector3 absolutePosition)
 	{
-		int x = Mathf.RoundToInt(relativPosition.x + generationBounds.size.x);
-		int y = Mathf.RoundToInt(relativPosition.y + generationBounds.size.y);
+		int x = Mathf.RoundToInt(absolutePosition.x + generationBounds.size.x);
+		int y = Mathf.RoundToInt(absolutePosition.y + generationBounds.size.y);
 
 		return new Vector2Int(x, y);
 	}
@@ -736,7 +738,7 @@ public class LayoutGenerator : MonoBehaviour {
 
 		//map = new TileType[generationBounds.size.x, generationBounds.size.y];
 		regionMap = new RegionSpot[generationBounds.size.x, generationBounds.size.y];
-        tilemap = new GameObject[generationBounds.size.x, generationBounds.size.y];
+        tileMap = new GameObject[generationBounds.size.x, generationBounds.size.y];
 
         for (int x = 0; x < generationBounds.size.x; x++)
         {
@@ -744,7 +746,7 @@ public class LayoutGenerator : MonoBehaviour {
             {
         //        map[x, y] = TileType.Air;
                 regionMap[x, y] = new RegionSpot(RegionType.None, -1);
-				tilemap[x, y] = null;
+				tileMap[x, y] = null;
             }
         }
 

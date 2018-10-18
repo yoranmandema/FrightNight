@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878a0a3afa0b1d74d9d87a8e6e1eb739, type: 3}
+  m_Name: Floor
+  m_EditorClassIdentifier: 
+  TopLeft: {fileID: 0}
+  Top: {fileID: 0}
+  TopRight: {fileID: 0}
+  Left: {fileID: 0}
+  Middle: {fileID: 0}
+  Right: {fileID: 0}
+  BottomLeft: {fileID: 0}
+  Bottom: {fileID: 0}
+  BottomRight: {fileID: 0}
