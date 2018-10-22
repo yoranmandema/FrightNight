@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878a0a3afa0b1d74d9d87a8e6e1eb739, type: 3}
+  m_Name: Floor
+  m_EditorClassIdentifier: 
+  TopLeft: {fileID: 1706504851922586, guid: aac4b836bf324794fa2993293656c2ad, type: 2}
+  Top: {fileID: 1577172713477960, guid: d0391f1ac71866e4d82a5f769a4fad8c, type: 2}
+  TopRight: {fileID: 1130432525207208, guid: 875b16137aade694ab815f274068a57b, type: 2}
+  Left: {fileID: 1456124680127476, guid: 11847af7adead5943841401742877a7e, type: 2}
+  Middle: {fileID: 1087665060789828, guid: a9f59e12366ef9a43accab5d4a60e5da, type: 2}
+  Right: {fileID: 1675115578835458, guid: 7e2ca61f34d4b2848857904d214612f1, type: 2}
+  BottomLeft: {fileID: 1215798235451686, guid: 9214a9a2464e94145a96b04508007a7a, type: 2}
+  Bottom: {fileID: 1872189779881812, guid: 2c619927c8b17544e9d0e2aa2f133fed, type: 2}
+  BottomRight: {fileID: 1247434142881026, guid: 7e6ca2f4a6c7a7a4bb85b52971a56b1b,
+    type: 2}
