@@ -15,7 +15,7 @@ MonoBehaviour:
   Top: {fileID: 0}
   TopRight: {fileID: 0}
   Left: {fileID: 0}
-  Middle: {fileID: 0}
+  Middle: {fileID: 1478774932898452, guid: 03ec6701331d51d4c93152c869b4f6ad, type: 2}
   Right: {fileID: 0}
   BottomLeft: {fileID: 0}
   Bottom: {fileID: 0}

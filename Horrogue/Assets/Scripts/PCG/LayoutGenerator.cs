@@ -245,14 +245,18 @@ public class LayoutGenerator : MonoBehaviour {
 
 			if (newRoom != null)
 			{
-				roomWasCreated = true;
-				AddRegion(newRoom, createCorridor);
-				ConnectRegions(region, newRoom);
-
+				int connectionSize = -1;
 				if (!createCorridor)
 				{
 					numAddRoom++;
+					connectionSize = 2;
 				}
+
+				roomWasCreated = true;
+				AddRegion(newRoom, createCorridor);
+				ConnectRegions(region, newRoom, connectionSize);
+
+				
 				break;
 			}
 		}
@@ -352,7 +356,6 @@ public class LayoutGenerator : MonoBehaviour {
 				Vector3Int point = basePos;
 				point.x += widthAxis.x * counter;
 				point.y += widthAxis.y * counter;
-				Debug.Log("Point: " + point);
 
 				spots.Add(point);
 			}
@@ -383,14 +386,14 @@ public class LayoutGenerator : MonoBehaviour {
 						{
 							case Region.Direction.NORTH:
 								pX = s.x - w + 1;
-								pY = s.y;
+								pY = s.y - 1;
 								sX = w;
 								sY = l;
 								break;
 
 							case Region.Direction.SOUTH:
 								pX = s.x - w + 1;
-								pY = s.y - l + 1;
+								pY = s.y - l;
 								sX = w;
 								sY = l;
 								break;
@@ -426,6 +429,8 @@ public class LayoutGenerator : MonoBehaviour {
 						// Place region
 						if (!isOverlapping)
 						{
+							Debug.Log(s.ToString());
+							Debug.Log(wall.dir);
 							Debug.Log("Test Region " + new Region(testBounds, RegionType.None, Region.GetOppositeDirection(wall.dir)).ToString());
 
 							Range width, length;
@@ -443,7 +448,6 @@ public class LayoutGenerator : MonoBehaviour {
 
 							// Create region at random spot with given tested parameters
 							Region newRegion = MakeRandomRegion(s, wall.dir, width, length);
-							newRegion.orientation = Region.GetOppositeDirection(wall.dir);
 
 							newRegion.type = newRegionType;
 
@@ -467,9 +471,7 @@ public class LayoutGenerator : MonoBehaviour {
 		int sX = Random.Range(width.min, width.max + 1);
 		int sY = Random.Range(length.min, length.max + 1);
 
-		Debug.Log(spot.ToString());
-
-		//Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
+		Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
 
 		int pX = 0,
 			pY = 0;
@@ -504,10 +506,9 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 
 		BoundsInt newBounds = new BoundsInt(pX, pY, 0, sX, sY, 1);
-		newBounds.ClampToBounds(generationBounds);
 		DebugBounds = newBounds;
 
-		return new Region(newBounds, RegionType.None);
+		return new Region(newBounds, RegionType.None, Region.GetOppositeDirection(dir));
 	}
 
 	private void AddRegion(Region region, bool isCorrdior = false)
@@ -544,14 +545,15 @@ public class LayoutGenerator : MonoBehaviour {
 		else rooms.Add(region);
 	}
 
-	private void ConnectRegions(Region a, Region b, int connectionSize = -1)
+	private void ConnectRegions(Region a, Region b, int connectionSize)
 	{
 		BoundsInt overlap = a.ConnectToRegion(b, connectionSize);
-		int translatedX = overlap.x - generationBounds.x,
+
+		/*int translatedX = overlap.x - generationBounds.x,
 			translatedY = overlap.y - generationBounds.y;
 
 		// Update map
-		/*for (int x = translatedX; x < translatedX + overlap.size.x; x++)
+		for (int x = translatedX; x < translatedX + overlap.size.x; x++)
 		{
 			for (int y = translatedY; y < translatedY + overlap.size.y; y++)
 			{
@@ -590,7 +592,7 @@ public class LayoutGenerator : MonoBehaviour {
 		// Connect rooms
 		if (!spawnRoom.isConnected)
 		{
-			ConnectRegions(spawnRoom, mainCorridor);
+			ConnectRegions(spawnRoom, mainCorridor, 1);
 		}
 	}
 
@@ -608,41 +610,41 @@ public class LayoutGenerator : MonoBehaviour {
 					GameObject tilePrefab;
 
 					// Walls
-					if (x == 0 || y == 0 || x == r.bounds.xMax - 1 || y == r.bounds.yMax)
+					if (x == 0 || y == 0 || x == r.bounds.size.x - 1 || y == r.bounds.size.y - 1)
 					{
 						tilePrefab = wallTiles.Middle;
 					}
-					else if (x == 1 && y == 1) // top left ground
-					{
-						tilePrefab = floorTiles.TopLeft;
-					}
-					else if (x == r.bounds.xMax - 2 && y == 1) // top right ground
-					{
-						tilePrefab = floorTiles.TopRight;
-					}
-					else if (x == 1 && y == r.bounds.yMax - 2) // bottom left ground
+					else if (x == 1 && y == 1) // bottom left ground
 					{
 						tilePrefab = floorTiles.BottomLeft;
 					}
-					else if (x == r.bounds.xMax - 2 && y == r.bounds.yMax - 2) // bottom right ground
+					else if (x == r.bounds.size.x - 2 && y == 1) // bottom right ground
 					{
 						tilePrefab = floorTiles.BottomRight;
 					}
-					else if (y == 1) // top ground
+					else if (x == 1 && y == r.bounds.size.y - 2) // top left ground
 					{
-						tilePrefab = floorTiles.Top;
+						tilePrefab = floorTiles.TopLeft;
+					}
+					else if (x == r.bounds.size.x - 2 && y == r.bounds.size.y - 2) // bottom right ground
+					{
+						tilePrefab = floorTiles.TopRight;
+					}
+					else if (y == 1) // bottom ground
+					{
+						tilePrefab = floorTiles.Bottom;
 					}
 					else if (x == 1) // left ground
 					{
 						tilePrefab = floorTiles.Left;
 					}
-					else if (x == r.bounds.xMax - 2) // right ground
+					else if (x == r.bounds.size.x - 2) // right ground
 					{
 						tilePrefab = floorTiles.Right;
 					}
-					else if (y == r.bounds.yMax - 2) // bottom ground
+					else if (y == r.bounds.size.y - 2) // top ground
 					{
-						tilePrefab = floorTiles.Bottom;
+						tilePrefab = floorTiles.Top;
 					}
 					else // center ground
 					{
@@ -661,8 +663,7 @@ public class LayoutGenerator : MonoBehaviour {
 					for (int y = 0; y < con.size.y; y++)
 					{
 						GameObject tilePrefab = connectionTiles.Middle;
-						SpawnTile(conBasePos, new Vector2Int(x, y), tilePrefab);
-						
+						SpawnTile(conBasePos, new Vector2Int(x, y), tilePrefab);	
 					}
 				}
 			}
@@ -697,7 +698,7 @@ public class LayoutGenerator : MonoBehaviour {
 		Vector3 pos = new Vector3(generationBounds.xMin + (mapPos.x + 0.5f) * tileSize,
 			generationBounds.yMin + (mapPos.y + 0.5f) * tileSize);
 
-		if (tileMap[mapPos.x, mapPos.y] != null)
+		if (tileMap[mapPos.x, mapPos.y] != null && tileMap[mapPos.x, mapPos.y] != connectionTiles.Middle)
 		{
 			Destroy(tileMap[mapPos.x, mapPos.y]);
 		}
@@ -708,8 +709,11 @@ public class LayoutGenerator : MonoBehaviour {
 
 	private Vector2Int GetPositionInMap(Vector3 absolutePosition)
 	{
-		int x = Mathf.RoundToInt(absolutePosition.x + generationBounds.size.x);
-		int y = Mathf.RoundToInt(absolutePosition.y + generationBounds.size.y);
+		int offsetX = generationBounds.size.x + generationBounds.xMin;
+		int offsetY = generationBounds.size.y + generationBounds.yMin;
+
+		int x = Mathf.RoundToInt(absolutePosition.x + offsetX);
+		int y = Mathf.RoundToInt(absolutePosition.y + offsetY);
 
 		return new Vector2Int(x, y);
 	}

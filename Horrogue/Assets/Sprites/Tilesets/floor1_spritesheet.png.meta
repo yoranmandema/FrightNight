@@ -5,12 +5,12 @@ TextureImporter:
     21300000: floor1_regular
     21300002: floor1_topleft
     21300004: floor1_topright
-    21300006: floor1_spritesheet_3
-    21300008: floor1_spritesheet_4
-    21300010: floor1_spritesheet_5
-    21300012: floor1_spritesheet_6
-    21300014: floor1_spritesheet_7
-    21300016: floor1_spritesheet_8
+    21300006: floor1_bottomleft
+    21300008: floor1_bottomright
+    21300010: floor1_top
+    21300012: floor1_bottom
+    21300014: floor1_left
+    21300016: floor1_right
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -69,8 +69,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -80,8 +80,41 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -153,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor1_spritesheet_3
+      name: floor1_bottomleft
       rect:
         serializedVersion: 2
         x: 1200
@@ -173,7 +206,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor1_spritesheet_4
+      name: floor1_bottomright
       rect:
         serializedVersion: 2
         x: 1600
@@ -193,7 +226,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor1_spritesheet_5
+      name: floor1_top
       rect:
         serializedVersion: 2
         x: 2000
@@ -213,7 +246,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor1_spritesheet_6
+      name: floor1_bottom
       rect:
         serializedVersion: 2
         x: 2400
@@ -233,7 +266,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor1_spritesheet_7
+      name: floor1_left
       rect:
         serializedVersion: 2
         x: 2800
@@ -253,7 +286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor1_spritesheet_8
+      name: floor1_right
       rect:
         serializedVersion: 2
         x: 3200
