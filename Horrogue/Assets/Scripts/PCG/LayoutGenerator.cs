@@ -147,7 +147,13 @@ public class LayoutGenerator : MonoBehaviour {
 		Region r;
 		if (excludeCorridors)
 		{
-			r = rooms[Random.Range(2, rooms.Count)];
+			if (rooms.Count > 1)
+			{
+				r = rooms[Random.Range(1, rooms.Count)];
+			} else
+			{
+				r = mainCorridor;
+			}
 		}
 		else
 		{
@@ -343,10 +349,10 @@ public class LayoutGenerator : MonoBehaviour {
 				maxCounter = maxCounter - counter;
 			}
 
-			Debug.Log("Wall dir [" + wall.dir + "] Bounds: " + wall.bounds + " (min: " + wall.bounds.min + " | max: " + wall.bounds.max + ")");
+			/*Debug.Log("Wall dir [" + wall.dir + "] Bounds: " + wall.bounds + " (min: " + wall.bounds.min + " | max: " + wall.bounds.max + ")");
 			Debug.Log("Spots: " + minSpot + " | " + maxSpot + " | " + minPos + " | " + maxPos);
 			Debug.Log("Counting: " + counter + " | " + maxCounter + " | " + widthAxis);
-
+			*/
 			int stepSize = 2;
 
 			Vector3Int basePos = wall.bounds.min * (Vector3Int.one - width3Axis);
@@ -429,8 +435,7 @@ public class LayoutGenerator : MonoBehaviour {
 						// Place region
 						if (!isOverlapping)
 						{
-							Debug.Log(s.ToString());
-							Debug.Log(wall.dir);
+							Debug.Log("Spot: " + s.ToString() + ", Dir: " + wall.dir);
 							Debug.Log("Test Region " + new Region(testBounds, RegionType.None, Region.GetOppositeDirection(wall.dir)).ToString());
 
 							Range width, length;
@@ -526,6 +531,10 @@ public class LayoutGenerator : MonoBehaviour {
 			}
 		}
 
+		regions.Add(region);
+		if (isCorrdior) corridors.Add(region);
+		else rooms.Add(region);
+
 		/*// Add to map
 		for (int x = translatedX; x < translatedX + region.bounds.size.x; x++)
 		{
@@ -540,9 +549,7 @@ public class LayoutGenerator : MonoBehaviour {
 			}
 		}*/
 
-		regions.Add(region);
-		if (isCorrdior) corridors.Add(region);
-		else rooms.Add(region);
+
 	}
 
 	private void ConnectRegions(Region a, Region b, int connectionSize)
@@ -585,8 +592,7 @@ public class LayoutGenerator : MonoBehaviour {
 			Vector3Int position = Vector3Int.RoundToInt(w.bounds.center - Vector3.Scale(size, new Vector3(0, .5f)));
 			mainCorridor = new Region(new BoundsInt(position, size), RegionType.MainCorridor);
 
-			AddRegion(mainCorridor);
-			corridors.Add(mainCorridor);
+			AddRegion(mainCorridor, true);
 		}
 
 		// Connect rooms
@@ -792,19 +798,13 @@ public class LayoutGenerator : MonoBehaviour {
 						Gizmos.DrawLine(new Vector3(b.xMax, b.yMax), new Vector3(b.xMin, b.yMax));
 						Gizmos.DrawLine(new Vector3(b.xMax, b.yMax), new Vector3(b.xMax, b.yMin));
 					}
-					Gizmos.color = Color.yellow;
-
-					Gizmos.DrawLine(new Vector3(r.bounds.xMin, r.bounds.yMin), new Vector3(r.bounds.xMin, r.bounds.yMax));
-					Gizmos.DrawLine(new Vector3(r.bounds.xMin, r.bounds.yMin), new Vector3(r.bounds.xMax, r.bounds.yMin));
-					Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMin, r.bounds.yMax));
-					Gizmos.DrawLine(new Vector3(r.bounds.xMax, r.bounds.yMax), new Vector3(r.bounds.xMax, r.bounds.yMin));
 				}
 			}
         }
 
         if (DebugBounds != null)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.green;
 
             Gizmos.DrawLine(new Vector3(DebugBounds.xMin, DebugBounds.yMin), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
             Gizmos.DrawLine(new Vector3(DebugBounds.xMin, DebugBounds.yMin), new Vector3(DebugBounds.xMax, DebugBounds.yMin));

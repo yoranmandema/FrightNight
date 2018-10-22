@@ -121,19 +121,19 @@ public class Region
 			Wall wallA = owe.Current.Key, 
 				wallB = owe.Current.Value;
 			BoundsInt connectionBounds = CalculateOverlap(wallA.bounds, wallB.bounds);
-
-			// TODO Check for max size
-			if (connectionSize > 0)
+			int overlapSize = connectionBounds.size.x + connectionBounds.size.y - 3;
+			
+			if (connectionSize > 0 && connectionSize <= overlapSize)
 			{
 				Vector3Int pos, size;
 				if (wallA.isVertical) // | Vertical
 				{
-					pos = Vector3Int.RoundToInt(connectionBounds.center - new Vector3Int(0, connectionSize / 2, 0));
+					pos = Vector3Int.FloorToInt(connectionBounds.center) - new Vector3Int(0, connectionSize / 2, 0);
 					size = new Vector3Int(1, connectionSize, 1);
 				}
 				else // __ Horizontal
 				{
-					pos = Vector3Int.RoundToInt(connectionBounds.center - new Vector3Int(connectionSize / 2, 0, 0));
+					pos = Vector3Int.FloorToInt(connectionBounds.center) - new Vector3Int(connectionSize / 2, 0, 0);
 					size = new Vector3Int(connectionSize, 1, 1);
 				}
 				connectionBounds = new BoundsInt(pos, size);
@@ -176,11 +176,6 @@ public class Region
 		SplitWall(otherRegion, otherWall, overlap);
 	}
 
-	private void AddConnection()
-	{
-
-	}
-
 	private void SplitWall(Region region, Wall wall, BoundsInt splitBounds)
 	{
 		Vector2Int dir = GetPerpendicularDirectionVector(wall.dir);
@@ -190,19 +185,19 @@ public class Region
 
 		region.walls.Remove(wall);
 		
-		Debug.Log("OG Wall:" + wall.ToString() + "; Split Bounds: (min)" + splitBounds.min.ToString() + " | (max)" + splitBounds.max.ToString());
-		Debug.Log("Before: Wall A:" + wallA.ToString() + "; Wall B:" + wallB.ToString());
+		//Debug.Log("OG Wall:" + wall.ToString() + "; Split Bounds: (min)" + splitBounds.min.ToString() + " | (max)" + splitBounds.max.ToString());
+		//Debug.Log("Before: Wall A:" + wallA.ToString() + "; Wall B:" + wallB.ToString());
 
-		wallA.bounds.max = splitBounds.min + Vector3Int.one - corner;
-		wallB.bounds.min = splitBounds.max - Vector3Int.one + corner;
+		wallA.bounds.max = splitBounds.min + Vector3Int.one - corner * 2;
+		wallB.bounds.min = splitBounds.max - Vector3Int.one + corner * 2;
 
 		Debug.Log("After: Wall A:" + wallA.ToString() + "; Wall B:" + wallB.ToString());
 
-		if ((wallA.isVertical && wallA.bounds.size.y >= minWallWidth) || (!wallA.isVertical && wallA.bounds.size.x >= minWallWidth))
+		if ((wallA.isVertical && wallA.bounds.size.y > minWallWidth) || (!wallA.isVertical && wallA.bounds.size.x > minWallWidth))
 		{
 			region.walls.Add(wallA);
 		}
-		if ((wallB.isVertical && wallB.bounds.size.y >= minWallWidth) || (!wallB.isVertical && wallB.bounds.size.x >= minWallWidth))
+		if ((wallB.isVertical && wallB.bounds.size.y > minWallWidth) || (!wallB.isVertical && wallB.bounds.size.x > minWallWidth))
 		{
 			region.walls.Add(wallB);
 		}
@@ -221,29 +216,27 @@ public class Region
 	public static bool BoundsOverlap(BoundsInt a, BoundsInt b, int overlapThreshhold = 0)
 	{
 		/*
-				bool topRight = (b.x >= a.x + overlapThreshhold && b.y >= a.y + overlapThreshhold 
-					&& b.x <= a.xMax - overlapThreshhold && b.y <= a.yMax - overlapThreshhold);
+		bool topRight = (b.x >= a.x + overlapThreshhold && b.y >= a.y + overlapThreshhold 
+			&& b.x <= a.xMax - overlapThreshhold && b.y <= a.yMax - overlapThreshhold);
 
-				bool bottomRight = (b.xMax >= a.x + overlapThreshhold && b.yMax >= a.yMax + overlapThreshhold
-					&& b.xMax <= a.xMax - overlapThreshhold && b.yMax <= a.yMax - overlapThreshhold);
+		bool bottomRight = (b.xMax >= a.x + overlapThreshhold && b.yMax >= a.yMax + overlapThreshhold
+			&& b.xMax <= a.xMax - overlapThreshhold && b.yMax <= a.yMax - overlapThreshhold);
 
-				bool bottomLeft = (a.x >= b.x + overlapThreshhold && a.y >= b.y + overlapThreshhold
-					&& a.x <= b.xMax - overlapThreshhold && a.y <= b.yMax - overlapThreshhold);
+		bool bottomLeft = (a.x >= b.x + overlapThreshhold && a.y >= b.y + overlapThreshhold
+			&& a.x <= b.xMax - overlapThreshhold && a.y <= b.yMax - overlapThreshhold);
 
-				bool topLeft = (a.xMax >= a.x + overlapThreshhold && a.yMax >= a.yMax + overlapThreshhold
-					&& a.xMax <= a.xMax - overlapThreshhold && a.yMax <= a.yMax - overlapThreshhold);
+		bool topLeft = (a.xMax >= a.x + overlapThreshhold && a.yMax >= a.yMax + overlapThreshhold
+			&& a.xMax <= a.xMax - overlapThreshhold && a.yMax <= a.yMax - overlapThreshhold);
 
-				return (topRight || topLeft || bottomRight || bottomLeft);
-				*/
+		return (topRight || topLeft || bottomRight || bottomLeft);
+		*/
 		// Convert IntBounds to Bounds to use Bounds.Intersects()
-		Bounds boundsA = new Bounds(a.center, a.size);
-		Bounds boundsB = new Bounds(b.center, b.size);
 
-		// Apply threshhold
-		boundsA.size -= new Vector3(overlapThreshhold * 2 + 1, overlapThreshhold * 2 + 1);
-		boundsB.size -= new Vector3(overlapThreshhold * 2 + 1, overlapThreshhold * 2 + 1);
-		boundsA.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
-		boundsB.min += new Vector3(overlapThreshhold + 0.5f, overlapThreshhold + 0.5f);
+		Vector3 overlapMargin = new Vector3(overlapThreshhold, overlapThreshhold),
+			offset = new Vector3(0.5f, 0.5f);
+
+		Bounds boundsA = new Bounds(a.center + offset + overlapMargin, a.size - overlapMargin * 2);
+		Bounds boundsB = new Bounds(b.center + offset + overlapMargin, b.size - overlapMargin * 2);
 
 		//Debug.Log(boundsA.min.ToString() + " and " + boundsB.min.ToString() + " are intersecting? " + boundsA.Intersects(boundsB));
 
