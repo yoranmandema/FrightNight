@@ -222,7 +222,7 @@ MonoBehaviour:
   repathRate: 0.5
   canSearch: 1
   canMove: 1
-  maxSpeed: 2
+  maxSpeed: 3
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -294,6 +294,7 @@ MonoBehaviour:
   AnimationController: {fileID: 114231648671915144}
   ClosestFriend: {fileID: 0}
   DestinationSlave: {fileID: 1580803101079072}
+  LastHeardSound: {x: 0, y: 0, z: 0}
 --- !u!114 &114870310439321538
 MonoBehaviour:
   m_ObjectHideFlags: 1
