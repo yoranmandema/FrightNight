@@ -13,6 +13,7 @@ public class NPC : AIBehaviour {
     public GameObject ClosestFriend;
     public GameObject DestinationSlave;
     public Vector3 LastHeardSound;
+    public Vector3 FleePosition;
     #endregion
 
     #region Private Variables
@@ -111,9 +112,24 @@ public class NPC : AIBehaviour {
         StartCoroutine(resetSoundState());
     }
 
-    IEnumerator resetSoundState () {
+    IEnumerator resetSoundState() {
         yield return new WaitForSeconds(0.1f);
 
         StateMachine.SetBool("Heard Sound", false);
+    }
+
+    public void FleeForSeconds (Vector3 position, float time) {
+        StateMachine.Play("Flee", 0);
+        FleePosition = position;
+
+        print("is Fleeing");
+
+        StartCoroutine(resetFleeState(time));
+    }
+
+    IEnumerator resetFleeState(float time) {
+        yield return new WaitForSeconds(time);
+
+        StateMachine.Play("Idle",0);
     }
 }
