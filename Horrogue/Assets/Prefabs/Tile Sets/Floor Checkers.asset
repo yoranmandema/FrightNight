@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878a0a3afa0b1d74d9d87a8e6e1eb739, type: 3}
+  m_Name: Floor Checkers
+  m_EditorClassIdentifier: 
+  TopLeft: {fileID: 1706504851922586, guid: f7664d3c580c081449919f9620e1e62d, type: 2}
+  Top: {fileID: 1577172713477960, guid: 09e09a4267af7424cb2752a60ee6cdea, type: 2}
+  TopRight: {fileID: 1130432525207208, guid: 7bdfe3b0f01b4ec4a88dc2f2651287ee, type: 2}
+  Left: {fileID: 1456124680127476, guid: 1e93709ee38b13a438583df04234ada4, type: 2}
+  Middle: {fileID: 1087665060789828, guid: 77e57c914c3d38b419442502c957420a, type: 2}
+  Right: {fileID: 1675115578835458, guid: c2afb73560a6f9f429ae0573c77bbb75, type: 2}
+  BottomLeft: {fileID: 1215798235451686, guid: 30815c0901588854484b77c8f63f09b3, type: 2}
+  Bottom: {fileID: 1872189779881812, guid: 68f56a5fc59079a489954407221a6446, type: 2}
+  BottomRight: {fileID: 1247434142881026, guid: 8467335edebcbfb4a8fa411194925c63,
+    type: 2}

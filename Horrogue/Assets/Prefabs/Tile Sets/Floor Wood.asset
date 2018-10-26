@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 878a0a3afa0b1d74d9d87a8e6e1eb739, type: 3}
-  m_Name: Floor
+  m_Name: Floor Wood
   m_EditorClassIdentifier: 
   TopLeft: {fileID: 1706504851922586, guid: aac4b836bf324794fa2993293656c2ad, type: 2}
   Top: {fileID: 1577172713477960, guid: d0391f1ac71866e4d82a5f769a4fad8c, type: 2}
