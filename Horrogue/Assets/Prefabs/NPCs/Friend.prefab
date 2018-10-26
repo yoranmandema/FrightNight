@@ -229,6 +229,7 @@ MonoBehaviour:
   AnimationController: {fileID: 114864381728169080}
   ClosestFriend: {fileID: 0}
   DestinationSlave: {fileID: 0}
+  LastHeardSound: {x: 0, y: 0, z: 0}
 --- !u!114 &114525195995459426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -303,7 +304,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6d2b9d75710ba4b47aed343c2ccd9686, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
