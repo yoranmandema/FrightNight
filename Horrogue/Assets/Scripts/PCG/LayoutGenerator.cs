@@ -82,7 +82,7 @@ public class LayoutGenerator : MonoBehaviour {
     // Tile prefabs and settings
     [Header("Generator Tiles")]
 	public int tileSize = 1;
-	public Tileset floorTiles;
+	public List<Tileset> floorTiles;
 	public Tileset wallTiles;
 	public Tileset connectionTiles;
 	#endregion
@@ -435,8 +435,8 @@ public class LayoutGenerator : MonoBehaviour {
 						// Place region
 						if (!isOverlapping)
 						{
-							Debug.Log("Spot: " + s.ToString() + ", Dir: " + wall.dir);
-							Debug.Log("Test Region " + new Region(testBounds, RegionType.None, Region.GetOppositeDirection(wall.dir)).ToString());
+							//Debug.Log("Spot: " + s.ToString() + ", Dir: " + wall.dir);
+							//Debug.Log("Test Region " + new Region(testBounds, RegionType.None, Region.GetOppositeDirection(wall.dir)).ToString());
 
 							Range width, length;
 
@@ -456,7 +456,7 @@ public class LayoutGenerator : MonoBehaviour {
 
 							newRegion.type = newRegionType;
 
-							Debug.Log("New Region " + newRegion.ToString());
+							//Debug.Log("New Region " + newRegion.ToString());
 
 							return newRegion;
 						}
@@ -476,7 +476,7 @@ public class LayoutGenerator : MonoBehaviour {
 		int sX = Random.Range(width.min, width.max + 1);
 		int sY = Random.Range(length.min, length.max + 1);
 
-		Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
+		//Debug.Log("Creating region with width of " + sX + " " + width.ToString() + " & length of " + sY + " " + length.ToString());
 
 		int pX = 0,
 			pY = 0;
@@ -609,6 +609,9 @@ public class LayoutGenerator : MonoBehaviour {
 		{
 			Region r = regions[i];
 			Vector3Int basePos = r.bounds.min;
+			// Temp fix
+			Tileset tsFloor = floorTiles[Random.Range(0, floorTiles.Count)];
+
 			for (int x = 0; x < r.bounds.size.x; x++)
 			{
 				for (int y = 0; y < r.bounds.size.y; y++)
@@ -616,45 +619,57 @@ public class LayoutGenerator : MonoBehaviour {
 					GameObject tilePrefab;
 
 					// Walls
-					if (x == 0 || y == 0 || x == r.bounds.size.x - 1 || y == r.bounds.size.y - 1)
+					if (x == 0)
 					{
-						tilePrefab = wallTiles.Middle;
+						tilePrefab = wallTiles.Left;
+					}
+					else if (x == r.bounds.size.x - 1)
+					{
+						tilePrefab = wallTiles.Right;
+					}
+					else if (y == r.bounds.size.y - 1)
+					{
+						tilePrefab = wallTiles.Top;
+					}
+					else if (y == 0)
+					{
+						tilePrefab = wallTiles.Bottom;
 					}
 					else if (x == 1 && y == 1) // bottom left ground
 					{
-						tilePrefab = floorTiles.BottomLeft;
+						tilePrefab = tsFloor.BottomLeft;
 					}
 					else if (x == r.bounds.size.x - 2 && y == 1) // bottom right ground
 					{
-						tilePrefab = floorTiles.BottomRight;
+						tilePrefab = tsFloor.BottomRight;
 					}
 					else if (x == 1 && y == r.bounds.size.y - 2) // top left ground
 					{
-						tilePrefab = floorTiles.TopLeft;
+						tilePrefab = tsFloor.TopLeft;
 					}
 					else if (x == r.bounds.size.x - 2 && y == r.bounds.size.y - 2) // bottom right ground
 					{
-						tilePrefab = floorTiles.TopRight;
+						tilePrefab = tsFloor.TopRight;
 					}
 					else if (y == 1) // bottom ground
 					{
-						tilePrefab = floorTiles.Bottom;
+						tilePrefab = tsFloor.Bottom;
 					}
 					else if (x == 1) // left ground
 					{
-						tilePrefab = floorTiles.Left;
+						tilePrefab = tsFloor.Left;
 					}
 					else if (x == r.bounds.size.x - 2) // right ground
 					{
-						tilePrefab = floorTiles.Right;
+						tilePrefab = tsFloor.Right;
 					}
 					else if (y == r.bounds.size.y - 2) // top ground
 					{
-						tilePrefab = floorTiles.Top;
+						tilePrefab = tsFloor.Top;
 					}
 					else // center ground
 					{
-						tilePrefab = floorTiles.Middle;
+						tilePrefab = tsFloor.Middle;
 					}
 
 					SpawnTile(basePos, new Vector2Int(x, y), tilePrefab);
@@ -674,26 +689,6 @@ public class LayoutGenerator : MonoBehaviour {
 				}
 			}
 		}
-
-        /*for (int x = 0; x < generationBounds.size.x; x++)
-        {
-            for (int y = 0; y < generationBounds.size.y; y++)
-            {
-				if (map[x, y] == TileType.Air) continue;
-
-                Vector3 position = new Vector3(generationBounds.xMin + (x + 0.5f) * tileSize,
-                    generationBounds.yMin + (y + 0.5f * tileSize) * tileSize);
-
-
-                GameObject tilePrefab; 
-                TileType tileType = map[x, y];
-                tilePrefab = tileSprites[(int)tileType].tilePrefabs[0];
-
-                tilemap[x, y] = Instantiate(tilePrefab, position, Quaternion.identity, parent.transform);
-				tilemap[x, y].transform.localScale = size;
-
-            }
-        }*/
     }
 
 	private void SpawnTile (Vector3 basePosition, Vector2Int relativePosition, GameObject tilePrefab)

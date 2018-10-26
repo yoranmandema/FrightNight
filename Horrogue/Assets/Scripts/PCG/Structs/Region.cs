@@ -191,7 +191,7 @@ public class Region
 		wallA.bounds.max = splitBounds.min + Vector3Int.one - corner * 2;
 		wallB.bounds.min = splitBounds.max - Vector3Int.one + corner * 2;
 
-		Debug.Log("After: Wall A:" + wallA.ToString() + "; Wall B:" + wallB.ToString());
+		//Debug.Log("After: Wall A:" + wallA.ToString() + "; Wall B:" + wallB.ToString());
 
 		if ((wallA.isVertical && wallA.bounds.size.y > minWallWidth) || (!wallA.isVertical && wallA.bounds.size.x > minWallWidth))
 		{

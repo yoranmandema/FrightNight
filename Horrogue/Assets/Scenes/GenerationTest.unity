@@ -233,6 +233,11 @@ Prefab:
       propertyPath: tagNames.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: floorTiles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4041915422278414, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
       propertyPath: m_LocalPosition.x
       value: 3.0822854
@@ -502,8 +507,7 @@ Prefab:
         type: 2}
       propertyPath: floorTiles
       value: 
-      objectReference: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: wallTiles
@@ -521,6 +525,18 @@ Prefab:
       propertyPath: classAreaSize.max
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: floorTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: af9e6613678eef249b9a5fc756ed87c0,
+        type: 2}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: floorTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
   m_IsPrefabAsset: 0
