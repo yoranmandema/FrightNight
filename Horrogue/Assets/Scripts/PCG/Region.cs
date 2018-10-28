@@ -8,9 +8,10 @@ public enum RegionType
 	None,
 	MainCorridor,
 	Corridor,
-	Toilet,
+	Toilets,
 	ClassRoom,
 	Storage,
+	PrincipalsOffice
 }
 
 [Serializable]
@@ -74,10 +75,12 @@ public class Region
 	private int id;
 	public bool isSpawn = false;
 	public bool isConnected;
+	public bool isFurnished = false;
 	public List<Region> connectedRegions;
 	public List<BoundsInt> connections;
 	public List<Wall> walls;
-	public BoundsInt bounds;
+	public BoundsInt outerBounds;
+	public BoundsInt innerBounds;
 	public RegionType type;
     public Direction orientation;
 	public const int cornerThreshold = 1; // may change to wall thickness, since it determines corner size
@@ -94,15 +97,13 @@ public class Region
 	public Region(BoundsInt bounds, RegionType type, Direction orientation = Direction.NORTH)
 	{
 		id = NEXT_ID++;
-		//Debug.Log("New region id = " + Id + " (next = " + NEXT_ID + ")");
 
 		this.isConnected = false;
 		this.connectedRegions = new List<Region>();
-		this.connections = new List<BoundsInt>();
-		this.walls = new List<Wall>();
-		this.bounds = bounds;
+		this.outerBounds = bounds;
 		this.type = type;
 		this.orientation = orientation;
+
 		GenerateWallsFromBounds();
 	}
 
@@ -245,8 +246,11 @@ public class Region
 
 	private void GenerateWallsFromBounds()
 	{
-		Vector3Int pos = bounds.position;
-		Vector3Int size = bounds.size;
+		this.connections = new List<BoundsInt>();
+		this.walls = new List<Wall>();
+
+		Vector3Int pos = outerBounds.position;
+		Vector3Int size = outerBounds.size;
 
 		BoundsInt nBounds = new BoundsInt(pos.x + cornerThreshold, pos.y + size.y - 1, pos.z, size.x - cornerThreshold * 2, 1, size.z);
 		if (nBounds.size.x > 0)
@@ -308,7 +312,7 @@ public class Region
 
 	public bool OverlapsRegion(Region otherRegion)
 	{
-		return BoundsOverlap(bounds, otherRegion.bounds);
+		return BoundsOverlap(outerBounds, otherRegion.outerBounds);
 	}
 
 	public Dictionary<Wall, Wall> GetOverlappingWalls(Region otherRegion)
@@ -391,6 +395,6 @@ public class Region
 
 	public override string ToString()
 	{
-		return ("[" + Id + ". " + orientation.ToString() + " | " + bounds.ToString() + "]");
+		return ("[" + Id + ". " + orientation.ToString() + " | " + outerBounds.ToString() + "]");
 	}
 }

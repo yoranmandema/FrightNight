@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b23721944dc7bd4f9fff44807b3761e, type: 3}
+  m_Name: Toilets (Premade Region)
+  m_EditorClassIdentifier: 
+  isSpawn: 1
+  type: 3
+  usePositionInGeneration: 0
+  position: {x: 0, y: 0, z: 0}
+  innerRegionWidth: 8
+  innerRegionLength: 4
+  furnitures:
+  - name: Toilet Stalls
+    prefab: {fileID: 1372229311558152, guid: dead46332ea90e84cb82ee5b024c26ed, type: 2}
+    positions:
+    - {x: 3, y: 1.9, z: 0}
+    - {x: 2, y: 1.9, z: 0}
+    - {x: 1, y: 1.9, z: 0}
+    - {x: 0, y: 1.9, z: 0}
+  connections:
+  - direction: 1
+    boundsList:
+    - m_Position: {x: 4, y: 0, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: 4, y: -1, z: 0}
+      m_Size: {x: 1, y: 1, z: 0}
+  tileset: {fileID: 11400000, guid: af9e6613678eef249b9a5fc756ed87c0, type: 2}

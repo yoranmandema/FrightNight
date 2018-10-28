@@ -6,15 +6,21 @@ using System;
 
 public class GameManager : MonoBehaviour {
 
-    #region Public Variables
-    // Player and NPC Prefabs
+	#region Public Variables
+	[Header("Debugging")]
+	[Tooltip("For debugging puposes")]
+	public bool disableAutomaticGeneration = false;
+	public KeyCode generationHotkey = KeyCode.G;
+
+	// Player and NPC Prefabs
+	[Header("Player/NPC Prefabs")]
     public GameObject playerPrefab;
     public GameObject clownPrefab;
     public GameObject friendPrefab;
 
-    //TODO Children
-
-    // References
+	//TODO Children
+	// References
+	[Header("Important References")]
     public GameObject ControlledObject;
 	public GameObject CameraObject;
 
@@ -34,8 +40,11 @@ public class GameManager : MonoBehaviour {
 
         generator = GetComponent<LayoutGenerator>();
 
-        GenerateLayout();
-        SpawnCharacters();
+		if (!disableAutomaticGeneration)
+		{
+			GenerateLayout();
+			SpawnCharacters();
+		}
 	}
 
     private void SpawnCharacters()
@@ -82,7 +91,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.G))
+		if (Input.GetKeyDown(generationHotkey))
 		{
             GenerateLayout();
             SpawnCharacters();

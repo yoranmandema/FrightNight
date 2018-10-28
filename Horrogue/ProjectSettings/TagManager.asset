@@ -61,3 +61,6 @@ TagManager:
   - name: Lights
     uniqueID: 3130035713
     locked: 0
+  - name: Layout
+    uniqueID: 1060281543
+    locked: 0

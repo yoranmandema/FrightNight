@@ -59,9 +59,6 @@ public class LayoutGenerator : MonoBehaviour {
     public int maxGenerationAttempts = 25;
 
 	// Premade objects and regions
-	[Header("Custom Content")]
-	public List<CustomRegion> customRegions;
-
 	[Header("Spawning Behaviour")]
 	public int additionalCorridorAmount = 2;
 	public int additionalRegionAmount = 10;
@@ -95,7 +92,6 @@ public class LayoutGenerator : MonoBehaviour {
 	private List<Region> corridors;
 
 	//private TileType[,] map;
-    private Furniture[,] obstacleMap;
     private GameObject[,] tileMap;
 
 	private GameObject parent;
@@ -139,7 +135,7 @@ public class LayoutGenerator : MonoBehaviour {
 
     public Vector3 GetPlayerSpawnPoint()
     {
-        return new Vector3(spawnRoom.bounds.center.x, spawnRoom.bounds.center.y, 0);
+        return new Vector3(spawnRoom.outerBounds.center.x, spawnRoom.outerBounds.center.y, 0);
     }
 
     public Vector3 GetRandomSpawnPoint(bool excludeCorridors = false)
@@ -160,7 +156,7 @@ public class LayoutGenerator : MonoBehaviour {
 			r = regions[Random.Range(2, regions.Count)];
 		}
 
-        return new Vector3(r.bounds.center.x, r.bounds.center.y, 0);
+        return new Vector3(r.outerBounds.center.x, r.outerBounds.center.y, 0);
     }
 
     private void CreateAdditionalRooms()
@@ -425,7 +421,7 @@ public class LayoutGenerator : MonoBehaviour {
 						bool isOverlapping = false;
 						for (int i = 0; i < regions.Count; i++)
 						{
-							if (Region.BoundsOverlap(regions[i].bounds, testBounds, 1))
+							if (Region.BoundsOverlap(regions[i].outerBounds, testBounds, 1))
 							{
 								isOverlapping = true;
 								break;
@@ -518,14 +514,14 @@ public class LayoutGenerator : MonoBehaviour {
 
 	private void AddRegion(Region region, bool isCorrdior = false)
 	{
-		int translatedX = region.bounds.x - generationBounds.x,
-			translatedY = region.bounds.y - generationBounds.y;
+		int translatedX = region.outerBounds.x - generationBounds.x,
+			translatedY = region.outerBounds.y - generationBounds.y;
 		//Debug.Log(region.bounds.ToString() + " -> " + translatedX + ", " + translatedY);
 
 		// Add to region map
-		for (int x = translatedX; x < translatedX + region.bounds.size.x; x++)
+		for (int x = translatedX; x < translatedX + region.outerBounds.size.x; x++)
 		{
-			for (int y = translatedY; y < translatedY + region.bounds.size.y; y++)
+			for (int y = translatedY; y < translatedY + region.outerBounds.size.y; y++)
 			{
 				regionMap[x, y] = new RegionSpot(region.type, region.Id);
 			}
@@ -577,7 +573,7 @@ public class LayoutGenerator : MonoBehaviour {
 		{
 			Vector3Int size = new Vector3Int(spawnAreaWidth, spawnAreaHeight, 1);
 			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
-			spawnRoom = new Region(new BoundsInt(position, size), RegionType.Toilet);
+			spawnRoom = new Region(new BoundsInt(position, size), RegionType.Toilets);
 			spawnRoom.isSpawn = true;
 
 			AddRegion(spawnRoom);
@@ -608,13 +604,13 @@ public class LayoutGenerator : MonoBehaviour {
 		for (int i = 0; i < regions.Count; i++)
 		{
 			Region r = regions[i];
-			Vector3Int basePos = r.bounds.min;
+			Vector3Int basePos = r.outerBounds.min;
 			// Temp fix
 			Tileset tsFloor = floorTiles[Random.Range(0, floorTiles.Count)];
 
-			for (int x = 0; x < r.bounds.size.x; x++)
+			for (int x = 0; x < r.outerBounds.size.x; x++)
 			{
-				for (int y = 0; y < r.bounds.size.y; y++)
+				for (int y = 0; y < r.outerBounds.size.y; y++)
 				{
 					GameObject tilePrefab;
 
@@ -623,11 +619,11 @@ public class LayoutGenerator : MonoBehaviour {
 					{
 						tilePrefab = wallTiles.Left;
 					}
-					else if (x == r.bounds.size.x - 1)
+					else if (x == r.outerBounds.size.x - 1)
 					{
 						tilePrefab = wallTiles.Right;
 					}
-					else if (y == r.bounds.size.y - 1)
+					else if (y == r.outerBounds.size.y - 1)
 					{
 						tilePrefab = wallTiles.Top;
 					}
@@ -639,15 +635,15 @@ public class LayoutGenerator : MonoBehaviour {
 					{
 						tilePrefab = tsFloor.BottomLeft;
 					}
-					else if (x == r.bounds.size.x - 2 && y == 1) // bottom right ground
+					else if (x == r.outerBounds.size.x - 2 && y == 1) // bottom right ground
 					{
 						tilePrefab = tsFloor.BottomRight;
 					}
-					else if (x == 1 && y == r.bounds.size.y - 2) // top left ground
+					else if (x == 1 && y == r.outerBounds.size.y - 2) // top left ground
 					{
 						tilePrefab = tsFloor.TopLeft;
 					}
-					else if (x == r.bounds.size.x - 2 && y == r.bounds.size.y - 2) // bottom right ground
+					else if (x == r.outerBounds.size.x - 2 && y == r.outerBounds.size.y - 2) // bottom right ground
 					{
 						tilePrefab = tsFloor.TopRight;
 					}
@@ -659,11 +655,11 @@ public class LayoutGenerator : MonoBehaviour {
 					{
 						tilePrefab = tsFloor.Left;
 					}
-					else if (x == r.bounds.size.x - 2) // right ground
+					else if (x == r.outerBounds.size.x - 2) // right ground
 					{
 						tilePrefab = tsFloor.Right;
 					}
-					else if (y == r.bounds.size.y - 2) // top ground
+					else if (y == r.outerBounds.size.y - 2) // top ground
 					{
 						tilePrefab = tsFloor.Top;
 					}
@@ -737,7 +733,10 @@ public class LayoutGenerator : MonoBehaviour {
 
         parent = new GameObject("Tile Map");
 
-        regions = new List<Region>();
+		// Reset region ids
+		Region.NEXT_ID = 0;
+
+		regions = new List<Region>();
         corridors = new List<Region>();
         rooms = new List<Region>();
 
