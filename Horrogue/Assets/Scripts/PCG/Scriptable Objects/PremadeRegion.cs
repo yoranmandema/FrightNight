@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Premade Region", menuName = "Procedural/New Premade Region")]
+[Serializable, CreateAssetMenu(fileName = "Premade Region", menuName = "Procedural/New Premade Region")]
 public class PremadeRegion : ScriptableObject
 {
 	public bool isSpawn;

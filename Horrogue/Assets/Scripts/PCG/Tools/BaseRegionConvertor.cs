@@ -1,34 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 
-public class PremadeRegionConvertor : MonoBehaviour {
+public class BaseRegionConvertor : MonoBehaviour {
 
 	[Tooltip("Refresh output (Useful after modifiying children)")]
 	public bool update = false;
 
-	public bool showGizmos = false;
+	public bool drawGizmos = false;
 
-	[Header("Premade Region Parameters")]
+	[Header("Region Parameters")]
 	public int innerRegionWidth;
 	public int innerRegionLength;
 	public Tileset tileset;
 	public GameObject furnitureParent;
 	public GameObject connectionParent;
 
-	[Header("Region Output")]
-	public PremadeRegion premadeRegionObject;
-	public bool createPrefab = false;
+	protected Vector3 pos;
+	protected Vector3 size;
 
-	private Vector3 pos;
-	private Vector3 size;
+	protected List<RegionFurnitures> furnitures;
+	protected List<RegionConnections> connections;
 
-	private List<RegionFurnitures> furnitures;
-	private List<RegionConnections> connections;
-
-	private void OnValidate()
+	protected virtual void Convert()
 	{
 		update = false;
 
@@ -43,7 +37,7 @@ public class PremadeRegionConvertor : MonoBehaviour {
 			{
 				RegionFurnitures rf = new RegionFurnitures(obj.name);
 
-				for(int j = 0; j < obj.transform.childCount; j++)
+				for (int j = 0; j < obj.transform.childCount; j++)
 				{
 					rf.AddPosition(obj.transform.GetChild(j).transform.position);
 				}
@@ -60,7 +54,8 @@ public class PremadeRegionConvertor : MonoBehaviour {
 
 			//Debug.Log(cmps.Length + " colliders found for " + obj.name);
 
-			if (cmps.Length > 0) {
+			if (cmps.Length > 0)
+			{
 				RegionConnections con = new RegionConnections(obj.name);
 				for (int j = 0; j < cmps.Length; j++)
 				{
@@ -71,45 +66,11 @@ public class PremadeRegionConvertor : MonoBehaviour {
 				connections.Add(con);
 			}
 		}
-
-		GeneratePremadeRegion();
 	}
 
-	public void GeneratePremadeRegion()
+	protected virtual void OnDrawGizmos()
 	{
-		premadeRegionObject = (PremadeRegion) ScriptableObject.CreateInstance(typeof(PremadeRegion));
-		premadeRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset);
-
-		if (createPrefab)
-		{
-			// http://wiki.unity3d.com/index.php/CreateScriptableObjectAsset
-
-			string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-			if (path == "")
-			{
-				path = "Assets";
-			}
-			else if (Path.GetExtension(path) != "")
-			{
-				path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
-			}
-
-			// Create Premade Region
-			string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + gameObject.name + " (Premade Region).asset");
-			AssetDatabase.CreateAsset(premadeRegionObject, assetPathAndName);
-
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-			EditorUtility.FocusProjectWindow();
-			Selection.activeObject = premadeRegionObject;
-
-			createPrefab = false;
-		}
-	}
-
-	private void OnDrawGizmos()
-	{
-		if (showGizmos)
+		if (drawGizmos)
 		{
 			Gizmos.color = Color.white;
 			Gizmos.DrawCube(pos, size + Vector3.one * 2);
@@ -123,10 +84,10 @@ public class PremadeRegionConvertor : MonoBehaviour {
 				for (int i = 0; i < furnitures.Count; i++)
 				{
 					RegionFurnitures rf = furnitures[i];
-					for (int j = 0; j < rf.positions.Count; j++)
+					for (int j = 0; j < rf.spawnLocations.Count; j++)
 					{
 						// Convert to world coords
-						Gizmos.DrawCube(rf.positions[j], Vector3.one * 0.25f);
+						Gizmos.DrawCube(rf.spawnLocations[j], Vector3.one * 0.25f);
 					}
 				}
 			}
