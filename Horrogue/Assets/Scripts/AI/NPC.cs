@@ -104,7 +104,6 @@ public class NPC : AIBehaviour {
     }
 
     public void HearSound (Vector3 position) {
-        //AnimationController.Play("Check Sound");
         StateMachine.SetBool("Heard Sound", true);
     
         LastHeardSound = position;
@@ -121,8 +120,6 @@ public class NPC : AIBehaviour {
     public void FleeForSeconds (Vector3 position, float time) {
         StateMachine.Play("Flee", 0);
         FleePosition = position;
-
-        print("is Fleeing");
 
         StartCoroutine(resetFleeState(time));
     }

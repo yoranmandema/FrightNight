@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 58144904003564158}
   - component: {fileID: 114451227566582082}
   - component: {fileID: 114632795519883854}
+  - component: {fileID: 114643415893414468}
   m_Layer: 22
   m_Name: Magnesium
   m_TagString: Untagged
@@ -139,7 +140,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FuseTime: 2
   EffectiveDistance: 4
-  EffectiveTime: 5
+  EffectiveTime: 50
+  BlindTime: 5
+--- !u!114 &114643415893414468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1041385708567446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d744d5574916149e0854dfab5c4f781d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  coneAngle: 0
+  faceAngle: 0
+  degreeStep: 0.2
+  invertMode: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 10240
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  material: {fileID: 2100000, guid: c800755629e765446aa6faded5ba754e, type: 2}
+  orderInLayer: 1000
+  sortingLayer: 
+  radius: 0
+  flashFrequency: 5
+  flashOffset: 0.25
 --- !u!114 &114999753826269730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,7 +194,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6d2b9d75710ba4b47aed343c2ccd9686, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -25,12 +25,16 @@ public class Throwable : MonoBehaviour {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
 
-        rb.velocity = rb.transform.right * Velocity;
-
         verticalSpeed = UpVelocity;
     }
 	
-	void FixedUpdate () {
+    public void Throw (Vector3 direction) {
+        GetComponent<Rigidbody2D>().velocity = direction * Velocity;
+    }
+
+    void FixedUpdate () {
+        if (Sprite == null) return; 
+
         if (height >= 0) {
             verticalSpeed += -Gravity;
         } 

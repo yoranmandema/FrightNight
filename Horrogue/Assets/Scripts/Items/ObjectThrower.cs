@@ -13,7 +13,9 @@ public class ObjectThrower : MonoBehaviour {
 
 	void Update () {
         if (Input.GetButtonDown("Fire1")) {
-            Instantiate(Object, transform.position, Quaternion.Euler(0, 0, Aim.Rotation));
+            var throwedObject = Instantiate(Object, transform.position, Quaternion.Euler(0, 0, 0));
+
+            throwedObject.GetComponent<Throwable>().Throw(Quaternion.Euler(0, 0, Aim.Rotation) * Vector2.right);
         }
     }
 }

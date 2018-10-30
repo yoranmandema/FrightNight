@@ -6,14 +6,20 @@ public class Firecracker : MonoBehaviour {
 
     #region Public Variables
     public float FuseTime = 2f;
+    public GameObject SpriteObject;
+    public float FlashTime = 5f;
+    public float FlashRadius = 5f;
     #endregion
 
     #region Private Variables
     private GameManager gameManager;
+    private LOS.LOSRadialLight effectLight;
+    private float lt = 0;
     #endregion
 
     void Start () {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        effectLight = GetComponent<LOS.LOSRadialLight>();
 
         Invoke("Explode",FuseTime);
     }
@@ -24,6 +30,24 @@ public class Firecracker : MonoBehaviour {
 
         npc.HearSound(transform.position);
 
-        Destroy(gameObject);
+        Destroy(SpriteObject);
+
+        StartCoroutine(Effect());
+    }
+
+    IEnumerator Effect () {
+        lt = FlashTime;
+
+        while (true) {
+            effectLight.radius = (lt / FlashTime) * FlashRadius;
+
+            lt -= Time.deltaTime;
+
+            if (lt < 0) {
+                Destroy(gameObject);
+            }
+
+            yield return null;
+        }
     }
 }
