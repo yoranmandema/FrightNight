@@ -7,4 +7,7 @@ public class CustomRegion : ScriptableObject {
 	public List<Tileset> tilesets;
 	public RegionType type;
 	public List<VariantRegion> regionVariations;
+
+	public bool seperateVerticalRegions = false;
+	public List<VariantRegion> verticalRegionVariations;
 }

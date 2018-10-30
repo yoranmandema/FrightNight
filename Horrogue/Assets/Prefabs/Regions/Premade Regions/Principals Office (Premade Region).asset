@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b23721944dc7bd4f9fff44807b3761e, type: 3}
+  m_Name: Principals Office (Premade Region)
+  m_EditorClassIdentifier: 
+  isSpawn: 0
+  type: 6
+  innerRegionWidth: 20
+  innerRegionLength: 16
+  furnitures:
+  - name: Table Principal
+    prefab: {fileID: 1834840704449034, guid: 202c660fd08622547a266bd3af048809, type: 2}
+    spawnLocations: []
+  - name: Shelfs Principal
+    prefab: {fileID: 1779082459110622, guid: cc023bbe87e9f704abfa2f58df817eb3, type: 2}
+    spawnLocations: []
+  - name: Chairs Principal
+    prefab: {fileID: 1887626847730200, guid: 354fe9ed1f8b6e840a546c42532c5820, type: 2}
+    spawnLocations: []
+  - name: Notice Board
+    prefab: {fileID: 1627179672435920, guid: 46a160ac1e1d79e4cadd038420175ff0, type: 2}
+    spawnLocations: []
+  connections:
+  - direction: 2
+    boundsList:
+    - m_Position: {x: -9, y: -29, z: 0}
+      m_Size: {x: 4, y: 1, z: 0}
+    - m_Position: {x: 5, y: -29, z: 0}
+      m_Size: {x: 4, y: 1, z: 0}
+    - m_Position: {x: -2, y: -29, z: 0}
+      m_Size: {x: 4, y: 1, z: 0}
+  - direction: 3
+    boundsList:
+    - m_Position: {x: 10, y: -27, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  - direction: 1
+    boundsList:
+    - m_Position: {x: -11, y: -27, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}

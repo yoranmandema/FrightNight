@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable, CreateAssetMenu(fileName = "Premade Region", menuName = "Procedural/New Premade Region")]
 public class PremadeRegion : ScriptableObject
 {
-	public bool isSpawn;
 	public RegionType type;
 
 	public int innerRegionWidth;

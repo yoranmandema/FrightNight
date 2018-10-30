@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d269def0ea72bc4589c11c3300120fd, type: 3}
+  m_Name: Corridor Medium (Variant Region)
+  m_EditorClassIdentifier: 
+  isSpawn: 0
+  type: 2
+  innerRegionWidth: 8
+  innerRegionLength: 28
+  furnitures: []
+  connections:
+  - direction: 3
+    boundsList:
+    - m_Position: {x: 40, y: 10, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+    - m_Position: {x: 40, y: -14, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+    - m_Position: {x: 40, y: -2, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  - direction: 0
+    boundsList:
+    - m_Position: {x: 41, y: 14, z: 0}
+      m_Size: {x: 8, y: 1, z: 0}
+  - direction: 2
+    boundsList:
+    - m_Position: {x: 41, y: -15, z: 0}
+      m_Size: {x: 8, y: 1, z: 0}
+  - direction: 1
+    boundsList:
+    - m_Position: {x: 49, y: 10, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+    - m_Position: {x: 49, y: -14, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+    - m_Position: {x: 49, y: -2, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
+  variableFurnitures:
+  - name: Tripple Lockers East
+    spawnAmount: 3
+    prefab: {fileID: 1837856439036006, guid: 47b3336e1c7e0c54bbff36a52e16e83e, type: 2}
+    spawnLocations:
+    - {x: 48.76, y: 4.51, z: 0}
+    - {x: 48.76, y: 7.51, z: 0}
+    - {x: 48.76, y: -4.49, z: 0}
+    - {x: 48.76, y: -7.49, z: 0}
+  - name: Tripple Lockers West
+    spawnAmount: 3
+    prefab: {fileID: 1904529629978622, guid: 4d746a5b3c93ea24fa843ff1cb6981d3, type: 2}
+    spawnLocations:
+    - {x: 41.2, y: -4.53, z: 0}
+    - {x: 41.2, y: -7.53, z: 0}
+    - {x: 41.2, y: 4.4699993, z: 0}
+    - {x: 41.2, y: 7.47, z: 0}
+  - name: Water Fountains West
+    spawnAmount: 2
+    prefab: {fileID: 1157859484804120, guid: d3337dd0a8d587046af8b36c6ae777bf, type: 2}
+    spawnLocations:
+    - {x: 40.63, y: 2, z: 0}
+    - {x: 40.63, y: 9, z: 0}
+    - {x: 40.63, y: -3, z: 0}
+    - {x: 40.63, y: -10, z: 0}
+  - name: Water Fountains East
+    spawnAmount: 2
+    prefab: {fileID: 1914384909828020, guid: 0e1ba63a99ba3e740aa90541498c9068, type: 2}
+    spawnLocations:
+    - {x: 49.39, y: 2.02, z: 0}
+    - {x: 49.39, y: -2.98, z: 0}
+    - {x: 49.39, y: -9.98, z: 0}
+    - {x: 49.39, y: 9.02, z: 0}

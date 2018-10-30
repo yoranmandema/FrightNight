@@ -58,16 +58,25 @@ public class LayoutGenerator : MonoBehaviour {
     // How many times the generator should try placing content before skipping to the next step
     public int maxGenerationAttempts = 25;
 
+	[Header("New Spawning Behaviour")]
+	public int additionalCorridorAmount = 2;
+	public int additionalRoomAmount = 10;
+
+	public PremadeRegion spawnRoomLayout;
+	public PremadeRegion mainCorridorLayout;
+
+	public List<PremadeRegion> otherPremadeLayouts;
+
+	public CustomRegion corridorLayouts;
+	public CustomRegion roomLayouts;
+
 	// Premade objects and regions
 	[Header("Spawning Behaviour")]
-	public int additionalCorridorAmount = 2;
-	public int additionalRegionAmount = 10;
-
 	public int spawnAreaWidth = 10;
     public int spawnAreaHeight = 6;
 
-    //public Range spawnAreaSize;
-    public int mainCorridorWidth = 16;
+	//public Range spawnAreaSize;
+	public int mainCorridorWidth = 16;
     public int mainCorridorHeight = 44;
 
 	public Range corridorWidth;
@@ -161,7 +170,7 @@ public class LayoutGenerator : MonoBehaviour {
 
     private void CreateAdditionalRooms()
 	{
-		for (int i = 0; numAddRoom < additionalRegionAmount; i++)
+		for (int i = 0; numAddRoom < additionalRoomAmount; i++)
 		{
 			// If a corridor was created, reset counter
 			if (CreateRandomRoom())
@@ -177,7 +186,7 @@ public class LayoutGenerator : MonoBehaviour {
 				break;
 			}
 		}
-		Debug.Log("Final Number of Additional R.: " + numAddRoom + " of " + additionalRegionAmount);
+		Debug.Log("Final Number of Additional R.: " + numAddRoom + " of " + additionalRoomAmount);
 	}
 
 	private void CreateAdditionalCorridors()
