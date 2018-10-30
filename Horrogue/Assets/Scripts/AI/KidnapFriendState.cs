@@ -11,6 +11,7 @@ public class KidnapFriendState : StateMachineBehaviour {
     private GameManager gameManager;
     private LayoutGenerator layoutManager;
     private NPC npc;
+    private Clown clown;
 
     private GameObject friend;
     private GameObject gameObject;
@@ -22,6 +23,7 @@ public class KidnapFriendState : StateMachineBehaviour {
         destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
         aiPath = gameObject.GetComponent<AIPath>();
         npc = gameObject.GetComponent<NPC>();
+        clown = gameObject.GetComponent<Clown>();
 
         var gm = GameObject.FindGameObjectWithTag("GameManager");
         gameManager = gm.GetComponent<GameManager>();
@@ -34,6 +36,8 @@ public class KidnapFriendState : StateMachineBehaviour {
         // Make friend follow clown
         friend = npc.ClosestFriend;
         friend.GetComponent<Friend>().OnGetKidnapped();
+
+        clown.KidnappedFriend = friend;
 
         animator.SetBool("Is Kidnapping", true);
     }
@@ -50,6 +54,7 @@ public class KidnapFriendState : StateMachineBehaviour {
         destinationSetter.target = null;
 
         friend.GetComponent<Friend>().OnKidnapped();
+        clown.KidnappedFriend = null;
 
         animator.SetBool("Is Kidnapping", false);
     }

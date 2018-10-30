@@ -166,7 +166,7 @@ MonoBehaviour:
   orderInLayer: 1000
   sortingLayer: 
   radius: 0
-  flashFrequency: 5
+  flashFrequency: 30
   flashOffset: 0.25
 --- !u!114 &114999753826269730
 MonoBehaviour:

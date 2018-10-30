@@ -32,7 +32,6 @@ public class Magnesium : MonoBehaviour {
         isBurning = true;
 
         var light = GetComponent<LOS.LOSRadialLight>();
-
         light.radius = EffectiveDistance * 1.1f;
 
         Invoke("EndBurn", EffectiveTime);
@@ -44,6 +43,7 @@ public class Magnesium : MonoBehaviour {
 
     void TryToBlindClown() {
         var clown = gameManager.Clown;
+
         var rayCast = Physics2D.Raycast(transform.position, (clown.transform.position - transform.position).normalized, EffectiveDistance, LayerMask.GetMask(new[] { "Enemy", "Wall" }));
 
         if (rayCast.collider == null) return;

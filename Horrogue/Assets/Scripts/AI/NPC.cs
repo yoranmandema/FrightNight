@@ -89,7 +89,7 @@ public class NPC : AIBehaviour {
                     gameObject.transform.position,
                     player.transform.position - gameObject.transform.position,
                     _lookRadius,
-                    ~LayerMask.GetMask(new[] { "Sprite", "Floor", "Enemy" })
+                    ~LayerMask.GetMask(new[] { "Sprite", "Floor", "Enemy", "Friend" })
                 );
 
             StateMachine.SetFloat("Distance To Player", Vector2.Distance(player.transform.position, gameObject.transform.position));

@@ -11,25 +11,35 @@ public class FleeState : StateMachineBehaviour {
     private GameManager gameManager;
     private LayoutGenerator layoutManager;
     private NPC npc;
+    private Clown clown;
 
     private GameObject gameObject;
     private Vector3 targetLocation;
     #endregion
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        // Get references.
         gameObject = animator.gameObject;
 
         destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
         aiPath = gameObject.GetComponent<AIPath>();
         npc = gameObject.GetComponent<NPC>();
+        clown = gameObject.GetComponent<Clown>();
 
         var gm = GameObject.FindGameObjectWithTag("GameManager");
         gameManager = gm.GetComponent<GameManager>();
         layoutManager = gm.GetComponent<LayoutGenerator>();
 
-        // Set Location
+        // Reset Friend.
+        var friend = clown.KidnappedFriend;
+
+        if (friend != null) {
+            friend.GetComponent<NPC>().StateMachine.Play("Lost", 0);
+            clown.KidnappedFriend = null;
+        }
+
+        // Set target location.
         targetLocation = GetRandomNode().position;
-        Debug.Log(npc.DestinationSlave.transform.position);
         destinationSetter.target = npc.DestinationSlave.transform;
 
         animator.SetBool("Reached Destination", false);
@@ -41,6 +51,7 @@ public class FleeState : StateMachineBehaviour {
     }
 
     NNInfo GetRandomNode() {
+        // Get position in opposit direction of flee position.
         var goToPosition = (gameObject.transform.position - npc.FleePosition).normalized * 100f;
 
         return AstarPath.active.GetNearest(goToPosition);
