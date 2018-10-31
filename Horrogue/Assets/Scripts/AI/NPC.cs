@@ -33,6 +33,7 @@ public class NPC : AIBehaviour {
         SetDirection();
 
         StateMachine.SetBool("Player is being followed by friends", gameManager.PlayerFollowedByFriends());
+        StateMachine.SetBool("Player Is Alive", gameManager.PlayerIsAlive);
         //StateMachine.SetBool("Heard Sound", false);
     }
 

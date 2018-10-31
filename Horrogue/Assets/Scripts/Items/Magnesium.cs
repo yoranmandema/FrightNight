@@ -44,6 +44,8 @@ public class Magnesium : MonoBehaviour {
     void TryToBlindClown() {
         var clown = gameManager.Clown;
 
+        if (clown == null) return; 
+
         var rayCast = Physics2D.Raycast(transform.position, (clown.transform.position - transform.position).normalized, EffectiveDistance, LayerMask.GetMask(new[] { "Enemy", "Wall" }));
 
         if (rayCast.collider == null) return;

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114451227566582082}
   - component: {fileID: 114632795519883854}
   - component: {fileID: 114643415893414468}
+  - component: {fileID: 114092950256866882}
   m_Layer: 22
   m_Name: Magnesium
   m_TagString: Untagged
@@ -110,6 +111,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
+--- !u!114 &114092950256866882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1041385708567446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0647241cc6bdb0149a26ffc1a558b6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Value: Magnesium
 --- !u!114 &114451227566582082
 MonoBehaviour:
   m_ObjectHideFlags: 1

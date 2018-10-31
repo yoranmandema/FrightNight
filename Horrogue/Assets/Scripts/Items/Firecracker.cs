@@ -25,14 +25,17 @@ public class Firecracker : MonoBehaviour {
     }
 	
     void Explode () {
-        var clown = gameManager.Clown;
-        var npc = clown.GetComponent<NPC>();
-
-        npc.HearSound(transform.position);
-
         Destroy(SpriteObject);
 
         StartCoroutine(Effect());
+
+        var clown = gameManager.Clown;
+
+        if (clown == null) return;
+        
+        var npc = clown.GetComponent<NPC>();
+
+        npc.HearSound(transform.position);
     }
 
     IEnumerator Effect () {
