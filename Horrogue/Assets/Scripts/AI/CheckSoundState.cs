@@ -29,7 +29,6 @@ public class CheckSoundState : StateMachineBehaviour {
 
         // Set Location
         targetLocation = GetRandomNode().position;
-        Debug.Log(npc.DestinationSlave.transform.position);
         destinationSetter.target = npc.DestinationSlave.transform;
 
         animator.SetBool("Reached Destination", false);

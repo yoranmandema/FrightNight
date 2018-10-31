@@ -75,13 +75,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4190254728470334}
   - component: {fileID: 114060083000119230}
-  - component: {fileID: 58566324070933758}
   - component: {fileID: 50705450818260064}
   - component: {fileID: 114950442674318584}
   - component: {fileID: 114767132668067668}
   - component: {fileID: 114743896285987862}
   - component: {fileID: 114906768338203266}
   - component: {fileID: 70945538441060546}
+  - component: {fileID: 114270354194432266}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -248,21 +248,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &58566324070933758
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1875424871731584}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.25
 --- !u!70 &70945538441060546
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -275,9 +260,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 0.25}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0.36}
+  m_Size: {x: 0.44, y: 0.76}
+  m_Direction: 0
 --- !u!95 &95355093203377842
 Animator:
   serializedVersion: 3
@@ -338,6 +323,22 @@ MonoBehaviour:
   radius: 5
   flashFrequency: 0
   flashOffset: 0
+--- !u!114 &114270354194432266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875424871731584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41305ac07a60dc469b618997dc32703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items:
+  - Item: {fileID: 1041385708567446, guid: ce843aa2562f697408a228122dfb8d43, type: 2}
+    Amount: 3
+  - Item: {fileID: 1047982217264552, guid: cc2cb2f7d04c8cc4d87bc2cbd74cfdcb, type: 2}
+    Amount: 3
 --- !u!114 &114562100785381896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -425,7 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398f1e0f1b363104eb4753599269e169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 1041385708567446, guid: ce843aa2562f697408a228122dfb8d43, type: 2}
   Aim: {fileID: 0}
 --- !u!114 &114950442674318584
 MonoBehaviour:
@@ -442,7 +442,6 @@ MonoBehaviour:
   Max: 100
   Min: 0
   BloodHitAnimation: {fileID: 0}
-  IsAlive: 1
   style:
     m_Name: 
     m_Normal:

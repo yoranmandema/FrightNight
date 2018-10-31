@@ -4,15 +4,6 @@ using UnityEngine;
 using System.Linq;
 
 public class PlayerInventory : MonoBehaviour {
-
-    [System.Serializable]
-    public class InventoryItem {
-        public GameObject Item;
-        public int Amount;
-
-        public string Name { get { return Item.GetComponent<Name>().Value; } }
-    }
-
     #region Public Variables
     public List<InventoryItem> Items;
     #endregion
@@ -37,7 +28,7 @@ public class PlayerInventory : MonoBehaviour {
             for (int i = 0; i < sorted.Count; i++) {
                 var item = sorted[i];
 
-                GUI.Label(new Rect(50, 50 + i * 45, 400, 150), "[" + i + "] " + item.Name + ": " + item.Amount, style);
+                GUI.Label(new Rect(50, 50 + i * 45, 400, 150), "[" + (i + 1) + "] " + item.Name + ": " + item.Amount, style);
             }           
         }
     }
