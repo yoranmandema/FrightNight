@@ -80,8 +80,9 @@ GameObject:
   - component: {fileID: 114950442674318584}
   - component: {fileID: 114767132668067668}
   - component: {fileID: 114743896285987862}
-  - component: {fileID: 114906768338203266}
   - component: {fileID: 70945538441060546}
+  - component: {fileID: 114862119025643560}
+  - component: {fileID: 114163462355850518}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -312,6 +313,18 @@ MonoBehaviour:
   Animator: {fileID: 95355093203377842}
   AnimationController: {fileID: 114562100785381896}
   IsMoving: 0
+--- !u!114 &114163462355850518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875424871731584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398f1e0f1b363104eb4753599269e169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Aim: {fileID: 114767132668067668}
 --- !u!114 &114268799658185548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -414,7 +427,7 @@ MonoBehaviour:
   radius: 0.75
   flashFrequency: 0
   flashOffset: 0
---- !u!114 &114906768338203266
+--- !u!114 &114862119025643560
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,11 +435,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1875424871731584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 398f1e0f1b363104eb4753599269e169, type: 3}
+  m_Script: {fileID: 11500000, guid: d41305ac07a60dc469b618997dc32703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 1041385708567446, guid: ce843aa2562f697408a228122dfb8d43, type: 2}
-  Aim: {fileID: 0}
+  Items:
+  - Item: {fileID: 1047982217264552, guid: cc2cb2f7d04c8cc4d87bc2cbd74cfdcb, type: 2}
+    Amount: 3
+  - Item: {fileID: 1041385708567446, guid: ce843aa2562f697408a228122dfb8d43, type: 2}
+    Amount: 3
 --- !u!114 &114950442674318584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -442,7 +458,6 @@ MonoBehaviour:
   Max: 100
   Min: 0
   BloodHitAnimation: {fileID: 0}
-  IsAlive: 1
   style:
     m_Name: 
     m_Normal:

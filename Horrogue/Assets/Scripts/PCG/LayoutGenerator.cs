@@ -130,13 +130,7 @@ public class LayoutGenerator : MonoBehaviour {
 
 	private void GenerateRegions()
 	{
-		//throw new NotImplementedException();
-
-		// Add a principals office
-		// Add a gym
-		// Add a music room
-		// Add a chemistry room
-
+		
 	}
 
 	private void RandomizeRegionContent()
@@ -541,24 +535,9 @@ public class LayoutGenerator : MonoBehaviour {
 		regions.Add(region);
 		if (isCorrdior) corridors.Add(region);
 		else rooms.Add(region);
-
-		/*// Add to map
-		for (int x = translatedX; x < translatedX + region.bounds.size.x; x++)
-		{
-			for (int y = translatedY; y < translatedY + region.bounds.size.y; y++)
-			{
-				TileType type = TileType.Ground;
-				if (x == translatedX || y == translatedY || x == translatedX + region.bounds.size.x - 1 || y == translatedY + region.bounds.size.y - 1)
-				{
-					type = TileType.Wall;
-				}
-				map[x, y] = type;
-			}
-		}*/
-
-
 	}
-	private void ConnectRegion(Region a, Region b)
+
+	private void ConnectRegions(Region a, Region b)
 	{
 		a.ConnectToRegion(b);
 	}
@@ -566,18 +545,6 @@ public class LayoutGenerator : MonoBehaviour {
 	private void ConnectRegions(Region a, Region b, int connectionSize)
 	{
 		BoundsInt overlap = a.ConnectToRegion(b, connectionSize);
-
-		/*int translatedX = overlap.x - generationBounds.x,
-			translatedY = overlap.y - generationBounds.y;
-
-		// Update map
-		for (int x = translatedX; x < translatedX + overlap.size.x; x++)
-		{
-			for (int y = translatedY; y < translatedY + overlap.size.y; y++)
-			{
-				map[x, y] = TileType.Doorway;
-			}
-		}*/
 	}
 
 	private void SetupSpawn()
@@ -586,7 +553,7 @@ public class LayoutGenerator : MonoBehaviour {
 		spawnRoom = regions.Find(x => x.isSpawn);
 		if (spawnRoom == null)
 		{
-			Vector3Int size = new Vector3Int(spawnRoomLayout.innerRegionWidth, spawnRoomLayout.innerRegionLength, 1);
+			Vector3Int size = new Vector3Int(spawnRoomLayout.innerRegionWidth + 1, spawnRoomLayout.innerRegionLength + 1, 1);
 			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
 			spawnRoom = new Region(new BoundsInt(position, size), spawnRoomLayout.type);
 			spawnRoom.isSpawn = true;
@@ -608,7 +575,7 @@ public class LayoutGenerator : MonoBehaviour {
 		// Connect rooms
 		if (!spawnRoom.isConnected)
 		{
-			ConnectRegions(spawnRoom, mainCorridor);
+			ConnectRegions(spawnRoom, mainCorridor, 1);
 		}
 	}
 
