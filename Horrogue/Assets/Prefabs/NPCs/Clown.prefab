@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114325625302128046}
   - component: {fileID: 114770731321791106}
   - component: {fileID: 114870310439321538}
+  - component: {fileID: 114122778667877244}
   m_Layer: 16
   m_Name: Clown
   m_TagString: Enemy
@@ -173,6 +174,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9664d0cf11d7c7f42a1097d3e3fb2d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114122778667877244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301524832831452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26515f7fe4216ff42b2a8faa7474d89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KidnappedFriend: {fileID: 0}
 --- !u!114 &114212857236523070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,6 +308,7 @@ MonoBehaviour:
   ClosestFriend: {fileID: 0}
   DestinationSlave: {fileID: 1580803101079072}
   LastHeardSound: {x: 0, y: 0, z: 0}
+  FleePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114870310439321538
 MonoBehaviour:
   m_ObjectHideFlags: 1

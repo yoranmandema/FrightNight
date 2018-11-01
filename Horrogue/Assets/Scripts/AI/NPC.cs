@@ -33,6 +33,7 @@ public class NPC : AIBehaviour {
         SetDirection();
 
         StateMachine.SetBool("Player is being followed by friends", gameManager.PlayerFollowedByFriends());
+        StateMachine.SetBool("Player Is Alive", gameManager.PlayerIsAlive);
         //StateMachine.SetBool("Heard Sound", false);
     }
 
@@ -89,7 +90,7 @@ public class NPC : AIBehaviour {
                     gameObject.transform.position,
                     player.transform.position - gameObject.transform.position,
                     _lookRadius,
-                    ~LayerMask.GetMask(new[] { "Sprite", "Floor", "Enemy" })
+                    ~LayerMask.GetMask(new[] { "Sprite", "Floor", "Enemy", "Friend" })
                 );
 
             StateMachine.SetFloat("Distance To Player", Vector2.Distance(player.transform.position, gameObject.transform.position));
@@ -104,7 +105,6 @@ public class NPC : AIBehaviour {
     }
 
     public void HearSound (Vector3 position) {
-        //AnimationController.Play("Check Sound");
         StateMachine.SetBool("Heard Sound", true);
     
         LastHeardSound = position;
@@ -121,8 +121,6 @@ public class NPC : AIBehaviour {
     public void FleeForSeconds (Vector3 position, float time) {
         StateMachine.Play("Flee", 0);
         FleePosition = position;
-
-        print("is Fleeing");
 
         StartCoroutine(resetFleeState(time));
     }

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public GameObject Player;
     [HideInInspector] public GameObject Clown;
     [HideInInspector] public List<GameObject> Friends = new List<GameObject>();
+    [HideInInspector] public bool PlayerIsAlive;
     #endregion
 
     #region Private Variables

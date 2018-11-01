@@ -8,35 +8,52 @@ public class Magnesium : MonoBehaviour {
     public float FuseTime = 2f;
     public float EffectiveDistance = 4f;
     public float EffectiveTime = 5f;
+    public float BlindTime = 5f;
     #endregion
 
     #region Private Variables
     private GameManager gameManager;
+    private bool isBurning;
     #endregion
 
     void Start() {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
-        Invoke("TryToBlindClown", FuseTime);
+        Invoke("StartBurn", FuseTime);
+    }
+
+    void Update () {
+        if (isBurning) {
+            TryToBlindClown();
+        }
+    }
+
+    void StartBurn () {
+        isBurning = true;
+
+        var light = GetComponent<LOS.LOSRadialLight>();
+        light.radius = EffectiveDistance * 1.1f;
+
+        Invoke("EndBurn", EffectiveTime);
+    }
+
+    void EndBurn() {
+        Destroy(gameObject);
     }
 
     void TryToBlindClown() {
         var clown = gameManager.Clown;
+
+        if (clown == null) return; 
+
         var rayCast = Physics2D.Raycast(transform.position, (clown.transform.position - transform.position).normalized, EffectiveDistance, LayerMask.GetMask(new[] { "Enemy", "Wall" }));
 
-        print(rayCast.collider);
-
-        if (rayCast.collider == null) {
-            Destroy(gameObject);
-            return;
-        }
+        if (rayCast.collider == null) return;
 
         if (rayCast.collider.gameObject == clown) {
             var npc = clown.GetComponent<NPC>();
 
-            npc.FleeForSeconds(transform.position, EffectiveTime);
+            npc.FleeForSeconds(transform.position, BlindTime);
         }
-
-        Destroy(gameObject);
     }
 }

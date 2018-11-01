@@ -6,7 +6,6 @@ public class Throwable : MonoBehaviour {
 
     #region Public Variables
     public float Velocity = 0.5f;
-
     public float UpVelocity = 0.5f;
     public float Gravity = 0.25f;
     public float Bounce = 0.5f;
@@ -25,12 +24,16 @@ public class Throwable : MonoBehaviour {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
 
-        rb.velocity = rb.transform.right * Velocity;
-
         verticalSpeed = UpVelocity;
     }
 	
-	void FixedUpdate () {
+    public void Throw (Vector3 direction) {
+        GetComponent<Rigidbody2D>().velocity = direction * Velocity;
+    }
+
+    void FixedUpdate () {
+        if (Sprite == null) return; 
+
         if (height >= 0) {
             verticalSpeed += -Gravity;
         } 
