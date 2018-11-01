@@ -48,7 +48,7 @@ public class LayoutGenerator : MonoBehaviour {
 	#endregion
 
 	#region Public Variables
-	[Header("General")]
+	[Header("General", order = 0)]
 	public bool useRandomSeed = false;	// Should a seed be generated
 	public string seed = "elementary";  // The current seed used for generation
 
@@ -58,10 +58,12 @@ public class LayoutGenerator : MonoBehaviour {
     // How many times the generator should try placing content before skipping to the next step
     public int maxGenerationAttempts = 25;
 
-	[Header("New Spawning Behaviour")]
+	[Header("New Spawning Behaviour", order = 0)]
+	[Header("Amounts", order = 1)]
 	public int additionalCorridorAmount = 2;
 	public int additionalRoomAmount = 10;
 
+	[Header("Prefabs", order = 1)]
 	public PremadeRegion spawnRoomLayout;
 	public PremadeRegion mainCorridorLayout;
 
@@ -556,6 +558,10 @@ public class LayoutGenerator : MonoBehaviour {
 
 
 	}
+	private void ConnectRegion(Region a, Region b)
+	{
+		a.ConnectToRegion(b);
+	}
 
 	private void ConnectRegions(Region a, Region b, int connectionSize)
 	{
@@ -576,23 +582,22 @@ public class LayoutGenerator : MonoBehaviour {
 
 	private void SetupSpawn()
 	{
-		// Find Spawn Region or create a new one
+		// Create Spawn Region
 		spawnRoom = regions.Find(x => x.isSpawn);
 		if (spawnRoom == null)
 		{
-			Vector3Int size = new Vector3Int(spawnAreaWidth, spawnAreaHeight, 1);
+			Vector3Int size = new Vector3Int(spawnRoomLayout.innerRegionWidth, spawnRoomLayout.innerRegionLength, 1);
 			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
-			spawnRoom = new Region(new BoundsInt(position, size), RegionType.Toilets);
+			spawnRoom = new Region(new BoundsInt(position, size), spawnRoomLayout.type);
 			spawnRoom.isSpawn = true;
 
 			AddRegion(spawnRoom);
 		}
 
-		// Find Main Corridor or create a new one
-		mainCorridor = regions.Find(x => x.type == RegionType.MainCorridor);
+		// Create Main Corridor
 		if (mainCorridor == null)
 		{
-			Vector3Int size = new Vector3Int(mainCorridorWidth, mainCorridorHeight, 1);
+			Vector3Int size = new Vector3Int(mainCorridorLayout.innerRegionWidth, mainCorridorLayout.innerRegionLength, 1);
 			Region.Wall w = spawnRoom.walls.Find(x => x.dir == Region.Direction.EAST);
 			Vector3Int position = Vector3Int.RoundToInt(w.bounds.center - Vector3.Scale(size, new Vector3(0, .5f)));
 			mainCorridor = new Region(new BoundsInt(position, size), RegionType.MainCorridor);
@@ -603,7 +608,7 @@ public class LayoutGenerator : MonoBehaviour {
 		// Connect rooms
 		if (!spawnRoom.isConnected)
 		{
-			ConnectRegions(spawnRoom, mainCorridor, 1);
+			ConnectRegions(spawnRoom, mainCorridor);
 		}
 	}
 
@@ -623,22 +628,37 @@ public class LayoutGenerator : MonoBehaviour {
 				{
 					GameObject tilePrefab;
 
-					// Walls
-					if (x == 0)
+					if (x == 0 && y == 0) // bottom left wall
+					{
+						tilePrefab = wallTiles.BottomLeft;
+					}
+					else if (x == r.outerBounds.size.x - 1 && y == 0) // bottom right wall
+					{
+						tilePrefab = wallTiles.BottomRight;
+					}
+					else if (x == 0 && y == r.outerBounds.size.y - 1) // top left wall
+					{
+						tilePrefab = wallTiles.TopLeft;
+					}
+					else if (x == r.outerBounds.size.x - 1 && y == r.outerBounds.size.y - 1) // bottom right wall
+					{
+						tilePrefab = wallTiles.TopRight;
+					}
+					else if (y == 0) // bottom wall
+					{
+						tilePrefab = wallTiles.Bottom;
+					}
+					else if (x == 0) // left wall
 					{
 						tilePrefab = wallTiles.Left;
 					}
-					else if (x == r.outerBounds.size.x - 1)
+					else if (x == r.outerBounds.size.x - 1) // right wall
 					{
 						tilePrefab = wallTiles.Right;
 					}
-					else if (y == r.outerBounds.size.y - 1)
+					else if (y == r.outerBounds.size.y - 1) // top wall
 					{
 						tilePrefab = wallTiles.Top;
-					}
-					else if (y == 0)
-					{
-						tilePrefab = wallTiles.Bottom;
 					}
 					else if (x == 1 && y == 1) // bottom left ground
 					{

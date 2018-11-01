@@ -1,11 +1,13 @@
 fileFormatVersion: 2
-guid: 9cf795c540d107447ad9f11b3e662796
+guid: b5a8c3ead7f0efa408d98f066227af32
 TextureImporter:
   fileIDToRecycleName:
-    21300000: wall1_spritesheet_0
-    21300002: wall1_spritesheet_1
-    21300004: wall1_spritesheet_2
-    21300006: wall1_spritesheet_3
+    21300000: wall1_default
+    21300002: wall1_left
+    21300004: wall1_right
+    21300006: wall1_top
+    21300008: wall1_top_right
+    21300010: wall1_top_left
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -35,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -121,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wall1_spritesheet_0
+      name: wall1_default
       rect:
         serializedVersion: 2
         x: 0
@@ -135,13 +137,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbb690d95667c7c4a9bd3a91fa73c79d
+      spriteID: e785df5699abf4743ad893eabdacf74d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall1_spritesheet_1
+      name: wall1_left
       rect:
         serializedVersion: 2
         x: 400
@@ -155,13 +157,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9e5ade07ede3e345b4f7381a7c68b4c
+      spriteID: 7e22d665dc2af434e974b85c03ad7541
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall1_spritesheet_2
+      name: wall1_right
       rect:
         serializedVersion: 2
         x: 800
@@ -175,13 +177,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ce46e1622ff9a344b8692f24da58d44
+      spriteID: a06e66ff1fdcb714a97e4617cbf20863
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall1_spritesheet_3
+      name: wall1_top
       rect:
         serializedVersion: 2
         x: 1200
@@ -195,7 +197,47 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36baeb4cf55582e4d855d0e9cbd9f56f
+      spriteID: e2209c5785ff48d4593e0c364af18189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wall1_top_right
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9cd81caba9cc134c81d24886b38c116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wall1_top_left
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 0
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2535488b37e93cd4cb191ec2c92e5fcd
       vertices: []
       indices: 
       edges: []
@@ -203,7 +245,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: efaa6dd392b529f48a72707bbdeec801
+    spriteID: ef15038d7b3cc2841a0dc04a46cb7a2e
     vertices: []
     indices: 
     edges: []

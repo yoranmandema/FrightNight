@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1968991252197160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0822854, y: -2.7043614, z: 0.013683837}
+  m_LocalPosition: {x: 3.0822854, y: -1.7, z: 0.013683837}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,17 +53,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902bed412c05df34a808e56fc707f73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useRandomSeed: 1
+  useRandomSeed: 0
   seed: elementary
   generationBounds:
     m_Position: {x: -125, y: -125, z: 0}
     m_Size: {x: 250, y: 250, z: 1}
-  maxGenerationAttempts: 30
-  customRegions: []
+  maxGenerationAttempts: 50
   additionalCorridorAmount: 3
-  additionalRegionAmount: 10
+  additionalRoomAmount: 10
+  spawnRoomLayout: {fileID: 11400000, guid: e5913861e8c632c4a9f43ca32494c22e, type: 2}
+  mainCorridorLayout: {fileID: 11400000, guid: 18ef593eb19977642b9396a393b5d391, type: 2}
+  otherPremadeLayouts:
+  - {fileID: 11400000, guid: e7b17f8858197ae4fbb4c656c847cdf7, type: 2}
+  corridorLayouts: {fileID: 11400000, guid: 28c007141f33abf4c9e69ccc72f9a306, type: 2}
+  roomLayouts: {fileID: 11400000, guid: 1e532af7782f43440bab6cd75b828410, type: 2}
   spawnAreaWidth: 10
-  spawnAreaHeight: 6
+  spawnAreaHeight: 8
   mainCorridorWidth: 10
   mainCorridorHeight: 40
   corridorWidth:
@@ -74,13 +79,13 @@ MonoBehaviour:
     max: 40
   classAreaSize:
     min: 8
-    max: 12
+    max: 15
   tileSize: 1
-  tileSprites:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: e1d59ca625b3c9f42bde6533f329059a, type: 2}
-  - {fileID: 11400000, guid: 7f28163562828a546a3048ede1e54757, type: 2}
-  - {fileID: 11400000, guid: 6251228d7ca999644b7dcdc6dbfcaa8c, type: 2}
+  floorTiles:
+  - {fileID: 11400000, guid: af9e6613678eef249b9a5fc756ed87c0, type: 2}
+  - {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
+  wallTiles: {fileID: 11400000, guid: 5fc5893ea8f30724aa66cadc193f8311, type: 2}
+  connectionTiles: {fileID: 11400000, guid: b0e8ab4273bde7f4ca4cc7969470b328, type: 2}
 --- !u!114 &114150000751926110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,9 +97,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3e7d6ea2d3e70468a95be6784d43a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 0}
+  disableAutomaticGeneration: 0
+  generationHotkey: 103
+  playerPrefab: {fileID: 1875424871731584, guid: 549ff04917b9b4d45886843bee52fe14,
+    type: 2}
+  clownPrefab: {fileID: 1301524832831452, guid: 0b30c1bae505c864da82174dd2430741,
+    type: 2}
+  friendPrefab: {fileID: 1407853565990524, guid: 9c92c9e176c959d4880d737c096a3268,
+    type: 2}
   ControlledObject: {fileID: 0}
   CameraObject: {fileID: 0}
+  Player: {fileID: 0}
+  Clown: {fileID: 0}
+  Friends: []
 --- !u!114 &114198062469927730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,12 +123,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIeyKKDbxNQAAAD4AAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz1DM001FQSi9KLMgoBooYgDilmSkgdnQskFNSWZDql5ibChGoBQBQSwECLQAUAAAICAAACCHsiig28TUAAAA+AAAACQAkAAAAAAAAAAAAAAAAAAAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAABAAEAWwAAAIAAAAAAAA==
+    dataString: UEsDBBQAAAgIAAAIIeyYU3ceQgIAANQEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMmS2jAQ/RVK55AyDgQmt8QwJAcGaphULr4IuY1VyJJLy7AV/56WbLDHqZxoXm/vdbd8JVyaCphVeql5tlIZkG8D4m3yaUBo8L1SyxXCI0S4USVYzdl3uRc+NkLQSZ4rXS6yPSTKWINwToUBdGllfbZE6DogJ/wZPvmUM1rx1FsXtJ6iwQ1NBtKCbkPvgfewOspJJmhZQbblF2iD48mj7qQOlKimiYk+xxPfQAnBTUOH2HMV1G6rAjR4vRmnqC5Q8GIL4PvC+ord3HWeG7ANLU3Pc65xSHVR8kPZwlcqqTnU3N6pcL7NbPQUB1p11dU/AcNRcOdalT/vjUeRb2ILzg6v9MyosZ3ZduH5R+ZOHqk40J2APwXIF7XUyskMnVY7n+oMxPP270NbUgA7tHhNtQe66v8b8hpuQf4pEbzchdGPa2ArVJh32D9oXM4vJByuwzQlEPUsfht4o/vuGTWOZ66NRVejUnp6O+W0DyWLMDOvxtlEaQkBbkhXIKmw5w2Wsf0d9nydtj3PM/UPpWne+O7voJcS4DY+inqujTo+lmUKdVyBKdbOCi67xbznBQeVKCnrGzM9r8/bOp1T1s3bO559PC4Sfd1FEaOz0Xg3y+PxZEjpKBrn0+mXjMYsnjISro9LVErFpqbaDAj3JttRSry0+0disNS0CgefaXpc8kupOkPnMldbpgHkuq7wYA4am+DTzBYZxxFtwVouw8bJNSVCsQNk6aNQGqQuTlbTtK2Skoq/K+uRlCTh05GSG7n9BVBLAwQUAAAICAAACCHsaR1iNW0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9QzNNNRUEovSizIKAaKGII4pZkpIHa0koFZkoFBcqKFoUmSRZqRialuYqKhgUmaublxSqJRspF5slIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAACCHsmFN3HkICAADUBAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsaR1iNW0AAAB4AAAACQAkAAAAAAAAAAAAAACPAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAEcDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
     cacheStartup: 0
-  showNavGraphs: 1
+  showNavGraphs: 0
   showUnwalkableNodes: 1
   debugMode: 0
   debugFloor: 0
@@ -121,7 +136,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
+  logPathResults: 0
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -139,7 +154,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   minAreaSize: 0
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
@@ -148,4 +163,4 @@ MonoBehaviour:
     seed: 0
     pivotPointRoot: {fileID: 0}
     spreadOutCount: 1
-  showGraphs: 0
+  showGraphs: 1
