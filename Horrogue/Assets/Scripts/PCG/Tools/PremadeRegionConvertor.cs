@@ -23,8 +23,15 @@ public class PremadeRegionConvertor : BaseRegionConvertor {
 
 	public void GeneratePremadeRegion()
 	{
-		premadeRegionObject = (PremadeRegion) ScriptableObject.CreateInstance(typeof(PremadeRegion));
-		premadeRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset);
+		if (createPrefab)
+		{
+			premadeRegionObject = (PremadeRegion)ScriptableObject.CreateInstance(typeof(PremadeRegion));
+		}
+
+		if (premadeRegionObject != null)
+		{
+			premadeRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset);
+		}
 
 		if (createPrefab)
 		{

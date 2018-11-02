@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Random = UnityEngine.Random;
+
 // Types of regions that can be generated
 public enum RegionType
 {
@@ -29,61 +31,132 @@ public struct RegionSpot
 	}
 }
 
+public enum Direction
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+	UNKOWN
+}
+
+[Serializable]
+public struct Wall
+{
+	public BoundsInt bounds;
+	public Direction dir;
+	public bool isVertical;
+	public List<BoundsInt> possibleConnections;
+	public int thickness;
+
+	public static int thicknessNorth = 2;
+	public static int thicknessWest = 1;
+	public static int thicknessSouth = 1;
+	public static int thicknessEast = 1;
+
+	public Wall(Direction dir, BoundsInt bounds) : this(dir, bounds, new List<BoundsInt>())
+	{ }	
+	public Wall(Direction dir, BoundsInt bounds, List<BoundsInt> possibleBounds)
+	{
+		this.dir = dir;
+		this.bounds = bounds;
+		this.possibleConnections = new List<BoundsInt>(possibleBounds);
+
+		switch (dir)
+		{
+			case Direction.NORTH:
+				isVertical = false;
+				thickness = thicknessNorth;
+				break;
+			case Direction.EAST:
+				isVertical = true;
+				thickness = thicknessEast;
+				break;
+			case Direction.SOUTH:
+				isVertical = false;
+				thickness = thicknessSouth;
+				break;
+			case Direction.WEST:
+				isVertical = true;
+				thickness = thicknessWest;
+				break;
+			default:
+				throw new Exception("Unknown wall direction specified!");
+		}
+
+		ScalePossibleConnections();
+	}
+
+	private void ScalePossibleConnections()
+	{
+		for (int i = 0; i < possibleConnections.Count; i++) {
+			BoundsInt pCon = possibleConnections[i];
+			switch (dir)
+			{
+				case Direction.EAST:
+				case Direction.NORTH:
+					pCon.size += pCon.size * GetDirectionThickness(dir);
+					break;
+
+				case Direction.SOUTH:
+				case Direction.WEST:
+					pCon.min += pCon.size * GetDirectionThickness(dir);
+					break;
+
+				default:
+					throw new Exception("Unknown wall direction! '" + dir.ToString() + "'");
+			}
+			possibleConnections[i] = pCon;
+		}
+	}
+
+	public static Vector3Int GetDirectionThickness(Direction dir)
+	{
+		switch (dir)
+		{
+			case Direction.NORTH:
+				return new Vector3Int(0, thicknessNorth, 0);
+			case Direction.EAST:
+				return new Vector3Int(thicknessEast, 0, 0);
+				break;
+			case Direction.SOUTH:
+				return new Vector3Int(0, -thicknessSouth, 0);
+			case Direction.WEST:
+				return new Vector3Int(-thicknessWest, 0, 0);
+			default:
+				throw new Exception("Unknown direction specified!");
+		}
+	}
+
+	public bool OverlapsWall(Wall otherWall)
+	{
+		Bounds thisBounds = new Bounds(bounds.center, bounds.size);
+		Bounds otherBounds = new Bounds(otherWall.bounds.center, otherWall.bounds.size);
+		//Debug.Log("This [" + dir.ToString() + " -> " + thisBounds.ToString() + "]\nOther [" + otherWall.dir.ToString() + " -> " + otherBounds.ToString() + "]");
+		//Debug.Log(thisBounds.Intersects(otherBounds));
+		return (thisBounds.Intersects(otherBounds) || otherBounds.Intersects(thisBounds));
+	}
+
+	public BoundsInt GetRandomConnection()
+	{
+		BoundsInt connection = possibleConnections[Random.Range(0, possibleConnections.Count)];
+		return connection;
+	}
+
+	public bool RemoveConnection(BoundsInt connection)
+	{
+		return possibleConnections.Remove(connection);
+	}
+
+	public override string ToString()
+	{
+		return ("[" + dir + " | " + bounds.ToString() + "]");
+	}
+}
+
 [Serializable]
 public class Region
 {
-    public enum Direction
-    {
-        NORTH,
-        EAST,
-        SOUTH,
-        WEST,
-		UNKOWN
-	}
-
-    [Serializable]
-	public struct Wall
-	{
-		public BoundsInt bounds;
-		public Direction dir;
-		public bool isVertical;
-		public List<BoundsInt> possibleConnections;
-
-		public static int thicknessNorth = 2;
-		public static int thicknessWest = 1;
-		public static int thicknessSouth = 1;
-		public static int thicknessEast = 1;
-
-		public Wall(Direction dir, BoundsInt bounds)
-		{
-			this.dir = dir;
-			this.bounds = bounds;
-			isVertical = (dir == Direction.EAST || dir == Direction.WEST);
-			possibleConnections = new List<BoundsInt>();
-		}
-		public Wall(Direction dir, BoundsInt bounds, List<BoundsInt> possibleBounds)
-		{
-			this.dir = dir;
-			this.bounds = bounds;
-			isVertical = (dir == Direction.EAST || dir == Direction.WEST);
-			this.possibleConnections = new List<BoundsInt>(possibleBounds);
-		}
-
-		public bool OverlapsWall(Wall otherWall)
-		{
-			Bounds thisBounds = new Bounds(bounds.center, bounds.size);
-			Bounds otherBounds = new Bounds(otherWall.bounds.center, otherWall.bounds.size);
-			//Debug.Log("This [" + dir.ToString() + " -> " + thisBounds.ToString() + "]\nOther [" + otherWall.dir.ToString() + " -> " + otherBounds.ToString() + "]");
-			//Debug.Log(thisBounds.Intersects(otherBounds));
-			return (thisBounds.Intersects(otherBounds) || otherBounds.Intersects(thisBounds));
-		}
-
-		public override string ToString()
-		{
-			return ("[" + dir + " | " + bounds.ToString() + "]");
-		}
-	}
-
 	public static int NEXT_ID = 0;
 	private int id;
 
@@ -103,8 +176,13 @@ public class Region
 	public RegionType type;
 	public Direction orientation;
 
+	public Tileset floorTiles;
+	public Tileset wallTiles; // Todo
+
 	public const int cornerThreshold = 1; // may change to wall thickness, since it determines corner size
 	public const int minWallWidth = 2;
+
+	private Direction lastConDir;
 
 	public int Id
 	{
@@ -125,39 +203,66 @@ public class Region
 		GenerateWallsFromBounds();
 	}
 
-	public Region(BoundsInt innerBounds, RegionType type, Direction orientation, List<RegionConnections> possibleConnections, List<RegionFurnitures> furnitures, List<VariableRegionFurnitures> variableFurnitures)
+	public Region(VariantRegion variantRegion, Vector3Int position) 
+		: this((PremadeRegion) variantRegion, position)
+	{
+		this.variableFurnitures = new List<VariableRegionFurnitures>(variantRegion.variableFurnitures);
+	}
+
+	public Region(PremadeRegion premadeRegion, Vector3Int position)
 	{
 		id = NEXT_ID++;
 
-		this.innerBounds = innerBounds;
+		this.innerBounds = new BoundsInt(position.x, position.y, 0, premadeRegion.innerRegionWidth, premadeRegion.innerRegionLength, 1);
 
-		this.type = type;
-		this.orientation = orientation;
+		this.type = premadeRegion.type;
 
-		this.furnitures = new List<RegionFurnitures>(furnitures);
-		this.variableFurnitures = new List<VariableRegionFurnitures>(variableFurnitures);
+		this.furnitures = new List<RegionFurnitures>(premadeRegion.furnitures);
+		if (this.variableFurnitures == null)
+		{
+			this.variableFurnitures = new List<VariableRegionFurnitures>();
+		}
 
-		GenerateWallsFromInnerBounds(possibleConnections);
+		this.floorTiles = premadeRegion.tileset;
+
+		GenerateWallsFromInnerBounds(premadeRegion.connections);
 	}
 
 	private void GenerateWallsFromInnerBounds(List<RegionConnections> possibleConnections)
 	{
-		BoundsInt outerBounds = new BoundsInt(Vector3Int.RoundToInt(innerBounds.center), innerBounds.size);
-		walls = new List<Wall>();
-		for (int i = 0; i < possibleConnections.Count; i++)
+		List<Direction> directions = new List<Direction>()
 		{
-			RegionConnections conns = possibleConnections[i];
+			Direction.NORTH,
+			Direction.EAST,
+			Direction.SOUTH,
+			Direction.WEST
+		};
 
-			Direction wallDir = conns.direction;
+		BoundsInt outerBounds = new BoundsInt(innerBounds.min, innerBounds.size);
+		walls = new List<Wall>();
+		for (int i = 0; i < directions.Count; i++)
+		{
+			Direction wallDir = directions[i];
+
+			RegionConnections conns = possibleConnections.Find(x => x.direction == wallDir);
+
+			List<BoundsInt> newPossibleConnections = new List<BoundsInt>();
+
+			for (int j = 0; conns != null && j < conns.boundsList.Count; j++)
+			{
+				BoundsInt newConnection = new BoundsInt(conns.boundsList[j].position + Vector3Int.RoundToInt(innerBounds.center), conns.boundsList[j].size);
+				newPossibleConnections.Add(newConnection);
+			}
+
 			BoundsInt wallBounds;
 			switch (wallDir)
 			{
 				case Direction.NORTH:
-					wallBounds = new BoundsInt(innerBounds.x, innerBounds.yMax - 1, 0, innerBounds.size.x, Wall.thicknessNorth, 1);
+					wallBounds = new BoundsInt(innerBounds.x, innerBounds.yMax, 0, innerBounds.size.x, Wall.thicknessNorth, 1);
 					outerBounds.yMax += Wall.thicknessNorth;
 					break;
 				case Direction.EAST:
-					wallBounds = new BoundsInt(innerBounds.xMax - 1, innerBounds.y, 0, Wall.thicknessEast, innerBounds.size.y, 1);
+					wallBounds = new BoundsInt(innerBounds.xMax, innerBounds.y, 0, Wall.thicknessEast, innerBounds.size.y, 1);
 					outerBounds.xMax += Wall.thicknessWest;
 					break;
 				case Direction.SOUTH:
@@ -165,14 +270,14 @@ public class Region
 					outerBounds.yMin -= Wall.thicknessSouth;
 					break;
 				case Direction.WEST:
-					wallBounds = new BoundsInt(innerBounds.xMax - 1, innerBounds.y, 0, Wall.thicknessWest, innerBounds.size.y, 1);
+					wallBounds = new BoundsInt(innerBounds.x - Wall.thicknessWest, innerBounds.y, 0, Wall.thicknessWest, innerBounds.size.y, 1);
 					outerBounds.xMin -= Wall.thicknessWest;
 					break;
 				default:
-					throw new Exception("Unknown wall direction! '" + wallDir + "'");
+					throw new Exception("Unknown wall direction! '" + wallDir.ToString() + "'");
 			}
 
-			Wall newWall = new Wall(wallDir, wallBounds, conns.boundsList);
+			Wall newWall = new Wall(wallDir, wallBounds, newPossibleConnections);
 			walls.Add(newWall);
 		}
 
@@ -181,28 +286,206 @@ public class Region
 
 	public void ConnectToRegion(Region otherRegion)
 	{
-		GetOverlappingConnections(otherRegion);
+		// Find the overlapping connections
+		Wall[] overlappingWalls = GetOverlappingWalls(otherRegion);
+		BoundsInt[] overlappingConnections = GetOverlappingConnections(overlappingWalls);
+
+		// Calculate the connection bounds
+		BoundsInt connectionBounds = CalculateConnectionBounds(overlappingConnections[0], overlappingConnections[1], lastConDir);
+		Debug.Log("Connect To Region - " + "Connection Bounds: " + connectionBounds.ToString());
+
+		// Add other region to connected regions
+		if (connectedRegions.Find(x=> x == otherRegion) == null)
+			connectedRegions.Add(otherRegion);
+
+		// Check if this region or another region is spawn or connected to spawn
+		isConnected = (isSpawn || otherRegion.connectedRegions.Find(x => x.isConnected || x.isSpawn) != null);
+
+		// Add this region to the connected regions of the other region
+		if (otherRegion.connectedRegions.Find(x => x == this) == null)
+			otherRegion.connectedRegions.Add(this);
+		otherRegion.isConnected = isConnected;
+
+		CreateConnection(otherRegion, connectionBounds, overlappingWalls, overlappingConnections);
 	}
 
-	private void GetOverlappingConnections(Region otherRegion)
+	private void CreateConnection(Region otherRegion, BoundsInt connectionBounds, Wall[] overlappingWalls, BoundsInt[] overlappingConnections)
 	{
-		throw new NotImplementedException();
+		// Add connection bounds to both regions
+		connections.Add(connectionBounds);
+		otherRegion.connections.Add(connectionBounds);
+
+		// Remove overlapping connections and any other connections from overlapping walls
+		// to prevent unnescessarry overlap testing later on
+		
+		Wall a = overlappingWalls[0],
+			b = overlappingWalls[1];
+
+		RemoveBlockedConnections(a, b);
+		otherRegion.RemoveBlockedConnections(b, a);
+	}
+
+	private void RemoveBlockedConnections(Wall a, Wall b)
+	{
+		int index = walls.IndexOf(a);
+		List<BoundsInt> possibleConnections = new List<BoundsInt>();
+		foreach (BoundsInt connection in a.possibleConnections)
+		{
+			if (BoundsOverlap(connection, b.bounds))
+			{
+				Debug.LogAssertion("Remove Blocked Connection - " + " Removing Connection: " + connection.ToString() + " (overlap with " + b.bounds.ToString());
+			}
+			else
+			{
+				possibleConnections.Add(connection);
+			}
+		}
+		Debug.Log("Remove Blocked Connection - " + "Connection Count: " + a.possibleConnections.Count + " -> " + possibleConnections.Count);
+		a.possibleConnections = possibleConnections;
+		walls[index] = a;
+	}
+
+	private BoundsInt CalculateConnectionBounds(BoundsInt a, BoundsInt b, Direction direction)
+	{
+		BoundsInt bounds = new BoundsInt();
+		switch (direction)
+		{
+			case Direction.NORTH:
+				bounds.yMin = a.yMin;
+				bounds.yMax = b.yMax;
+
+				if  (a.size.x > b.size.x)
+				{
+					bounds.xMin = b.xMin;
+					bounds.xMax = b.xMax;
+				}
+				else
+				{
+					bounds.xMin = a.xMin;
+					bounds.xMax = a.xMax;
+				}
+				break;
+			case Direction.EAST:
+				bounds.xMin = a.xMin;
+				bounds.xMax = b.xMax;
+
+				if (a.size.y > b.size.y)
+				{
+					bounds.yMin = b.yMin;
+					bounds.yMax = b.yMax;
+				}
+				else
+				{
+					bounds.yMin = a.yMin;
+					bounds.yMax = a.yMax;
+				}
+				break;
+			case Direction.SOUTH:
+				bounds.yMin = b.yMin;
+				bounds.yMax = a.yMax;
+
+				if (a.size.x > b.size.x)
+				{
+					bounds.xMin = b.xMin;
+					bounds.xMax = b.xMax;
+				}
+				else
+				{
+					bounds.xMin = a.xMin;
+					bounds.xMax = a.xMax;
+				}
+				break;
+			case Direction.WEST:
+				bounds.xMin = b.xMin;
+				bounds.xMax = a.xMax;
+
+				if (a.size.y > b.size.y)
+				{
+					bounds.yMin = b.yMin;
+					bounds.yMax = b.yMax;
+				}
+				else
+				{
+					bounds.yMin = a.yMin;
+					bounds.yMax = a.yMax;
+				}
+				break;
+			default:
+				throw new Exception("Unknown wall direction! '" + direction.ToString() + "'");
+		}
+
+		return bounds;
+	}
+
+	private BoundsInt[] GetOverlappingConnections(Region otherRegion)
+	{
+		// Get overlapping walls
+		return GetOverlappingConnections(GetOverlappingWalls(otherRegion));
+	}
+	private BoundsInt[] GetOverlappingConnections(Wall[] overlappingWalls)
+	{
+		// Get overlapping connections
+		BoundsInt[] overlappingConnections = new BoundsInt[2];
+		for (int i = 0; i < overlappingWalls[0].possibleConnections.Count; i++)
+		{
+			// this connection
+			BoundsInt tc = overlappingWalls[0].possibleConnections[i];
+
+			for (int j = 0; j < overlappingWalls[1].possibleConnections.Count; j++)
+			{
+				// other connection
+				BoundsInt oc = overlappingWalls[1].possibleConnections[j];
+
+				if (BoundsOverlap(tc, oc))
+				{
+					overlappingConnections[0] = tc;
+					overlappingConnections[1] = oc;
+					Debug.Log("Get Overlapping Connections - " + "Adding " + tc.ToString() + " & " + oc.ToString());
+					lastConDir = overlappingWalls[0].dir;
+					return overlappingConnections;
+				}
+			}
+		}
+		throw new Exception("No overlapping connections found!");
+	}
+
+	private Wall[] GetOverlappingWalls(Region otherRegion)
+	{
+
+		// Get overlapping walls
+		Wall[] overlappingWalls = new Wall[2];
+		for (int i = 0; i < this.walls.Count; i++)
+		{
+			Wall tw = this.walls[i];
+			for (int j = 0; j < otherRegion.walls.Count; j++)
+			{
+				Wall ow = otherRegion.walls[j];
+
+				// Check if walls overlap and aren't touching over the edge
+				if (tw.OverlapsWall(ow) && !ArePerpendicual(tw.dir, ow.dir) && tw.dir != ow.dir)
+				{
+					overlappingWalls[0] = tw;
+					overlappingWalls[1] = ow;
+					Debug.Log("Get Overlapping Walls - " + "Adding " + tw.ToString() + " & " + ow.ToString());
+					return overlappingWalls;
+				}
+			}
+		}
+
+		throw new Exception("No overlapping walls found!");
 	}
 
 	// Returns wall overlap
 	public BoundsInt ConnectToRegion (Region otherRegion, int connectionSize)
 	{
 		//Debug.Log("Connecting " + this.ToString() + " to " + otherRegion.ToString());
-		Dictionary<Wall, Wall> overlappingWalls = GetOverlappingWalls(otherRegion);
+		Wall[] overlappingWalls = GetOverlappingWalls(otherRegion);
 		
-		// owe -> overlapping walls enumerator
-		Dictionary<Wall, Wall>.Enumerator owe = overlappingWalls.GetEnumerator();
-		owe.MoveNext();
 		// Take entire wall as bounds
-		if (overlappingWalls.Count == 1)
+		if (overlappingWalls.Length == 2)
 		{
-			Wall wallA = owe.Current.Key, 
-				wallB = owe.Current.Value;
+			Wall wallA = overlappingWalls[0], 
+				wallB = overlappingWalls[1];
 			BoundsInt connectionBounds = CalculateOverlap(wallA.bounds, wallB.bounds);
 			int overlapSize = connectionBounds.size.x + connectionBounds.size.y - 3;
 			
@@ -226,7 +509,7 @@ public class Region
 			ConnectToRegion(otherRegion, connectionBounds, wallA, wallB);
 			return connectionBounds;
 		}
-		Debug.Log(overlappingWalls.Count);
+		Debug.Log(overlappingWalls.Length);
 		throw new Exception("Can't connect Regions! Either none or too many walls are overlapping!"); 
 	}
 
@@ -299,23 +582,7 @@ public class Region
 	}
 	public static bool BoundsOverlap(BoundsInt a, BoundsInt b, int overlapThreshhold = 0)
 	{
-		/*
-		bool topRight = (b.x >= a.x + overlapThreshhold && b.y >= a.y + overlapThreshhold 
-			&& b.x <= a.xMax - overlapThreshhold && b.y <= a.yMax - overlapThreshhold);
-
-		bool bottomRight = (b.xMax >= a.x + overlapThreshhold && b.yMax >= a.yMax + overlapThreshhold
-			&& b.xMax <= a.xMax - overlapThreshhold && b.yMax <= a.yMax - overlapThreshhold);
-
-		bool bottomLeft = (a.x >= b.x + overlapThreshhold && a.y >= b.y + overlapThreshhold
-			&& a.x <= b.xMax - overlapThreshhold && a.y <= b.yMax - overlapThreshhold);
-
-		bool topLeft = (a.xMax >= a.x + overlapThreshhold && a.yMax >= a.yMax + overlapThreshhold
-			&& a.xMax <= a.xMax - overlapThreshhold && a.yMax <= a.yMax - overlapThreshhold);
-
-		return (topRight || topLeft || bottomRight || bottomLeft);
-		*/
 		// Convert IntBounds to Bounds to use Bounds.Intersects()
-
 		Vector3 overlapMargin = new Vector3(overlapThreshhold, overlapThreshhold),
 			offset = new Vector3(0.5f, 0.5f);
 
@@ -398,27 +665,6 @@ public class Region
 		return BoundsOverlap(outerBounds, otherRegion.outerBounds);
 	}
 
-	public Dictionary<Wall, Wall> GetOverlappingWalls(Region otherRegion)
-	{
-		Dictionary<Wall, Wall> overlappingWalls = new Dictionary<Wall, Wall>();
-		for (int i = 0; i < this.walls.Count; i++)
-		{
-			for (int j = 0; j < otherRegion.walls.Count; j++)
-			{
-				Wall tw = this.walls[i];
-				Wall ow = otherRegion.walls[j];
-
-				// Check if walls overlap and aren't touching over the edge
-				if (tw.OverlapsWall(ow) && !ArePerpendicual(tw.dir, ow.dir))
-				{
-					overlappingWalls.Add(tw, ow);
-					//Debug.Log("Adding " + tw.dir + " & " + ow.dir);
-				}
-			}
-		}
-		return overlappingWalls;
-	}
-
 	public static Vector2Int GetPerpendicularDirectionVector(Direction dir)
 	{
 		return ((dir == Direction.NORTH || dir == Direction.SOUTH) 
@@ -436,13 +682,13 @@ public class Region
 			? new Vector2Int(0, 1) : new Vector2Int(1, 0));
 	}
 
-	public static Vector2Int GetDirectionVector(Direction dir)
+	public static Vector3Int GetDirectionVector(Direction dir)
 	{
 		return (
-			(dir == Direction.NORTH) ? new Vector2Int(0, 1)  :	// North -> y + 1
-			(dir == Direction.EAST) ? new Vector2Int(1, 0)   :	// East -> x + 1 
-			(dir == Direction.SOUTH) ? new Vector2Int(0, -1) :	// South -> y - 1
-			new Vector2Int(-1, 0)								// West -> x - 1
+			(dir == Direction.NORTH) ? new Vector3Int(0, 1, 0)  :	// North -> y + 1
+			(dir == Direction.EAST) ? new Vector3Int(1, 0, 0) :		// East -> x + 1 
+			(dir == Direction.SOUTH) ? new Vector3Int(0, -1, 0) :	// South -> y - 1
+			new Vector3Int(-1, 0, 0)                                // West -> x - 1
 			);
 	}
 	public static Direction GetVectorDirection(Vector2Int dir)
