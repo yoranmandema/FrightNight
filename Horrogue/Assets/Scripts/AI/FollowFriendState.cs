@@ -13,6 +13,7 @@ public class FollowFriendState : StateMachineBehaviour {
         destinationSetter = animator.gameObject.GetComponent<AIDestinationSetter>();
 
         friend = animator.gameObject.GetComponent<NPC>().ClosestFriend;
+        friend.GetComponent<HeadReference>().Head.GetComponent<HeadAnimator>().State = HeadAnimator.AnimationState.Scared;
 
         animator.SetBool("Is Following Friend", true);
     }

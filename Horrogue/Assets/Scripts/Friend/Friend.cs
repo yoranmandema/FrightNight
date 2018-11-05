@@ -18,6 +18,7 @@ public class Friend : MonoBehaviour {
     private Interactable interactable;
     private AIPath aiPath;
     private GameManager gameManager;
+    private HeadAnimator headAnimator;
     #endregion
 
     void Start () {
@@ -28,14 +29,24 @@ public class Friend : MonoBehaviour {
         interactable.OnInteract += OnInteract;
 
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        headAnimator = GetComponent<HeadReference>().Head.GetComponent<HeadAnimator>();
+    }
+
+    void Update () {
+        if (headAnimator.State == HeadAnimator.AnimationState.Kidnapped && Status == FriendStatus.FollowingPlayer) {
+            headAnimator.State = HeadAnimator.AnimationState.Idle;
+        }
     }
 	
     public void OnGetKidnapped () {
         GetComponent<NPC>().StateMachine.Play("Following Clown");
+        headAnimator.State = HeadAnimator.AnimationState.Kidnapped;
+        Status = FriendStatus.FollowingKiller;
     }
 
     public void OnKidnapped() {
         GetComponent<NPC>().StateMachine.Play("Idle");
+        headAnimator.State = HeadAnimator.AnimationState.Idle;
 
         Status = FriendStatus.Kidnapped;
         aiPath.canMove = false;

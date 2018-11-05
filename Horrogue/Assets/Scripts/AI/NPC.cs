@@ -9,7 +9,7 @@ public class NPC : AIBehaviour {
     [SerializeField] private float _lookRadius = 5.0f;
 
     #region Public Variables
-    public AnimationController AnimationController;
+    //public AnimationController AnimationController;
     public GameObject ClosestFriend;
     public GameObject DestinationSlave;
     public Vector3 LastHeardSound;
@@ -23,30 +23,29 @@ public class NPC : AIBehaviour {
     void Start () {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
-        if (AnimationController != null)
-            AnimationController.Play("Idle");
+        //if (AnimationController != null) AnimationController.Play("Idle");
     }
 
     void Update() {
         LookForPlayer();
         LookForFriends();
-        SetDirection();
+        //SetDirection();
 
         StateMachine.SetBool("Player is being followed by friends", gameManager.PlayerFollowedByFriends());
         StateMachine.SetBool("Player Is Alive", gameManager.PlayerIsAlive);
         //StateMachine.SetBool("Heard Sound", false);
     }
 
-    void SetDirection() {
-        var direction = transform.rotation * Vector3.up;
+    //void SetDirection() {
+    //    var direction = transform.rotation * Vector3.up;
 
-        if (direction.x > 0 && AnimationController != null) {
-            AnimationController.Direction = "Right";
-        }
-        else {
-            AnimationController.Direction = "Left";
-        }
-    }
+    //    if (direction.x > 0 && AnimationController != null) {
+    //        AnimationController.Direction = "Right";
+    //    }
+    //    else {
+    //        AnimationController.Direction = "Left";
+    //    }
+    //}
 
     void LookForFriends() {
         var friends = GameObject.FindGameObjectsWithTag("Friend");
