@@ -16,7 +16,7 @@ MonoBehaviour:
   innerRegionLength: 20
   furnitures:
   - name: Tripple Lockers West
-    prefab: {fileID: 1904529629978622, guid: 4d746a5b3c93ea24fa843ff1cb6981d3, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: -2.83, y: -4.5, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -31,7 +31,7 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Tripple Lockers East
-    prefab: {fileID: 1837856439036006, guid: 47b3336e1c7e0c54bbff36a52e16e83e, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: 2.75, y: -4.5, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -69,7 +69,7 @@ MonoBehaviour:
   tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
   variableFurnitures:
   - name: Water Fountains North
-    prefab: {fileID: 1914384909828020, guid: a67c65341ac4a024590d172a5d28ecef, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: -2, y: 9.9, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -79,7 +79,7 @@ MonoBehaviour:
       scale: {x: 1, y: 1, z: 1}
     spawnAmount: 2
   - name: Water Fountains South
-    prefab: {fileID: 1914384909828020, guid: ba4e8a3b150b1d14d94315680fe71753, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: -2, y: -10.4, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}

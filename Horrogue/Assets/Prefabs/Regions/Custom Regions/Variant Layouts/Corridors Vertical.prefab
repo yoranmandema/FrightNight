@@ -47467,7 +47467,8 @@ MonoBehaviour:
   furnitureParent: {fileID: 1040682549939638}
   connectionParent: {fileID: 1222924992873250}
   variableFurnitureParent: {fileID: 1277797964191536}
-  variantRegionObject: {fileID: 0}
+  variantRegionObject: {fileID: 11400000, guid: 1b951d1fd6785854782c0589742eec6a,
+    type: 2}
   createPrefab: 0
 --- !u!114 &114790520488353140
 MonoBehaviour:
@@ -47554,7 +47555,8 @@ MonoBehaviour:
   furnitureParent: {fileID: 1443817005902974}
   connectionParent: {fileID: 1217020781334102}
   variableFurnitureParent: {fileID: 1524205585130828}
-  variantRegionObject: {fileID: 0}
+  variantRegionObject: {fileID: 11400000, guid: 6fdb734d0e6d5c241b5ba9295b45dab3,
+    type: 2}
   createPrefab: 0
 --- !u!114 &114841530647815222
 MonoBehaviour:

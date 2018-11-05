@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b23721944dc7bd4f9fff44807b3761e, type: 3}
+  m_Name: Exit (Premade Region)
+  m_EditorClassIdentifier: 
+  type: 7
+  innerRegionWidth: 2
+  innerRegionLength: 2
+  furnitures:
+  - name: School Exits
+    prefab: {fileID: 1891856763005462, guid: d1d3ef8aca4b6bc449520816fc553685, type: 2}
+    spawnTransforms:
+    - position: {x: 0, y: 0, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+  connections:
+  - direction: 0
+    boundsList:
+    - m_Position: {x: -2, y: 1, z: 0}
+      m_Size: {x: 4, y: 1, z: 0}
+  - direction: 1
+    boundsList:
+    - m_Position: {x: 1, y: -2, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  - direction: 3
+    boundsList:
+    - m_Position: {x: -2, y: -2, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  - direction: 2
+    boundsList:
+    - m_Position: {x: -2, y: -2, z: 0}
+      m_Size: {x: 4, y: 1, z: 0}
+  tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}

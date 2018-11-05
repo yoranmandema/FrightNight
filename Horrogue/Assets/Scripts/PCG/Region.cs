@@ -13,7 +13,9 @@ public enum RegionType
 	Toilets,
 	ClassRoom,
 	Storage,
-	PrincipalsOffice
+	PrincipalsOffice,
+	Exit,
+
 }
 
 [Serializable]
@@ -160,6 +162,7 @@ public class Region
 	private int id;
 
 	public bool isSpawn = false;
+	public bool isExit = false;
 	public bool isConnected = false;
 	public bool isFurnished = false;
 
@@ -169,7 +172,7 @@ public class Region
 	public List<RegionFurnitures> furnitures;
 	public List<VariableRegionFurnitures> variableFurnitures;
 
-	public List<GameObject> placedFurnitures = new List<GameObject>();
+	public List<GameObject> placedFurnitures;
 
 	public BoundsInt outerBounds;
 	public BoundsInt innerBounds;
@@ -225,6 +228,8 @@ public class Region
 		}
 
 		this.floorTiles = premadeRegion.tileset;
+
+		this.placedFurnitures = new List<GameObject>();
 
 		GenerateWallsFromInnerBounds(premadeRegion.connections);
 	}
@@ -293,7 +298,7 @@ public class Region
 
 		// Calculate the connection bounds
 		BoundsInt connectionBounds = CalculateConnectionBounds(overlappingConnections[0], overlappingConnections[1], lastConDir);
-		Debug.Log("Connect To Region - " + "Connection Bounds: " + connectionBounds.ToString());
+		//Debug.Log("Connect To Region - " + "Connection Bounds: " + connectionBounds.ToString());
 
 		// Add other region to connected regions
 		if (connectedRegions.Find(x=> x == otherRegion) == null)
@@ -334,14 +339,14 @@ public class Region
 		{
 			if (BoundsOverlap(connection, b.bounds))
 			{
-				Debug.LogWarning("Remove Blocked Connection - " + " Removing Connection: " + connection.ToString() + " (overlap with " + b.bounds.ToString());
+				//Debug.LogWarning("Remove Blocked Connection - " + " Removing Connection: " + connection.ToString() + " (overlap with " + b.bounds.ToString());
 			}
 			else
 			{
 				possibleConnections.Add(connection);
 			}
 		}
-		Debug.Log("Remove Blocked Connection - " + "Connection Count: " + a.possibleConnections.Count + " -> " + possibleConnections.Count);
+		//Debug.Log("Remove Blocked Connection - " + "Connection Count: " + a.possibleConnections.Count + " -> " + possibleConnections.Count);
 		a.possibleConnections = possibleConnections;
 		walls[index] = a;
 	}
@@ -441,7 +446,7 @@ public class Region
 				{
 					overlappingConnections[0] = tc;
 					overlappingConnections[1] = oc;
-					Debug.Log("Get Overlapping Connections - " + "Adding " + tc.ToString() + " & " + oc.ToString());
+					//Debug.Log("Get Overlapping Connections - " + "Adding " + tc.ToString() + " & " + oc.ToString());
 					lastConDir = overlappingWalls[0].dir;
 					return overlappingConnections;
 				}
@@ -467,7 +472,7 @@ public class Region
 				{
 					overlappingWalls[0] = tw;
 					overlappingWalls[1] = ow;
-					Debug.Log("Get Overlapping Walls - " + "Adding " + tw.ToString() + " & " + ow.ToString());
+					//Debug.Log("Get Overlapping Walls - " + "Adding " + tw.ToString() + " & " + ow.ToString());
 					return overlappingWalls;
 				}
 			}

@@ -22,7 +22,7 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Shelfs Principal
-    prefab: {fileID: 1779082459110622, guid: cc023bbe87e9f704abfa2f58df817eb3, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: -2.56, y: 7.699, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -91,7 +91,7 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Chairs Principal
-    prefab: {fileID: 1887626847730200, guid: 354fe9ed1f8b6e840a546c42532c5820, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: -1.49, y: 3.89, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -148,7 +148,7 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Notice Board
-    prefab: {fileID: 1627179672435920, guid: 46a160ac1e1d79e4cadd038420175ff0, type: 2}
+    prefab: {fileID: 0}
     spawnTransforms:
     - position: {x: 0, y: 8.2, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}

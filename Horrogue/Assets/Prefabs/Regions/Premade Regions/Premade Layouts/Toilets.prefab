@@ -3648,13 +3648,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   update: 0
-  drawGizmos: 1
+  drawGizmos: 0
   innerRegionWidth: 8
   innerRegionLength: 4
   tileset: {fileID: 11400000, guid: af9e6613678eef249b9a5fc756ed87c0, type: 2}
   furnitureParent: {fileID: 1377143010051604}
   connectionParent: {fileID: 1736076429610368}
-  premadeRegionObject: {fileID: 0}
+  premadeRegionObject: {fileID: 11400000, guid: e5913861e8c632c4a9f43ca32494c22e,
+    type: 2}
   createPrefab: 0
 --- !u!114 &114099545232190708
 MonoBehaviour:

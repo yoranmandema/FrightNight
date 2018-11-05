@@ -23,15 +23,16 @@ public class GameManager : MonoBehaviour {
 	[Header("Important References")]
     public GameObject ControlledObject;
 	public GameObject CameraObject;
+	public GameObject Exit;
 
     [HideInInspector] public GameObject Player;
     [HideInInspector] public GameObject Clown;
     [HideInInspector] public List<GameObject> Friends = new List<GameObject>();
     [HideInInspector] public bool PlayerIsAlive;
-    #endregion
+	#endregion
 
-    #region Private Variables
-    private LayoutGenerator generator;
+	#region Private Variables
+	private LayoutGenerator generator;
     #endregion
 
     // Use this for initialization
@@ -107,7 +108,9 @@ public class GameManager : MonoBehaviour {
         // Generate Layout
         if (generator != null) generator.GenerateLayout();
 
-        // Scan Generated Layout
-        AstarPath.active.Scan();
+		Exit = generator.GetExit();
+
+		// Scan Generated Layout
+		AstarPath.active.Scan();
     }
 }

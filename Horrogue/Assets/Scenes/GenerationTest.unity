@@ -180,6 +180,10 @@ Prefab:
       propertyPath: m_CullingMask.m_Bits
       value: 4718391
       objectReference: {fileID: 0}
+    - target: {fileID: 1058964505439492, guid: 378a5144c926bde4e8d48aef65e79719, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 378a5144c926bde4e8d48aef65e79719, type: 2}
   m_IsPrefabAsset: 0
@@ -236,6 +240,11 @@ Prefab:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: floorTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: otherPremadeLayouts.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4041915422278414, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
@@ -326,6 +335,21 @@ Prefab:
       propertyPath: disableAutomaticGeneration
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1968991252197160, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: otherPremadeLayouts.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
+        type: 2}
+      propertyPath: exitRoomLayout
+      value: 
+      objectReference: {fileID: 11400000, guid: 598ce70299dc8d04093657f838a0dc63,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
   m_IsPrefabAsset: 0

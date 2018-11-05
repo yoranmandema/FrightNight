@@ -65,12 +65,15 @@ public class LayoutGenerator : MonoBehaviour {
 
 	[Header("Prefabs", order = 1)]
 	public PremadeRegion spawnRoomLayout;
+	public PremadeRegion exitRoomLayout;
 	public PremadeRegion mainCorridorLayout;
 
 	public List<PremadeRegion> otherPremadeLayouts;
 
 	public CustomRegion corridorLayouts;
 	public CustomRegion roomLayouts;
+
+	
 
 	// Premade objects and regions
 	[Header("Spawning Behaviour")]
@@ -85,7 +88,6 @@ public class LayoutGenerator : MonoBehaviour {
 	public Range corridorLength;
 
 	public Range classAreaSize;
-
 
     // Tile prefabs and settings
     [Header("Generator Tiles")]
@@ -102,13 +104,12 @@ public class LayoutGenerator : MonoBehaviour {
 	private List<Region> rooms;
 	private List<Region> corridors;
 
-	//private TileType[,] map;
     private GameObject[,] tileMap;
 
 	private GameObject tileParent;
 	private GameObject furnitureParent;
 
-    Region spawnRoom, mainCorridor;
+    Region spawnRoom, mainCorridor, exitRoom;
 	Direction lastRandConDir;
     int numAddCor, numAddRoom;
 
@@ -130,8 +131,19 @@ public class LayoutGenerator : MonoBehaviour {
 		PlaceRegionContents();
 	}
 
+	public GameObject GetExit()
+	{
+		return exitRoom.placedFurnitures[0];
+	}
+
 	private void GenerateRegions()
 	{
+
+		// Create the exit and flag it
+		CreateRandomRoom(null, false, exitRoomLayout);
+		exitRoom = regions.Find(x => x.type == RegionType.Exit);
+		exitRoom.isExit = true;
+
 		for (int i = 0; i < otherPremadeLayouts.Count; i++)
 		{
 			PremadeRegion layout = otherPremadeLayouts[i];
@@ -206,9 +218,14 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 		else
 		{
-			r = regions[Random.Range(1, regions.Count)];
+			r = regions[Random.Range(2, regions.Count)];
 		}
-
+		if (r == exitRoom)
+		{
+			Debug.Log("Removing exit room from list");
+			regions.Remove(exitRoom);
+			return GetRandomSpawnPoint(excludeCorridors);
+		}
         return new Vector3(r.outerBounds.center.x, r.outerBounds.center.y, 0);
     }
 
@@ -319,7 +336,7 @@ public class LayoutGenerator : MonoBehaviour {
 					AddRegion(newRoom, createCorridor);
 					ConnectRegions(cr, newRoom);
 
-					Debug.Log(newRoom.orientation);
+					//Debug.Log(newRoom.orientation);
 					break;
 				}
 			}
@@ -342,7 +359,7 @@ public class LayoutGenerator : MonoBehaviour {
 			{
 				customRegion = roomLayouts;
 			}
-			Debug.Log("Create Region At Random Connection - " + "useSeperateVerticalRegions: " + customRegion.useSeperateVerticalRegions + " | Wall is Vertical: " + w.isVertical);
+			//Debug.Log("Create Region At Random Connection - " + "useSeperateVerticalRegions: " + customRegion.useSeperateVerticalRegions + " | Wall is Vertical: " + w.isVertical);
 			if (customRegion.useSeperateVerticalRegions && !w.isVertical)
 			{
 				possibleRegionLayouts = customRegion.verticalRegionVariations;
@@ -354,7 +371,7 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 		else
 		{
-			Debug.Log("Creating a premade region.");
+			//Debug.Log("Creating a premade region.");
 			customRegion = new CustomRegion();
 
 
@@ -752,7 +769,7 @@ public class LayoutGenerator : MonoBehaviour {
 		{
 			offset += Region.GetDirectionVector(Region.GetOppositeDirection(connectionSide));
 		}
-		Debug.Log("Align Connections - " + "Connection: " + connection.ToString() + ", Other Connection: " + otherConnection.ToString());
+		//Debug.Log("Align Connections - " + "Connection: " + connection.ToString() + ", Other Connection: " + otherConnection.ToString());
 		return offset;
 	}
 
