@@ -35,6 +35,7 @@ public class FleeState : StateMachineBehaviour {
 
         if (friend != null) {
             friend.GetComponent<NPC>().StateMachine.Play("Lost", 0);
+            friend.GetComponent<Friend>().Status = FriendStatus.FollowingPlayer;
             clown.KidnappedFriend = null;
         }
 

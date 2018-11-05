@@ -50,14 +50,17 @@ public class GameManager : MonoBehaviour {
 
     private void SpawnCharacters()
     {
-        Vector3 playerSpawn = generator.GetPlayerSpawnPoint();
-        Vector3 clownSpawn = generator.GetRandomSpawnPoint();
+        if (playerPrefab != null) {
+            Vector3 playerSpawn = generator.GetPlayerSpawnPoint();
+            Destroy(Player);
+            Player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
+        }
 
-        Destroy(Player);
-        Destroy(Clown);
-
-        Player = ControlledObject = Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
-        Clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+        if (clownPrefab != null) {
+            Vector3 clownSpawn = generator.GetRandomSpawnPoint();
+            Destroy(Clown);
+            Clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
+        }
 
         SpawnFriends();
     }
@@ -102,7 +105,7 @@ public class GameManager : MonoBehaviour {
     void GenerateLayout()
     {
         // Generate Layout
-        generator.GenerateLayout();
+        if (generator != null) generator.GenerateLayout();
 
         // Scan Generated Layout
         AstarPath.active.Scan();

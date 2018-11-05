@@ -10,8 +10,6 @@ public class AnimationController : MonoBehaviour {
     private Animator animator;
 
     public void Play (string type) {
-        if (animator == null) return;
-
         animator.Play(type + " " + Direction, 0);
     }
 

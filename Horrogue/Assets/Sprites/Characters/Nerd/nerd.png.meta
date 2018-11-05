@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: 24aa86a8f391ea341bfc2438da30d44e
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: nerd_0
+    21300002: nerd_1
+    21300004: nerd_2
+    21300006: nerd_3
+    21300008: nerd_4
+    21300010: nerd_5
+    21300012: nerd_6
+    21300014: nerd_7
+    21300016: nerd_8
+    21300018: nerd_9
+    21300020: nerd_10
+    21300022: nerd_11
+    21300024: nerd_12
+    21300026: nerd_13
+    21300028: nerd_14
+    21300030: nerd_15
+    21300032: nerd_16
+    21300034: nerd_17
+    21300036: nerd_18
+    21300038: nerd_19
+    21300040: nerd_20
+    21300042: nerd_21
+    21300044: nerd_22
+    21300046: nerd_23
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -82,7 +106,487 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: nerd_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0868ce5ee3422764e86ac59129a95f0b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_1
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d651b232a849e1f4bbbf554f59cc4377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_2
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b9eaca0096655a49898f5b0d0894130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_3
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e933d5a6780870c47b17682022b034d9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04b14e40f02caec4981b8495d7183331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_5
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c327aeaf59201624fa3e9ee7f5150713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_6
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fbd2775a5b67f243bf3788b66d6d7b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_7
+      rect:
+        serializedVersion: 2
+        x: 1092
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57d498b3cb3126d408ba1766c7a82008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_8
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25264e46cb8b7e4489b183a1a97fdebe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_9
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7df254ccf6fee3143a5e3b49ecace8c0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_10
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 358fe25aef1cd22449af39f6a63e95e5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_11
+      rect:
+        serializedVersion: 2
+        x: 1716
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e38ed138aae80264e9419c42c5f1c542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_12
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09595f9053b2a754fbc958b6124c8495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_13
+      rect:
+        serializedVersion: 2
+        x: 2028
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bf5e6ee4ff51d843a3fa7780b7f26bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_14
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e01e6df040efdb4c927f4813068fa56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_15
+      rect:
+        serializedVersion: 2
+        x: 2340
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848aebf52ef8b2c4cacad6ac04e5cb4b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_16
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23476d15d2e3f5f4599678115281dcca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_17
+      rect:
+        serializedVersion: 2
+        x: 2652
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f45234b535d43ba40a137320938bd7ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_18
+      rect:
+        serializedVersion: 2
+        x: 2808
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 016a5dc953cda154f8ae814369ae570b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_19
+      rect:
+        serializedVersion: 2
+        x: 2964
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e2cdf1b44e86641aacfc35fa73e9aa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_20
+      rect:
+        serializedVersion: 2
+        x: 3120
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c37170598e675941853e39aedf02ca7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_21
+      rect:
+        serializedVersion: 2
+        x: 3276
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeddb0b2247856645add9ad23c7563f8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_22
+      rect:
+        serializedVersion: 2
+        x: 3432
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc271047ee491e049bc8e54ca8c2c1da
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerd_23
+      rect:
+        serializedVersion: 2
+        x: 3588
+        y: 0
+        width: 156
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65f19448df86d114dbe1d948cd7a78ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
