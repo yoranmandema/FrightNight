@@ -11,18 +11,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d269def0ea72bc4589c11c3300120fd, type: 3}
   m_Name: Small Class (Variant Region)
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   innerRegionWidth: 12
   innerRegionLength: 12
   furnitures:
   - name: Black Boards
-    prefab: {fileID: 0}
+    prefab: {fileID: 1559057433295706, guid: 3b37c83e030047742ba9eef40e49b36f, type: 2}
     spawnTransforms:
     - position: {x: 0, y: 7.14, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Tables
-    prefab: {fileID: 0}
+    prefab: {fileID: 1372229311558152, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
     spawnTransforms:
     - position: {x: -2, y: 5.77, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -31,7 +31,7 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Bins
-    prefab: {fileID: 0}
+    prefab: {fileID: 1260625184554590, guid: 4b175a73503e9f040af56b3cb290d773, type: 2}
     spawnTransforms:
     - position: {x: 5.46, y: 5.49, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -45,11 +45,37 @@ MonoBehaviour:
     - position: {x: 5.46, y: -5.51, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-  connections: []
+  connections:
+  - direction: 1
+    boundsList:
+    - m_Position: {x: 6, y: -4, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: 6, y: 2, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: 6, y: -1, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+  - direction: 0
+    boundsList:
+    - m_Position: {x: 3, y: 6, z: 0}
+      m_Size: {x: 1, y: 1, z: 0}
+  - direction: 3
+    boundsList:
+    - m_Position: {x: -7, y: -4, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: -7, y: 2, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: -7, y: -1, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+  - direction: 2
+    boundsList:
+    - m_Position: {x: 2, y: -7, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+    - m_Position: {x: -4, y: -7, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
   tileset: {fileID: 0}
   variableFurnitures:
   - name: Tables
-    prefab: {fileID: 0}
+    prefab: {fileID: 1372229311558152, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
     spawnTransforms:
     - position: {x: -2.5200005, y: 2.28, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -107,7 +133,7 @@ MonoBehaviour:
       scale: {x: 1, y: 1, z: 1}
     spawnAmount: 18
   - name: Chairs
-    prefab: {fileID: 0}
+    prefab: {fileID: 1765175424795030, guid: cc148f6289b49af4f95691acc3895c6d, type: 2}
     spawnTransforms:
     - position: {x: -2.5499992, y: 1.12, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}

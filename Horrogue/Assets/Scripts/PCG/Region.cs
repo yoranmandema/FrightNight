@@ -118,7 +118,6 @@ public struct Wall
 				return new Vector3Int(0, thicknessNorth, 0);
 			case Direction.EAST:
 				return new Vector3Int(thicknessEast, 0, 0);
-				break;
 			case Direction.SOUTH:
 				return new Vector3Int(0, -thicknessSouth, 0);
 			case Direction.WEST:
@@ -631,6 +630,16 @@ public class Region
 			Wall wWall = new Wall(Direction.WEST, wBounds);
 			this.walls.Add(wWall);
 		}
+	}
+
+	public static BoundsInt GetOuterBounds(Vector3Int position, Vector3Int size)
+	{
+		BoundsInt outerBounds = new BoundsInt(position, size);
+		outerBounds.yMax += Wall.thicknessNorth;
+		outerBounds.xMax += Wall.thicknessWest;
+		outerBounds.yMin -= Wall.thicknessSouth;
+		outerBounds.xMin -= Wall.thicknessWest;
+		return outerBounds;
 	}
 
 	public static bool ArePerpendicual(Direction a, Direction b)

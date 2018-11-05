@@ -309,17 +309,17 @@ Prefab:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: useRandomSeed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: additionalRoomAmount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: additionalCorridorAmount
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114150000751926110, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}

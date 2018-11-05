@@ -123,11 +123,20 @@ public class LayoutGenerator : MonoBehaviour {
         SetupSpawn();
 
         CreateAdditionalCorridors();
-        //GenerateRegions();
-		//CreateAdditionalRooms();
+        GenerateRegions();
+		CreateAdditionalRooms();
 
         CreateTileMap();
 		PlaceRegionContents();
+	}
+
+	private void GenerateRegions()
+	{
+		for (int i = 0; i < otherPremadeLayouts.Count; i++)
+		{
+			PremadeRegion layout = otherPremadeLayouts[i];
+			CreateRandomRoom(null, false, layout);
+		}
 	}
 
 	private void PlaceRegionContents()
@@ -156,10 +165,14 @@ public class LayoutGenerator : MonoBehaviour {
 
 	private void PlaceRegionFurnitures(Region r, RegionFurnitures furnitures, int amount = -1)
 	{
-		if (furnitures.prefab == null || furnitures.spawnTransforms == null || furnitures.spawnTransforms.Count == 0)
+		/*if (furnitures.prefab == null || furnitures.spawnTransforms == null || furnitures.spawnTransforms.Count == 0)
 			throw new Exception("Place Region Furnitures - " + "No furniture prefab or spawn transforms have been assigned! " + furnitures.ToString());
-
+			*/
 		GameObject prefab = furnitures.prefab;
+		if (prefab == null)
+		{
+			prefab = new GameObject(furnitures.name);
+		}
 		Vector3 basePos = r.innerBounds.center;
 		List<LocalTransform> localTransforms = new List<LocalTransform>(furnitures.spawnTransforms);
 
@@ -248,9 +261,8 @@ public class LayoutGenerator : MonoBehaviour {
         while (cors.Count > 0)
         {
             // Get and remove random corridor from list to avoid duplicate checking
-            int cIndex = Random.Range(0, cors.Count);
-            Region c = cors[cIndex];
-            cors.RemoveAt(cIndex);
+            Region c = cors[Random.Range(0, cors.Count)];
+            cors.Remove(c);
 
 			// Create a randomly attached region
 			if (CreateRandomRoom(c, true))
@@ -264,76 +276,102 @@ public class LayoutGenerator : MonoBehaviour {
         return corridorWasCreated;
     }
 
-	private bool CreateRandomRoom(Region region = null, bool createCorridor = false)
+	private bool CreateRandomRoom(Region region = null, bool createCorridor = false, PremadeRegion regionLayout = null)
 	{
 		// if no region is given, take a random corridor for connection
+		List<Region> connectableRegions;
 		if (region == null)
 		{
-			region = corridors[Random.Range(0, corridors.Count)];
+			connectableRegions = new List<Region>(corridors);
+		}
+		else
+		{
+			connectableRegions = new List<Region>() { region };
 		}
 
-		// Create a list of all possible walls
-		List<Wall> walls = new List<Wall>((createCorridor) ? region.GetPerpendicularWalls() : region.walls);
 		bool roomWasCreated = false;
-		// iterating over all walls in random order
-		while (walls.Count > 0)
+		while (connectableRegions.Count > 0 && !roomWasCreated)
 		{
-			// Get and remove random wall from list
-			int wIndex = Random.Range(0, walls.Count);
-			Wall w = walls[wIndex];
-			walls.RemoveAt(wIndex);
+			// Get and remove random corridor from list to avoid duplicate checking
+			Region cr = connectableRegions[Random.Range(0, connectableRegions.Count)];
+			connectableRegions.Remove(cr);
 
-			Region newRoom = CreateRegionAtRandomConnection(w, createCorridor); //GenerateRegionAtRandomSpot(w, createCorridor);
+			// Create a list of all possible walls
+			List<Wall> walls = new List<Wall>((createCorridor) ? cr.GetPerpendicularWalls() : cr.walls);
 
-			if (newRoom != null)
+			// iterating over all walls in random order
+			while (walls.Count > 0)
 			{
-				int connectionSize = -1;
-				if (!createCorridor)
+				// Get and remove random wall from list
+				Wall w = walls[Random.Range(0, walls.Count)];
+				walls.Remove(w);
+
+				Region newRoom = CreateRegionAtRandomConnection(w, createCorridor, regionLayout); //GenerateRegionAtRandomSpot(w, createCorridor);
+
+				if (newRoom != null)
 				{
-					numAddRoom++;
-					connectionSize = 2;
+					if (!createCorridor && regionLayout == null)
+					{
+						numAddRoom++;
+					}
+					newRoom.orientation = Region.GetPerpendicularDirection(cr.orientation);
+					roomWasCreated = true;
+					AddRegion(newRoom, createCorridor);
+					ConnectRegions(cr, newRoom);
+
+					Debug.Log(newRoom.orientation);
+					break;
 				}
-
-				roomWasCreated = true;
-				AddRegion(newRoom, createCorridor);
-				ConnectRegions(region, newRoom, connectionSize);
-
-				
-				break;
 			}
 		}
-
 		return roomWasCreated;
 	}
 
-	private Region CreateRegionAtRandomConnection(Wall w, bool createCorridor)
+	private Region CreateRegionAtRandomConnection(Wall w, bool createCorridor, PremadeRegion regionLayout = null)
 	{
+		CustomRegion customRegion;
 		List<VariantRegion> possibleRegionLayouts;
 		List<BoundsInt> possibleConnections = new List<BoundsInt>(w.possibleConnections);
-
-		if (createCorridor)
+		if (regionLayout == null)
 		{
-			if (corridorLayouts.useSeperateVerticalRegions && !w.isVertical)
+			if (createCorridor)
 			{
-				possibleRegionLayouts = corridorLayouts.verticalRegionVariations;
+				customRegion = corridorLayouts;
 			}
 			else
 			{
-				possibleRegionLayouts = corridorLayouts.regionVariations;
+				customRegion = roomLayouts;
+			}
+			Debug.Log("Create Region At Random Connection - " + "useSeperateVerticalRegions: " + customRegion.useSeperateVerticalRegions + " | Wall is Vertical: " + w.isVertical);
+			if (customRegion.useSeperateVerticalRegions && !w.isVertical)
+			{
+				possibleRegionLayouts = customRegion.verticalRegionVariations;
+			}
+			else
+			{
+				possibleRegionLayouts = customRegion.regionVariations;
 			}
 		}
 		else
 		{
-			if (roomLayouts.useSeperateVerticalRegions && !w.isVertical)
+			Debug.Log("Creating a premade region.");
+			customRegion = new CustomRegion();
+
+
+
+			VariantRegion vr;
+			if (regionLayout.GetType() == typeof(VariantRegion))
 			{
-				possibleRegionLayouts = roomLayouts.verticalRegionVariations;
+				vr = (VariantRegion) regionLayout;
 			}
 			else
 			{
-				possibleRegionLayouts = roomLayouts.regionVariations;
+				vr = new VariantRegion(regionLayout);
 			}
+			possibleRegionLayouts = new List<VariantRegion>() { vr };
+			customRegion.regionVariations = possibleRegionLayouts;
+			customRegion.type = regionLayout.type;
 		}
-
 		while (possibleConnections.Count > 0)
 		{
 			// Get and remove a connection from the list
@@ -344,12 +382,56 @@ public class LayoutGenerator : MonoBehaviour {
 			
 			while(regionLayouts.Count > 0)
 			{
+				// Get and remove a layout from the list to avoid duplicate checking
 				VariantRegion layout = regionLayouts[Random.Range(0, regionLayouts.Count)];
 				regionLayouts.Remove(layout);
 
 				// Test layout connections against possbile connections
-				List<BoundsInt> variantConnections = new List<BoundsInt>(w.possibleConnections);
+				RegionConnections vrcs = layout.connections.Find(x => x.direction == Region.GetOppositeDirection(w.dir));
+				if (vrcs == null) continue;
 
+				List <BoundsInt> variantConnections = new List<BoundsInt>(vrcs.boundsList);
+				while (variantConnections.Count > 0)
+				{
+					// Get and remove a connection from the list
+					BoundsInt varcon = variantConnections[Random.Range(0, variantConnections.Count)];
+					variantConnections.Remove(varcon);
+
+					Vector3Int alignmentOffset = AlignConnections(con, varcon, w.dir);
+
+					Vector3Int size = new Vector3Int(layout.innerRegionWidth, layout.innerRegionLength, 1);
+					Vector3Int position = Vector3Int.RoundToInt(alignmentOffset - new Vector3(size.x / 2f, size.y / 2f));
+
+					BoundsInt testBounds = DebugBounds = Region.GetOuterBounds(position, size);
+					
+
+					bool isOverlapping = false;
+					for (int i = 0; i < regions.Count; i++)
+					{
+						if (Region.BoundsOverlap(regions[i].outerBounds, testBounds, 1))
+						{
+							isOverlapping = true;
+							break;
+						}
+					}
+
+					// Place region
+					if (!isOverlapping)
+					{
+						Region newRegion = new Region(layout, position);
+
+						if (newRegion.type == RegionType.None)
+						{
+							newRegion.type = customRegion.type;
+						}
+
+						if (newRegion.floorTiles == null)
+						{
+							newRegion.floorTiles = customRegion.tilesets[Random.Range(0, customRegion.tilesets.Count)];
+						}
+						return newRegion;
+					}
+				}
 			}
 		}
 
@@ -654,6 +736,9 @@ public class LayoutGenerator : MonoBehaviour {
 		Vector3Int mainCorridorPosition = Vector3Int.RoundToInt(alignmentOffset - new Vector3(mainCorridorSize.x / 2f, mainCorridorSize.y / 2f));
 		mainCorridor = new Region((VariantRegion)mainCorridorLayout, mainCorridorPosition);
 
+		mainCorridor.type = RegionType.MainCorridor;
+		mainCorridor.orientation = Direction.NORTH;
+
 		AddRegion(mainCorridor, true);
 
 		ConnectRegions(spawnRoom, mainCorridor);
@@ -668,7 +753,6 @@ public class LayoutGenerator : MonoBehaviour {
 			offset += Region.GetDirectionVector(Region.GetOppositeDirection(connectionSide));
 		}
 		Debug.Log("Align Connections - " + "Connection: " + connection.ToString() + ", Other Connection: " + otherConnection.ToString());
-		Debug.Log(offset);
 		return offset;
 	}
 
@@ -813,7 +897,7 @@ public class LayoutGenerator : MonoBehaviour {
 			}
 			else
 			{
-				Debug.LogWarning("Spawn Tile - " + "Tile spot already taken at " + mapPos.ToString() + "! (" + tilePrefab.name.ToString() + " -> " + tileMap[mapPos.x, mapPos.y].name.ToString() + ")");
+				//Debug.LogWarning("Spawn Tile - " + "Tile spot already taken at " + mapPos.ToString() + "! (" + tilePrefab.name.ToString() + " -> " + tileMap[mapPos.x, mapPos.y].name.ToString() + ")");
 				return;
 			}
 		}
@@ -913,5 +997,12 @@ public class LayoutGenerator : MonoBehaviour {
 
 			}
 		}
-    }
+		if (DebugBounds != null)
+		{
+			Color color = Color.red;
+			color.a = 0.5f;
+			Gizmos.color = color;
+			Gizmos.DrawCube(DebugBounds.center, DebugBounds.size);
+		}
+	}
 }

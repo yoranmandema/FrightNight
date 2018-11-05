@@ -17,50 +17,74 @@ MonoBehaviour:
   furnitures:
   - name: Tripple Lockers North
     prefab: {fileID: 1847063875138544, guid: 65372d289b728074b9373406f2323f56, type: 2}
-    spawnLocations:
-    - {x: 40.5, y: 62.83, z: 0}
-    - {x: 43.5, y: 62.83, z: 0}
-    - {x: 46.5, y: 62.83, z: 0}
-    - {x: 49.5, y: 62.83, z: 0}
-  - name: Tripple Lockers South
-    prefab: {fileID: 1684492944057278, guid: 3a8223cf50e6266479a79378596ea13e, type: 2}
-    spawnLocations:
-    - {x: 40.5, y: 57.25, z: 0}
-    - {x: 43.5, y: 57.25, z: 0}
-    - {x: 46.5, y: 57.25, z: 0}
-    - {x: 49.5, y: 57.25, z: 0}
+    spawnTransforms:
+    - position: {x: -2.83, y: -4.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.83, y: -1.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.83, y: 1.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.83, y: 4.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+  - name: Tripple Lockers East
+    prefab: {fileID: 1837856439036006, guid: 47b3336e1c7e0c54bbff36a52e16e83e, type: 2}
+    spawnTransforms:
+    - position: {x: 2.75, y: -4.5, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.75, y: -1.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.75, y: 1.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.75, y: 4.5, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
   connections:
   - direction: 1
     boundsList:
-    - m_Position: {x: 55, y: 59, z: 0}
+    - m_Position: {x: 10, y: -1, z: 0}
       m_Size: {x: 1, y: 2, z: 0}
   - direction: 0
     boundsList:
-    - m_Position: {x: 35, y: 63, z: 0}
+    - m_Position: {x: -10, y: 3, z: 0}
       m_Size: {x: 4, y: 1, z: 0}
-    - m_Position: {x: 51, y: 63, z: 0}
+    - m_Position: {x: 6, y: 3, z: 0}
       m_Size: {x: 4, y: 1, z: 0}
   - direction: 3
     boundsList:
-    - m_Position: {x: 34, y: 59, z: 0}
+    - m_Position: {x: -11, y: -1, z: 0}
       m_Size: {x: 1, y: 2, z: 0}
   - direction: 2
     boundsList:
-    - m_Position: {x: 35, y: 56, z: 0}
+    - m_Position: {x: -10, y: -4, z: 0}
       m_Size: {x: 4, y: 1, z: 0}
-    - m_Position: {x: 51, y: 56, z: 0}
+    - m_Position: {x: 6, y: -4, z: 0}
       m_Size: {x: 4, y: 1, z: 0}
   tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
   variableFurnitures:
   - name: Water Fountains East
+    prefab: {fileID: 1837856439036006, guid: 47b3336e1c7e0c54bbff36a52e16e83e, type: 2}
+    spawnTransforms:
+    - position: {x: -2, y: 9.9, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2, y: 9.89, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     spawnAmount: 2
-    prefab: {fileID: 1684492944057278, guid: 3a8223cf50e6266479a79378596ea13e, type: 2}
-    spawnLocations:
-    - {x: 54.9, y: 62, z: 0}
-    - {x: 54.89, y: 58, z: 0}
   - name: Water Fountains West
+    prefab: {fileID: 1914384909828020, guid: 2f89e0a07857ff14b90d7e6ff5d9b5d2, type: 2}
+    spawnTransforms:
+    - position: {x: -2, y: -10.4, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2, y: -10.4, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     spawnAmount: 2
-    prefab: {fileID: 1847063875138544, guid: 65372d289b728074b9373406f2323f56, type: 2}
-    spawnLocations:
-    - {x: 34.6, y: 62, z: 0}
-    - {x: 34.6, y: 58, z: 0}
