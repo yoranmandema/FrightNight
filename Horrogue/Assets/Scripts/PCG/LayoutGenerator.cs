@@ -105,7 +105,8 @@ public class LayoutGenerator : MonoBehaviour {
 	//private TileType[,] map;
     private GameObject[,] tileMap;
 
-	private GameObject parent;
+	private GameObject tileParent;
+	private GameObject furnitureParent;
 
     Region spawnRoom, mainCorridor;
 	Direction lastRandConDir;
@@ -121,7 +122,7 @@ public class LayoutGenerator : MonoBehaviour {
 
         SetupSpawn();
 
-        //CreateAdditionalCorridors();
+        CreateAdditionalCorridors();
         //GenerateRegions();
 		//CreateAdditionalRooms();
 
@@ -139,12 +140,13 @@ public class LayoutGenerator : MonoBehaviour {
 				for (int j = 0; j < r.furnitures.Count; j++)
 				{
 					RegionFurnitures rf = r.furnitures[j];
-					PlaceRegionFurnitures(rf);
+					PlaceRegionFurnitures(r, rf);
 				}
 
 				for (int j = 0; j < r.variableFurnitures.Count; j++)
 				{
 					VariableRegionFurnitures vrf = r.variableFurnitures[j];
+					PlaceRegionFurnitures(r, (RegionFurnitures)vrf, vrf.spawnAmount);
 				}
 
 				regions[i].isFurnished = true;
@@ -152,22 +154,23 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 	}
 
-	private void PlaceRegionFurnitures(RegionFurnitures furnitures)
+	private void PlaceRegionFurnitures(Region r, RegionFurnitures furnitures, int amount = -1)
 	{
 		if (furnitures.prefab == null || furnitures.spawnTransforms == null || furnitures.spawnTransforms.Count == 0)
-			throw new Exception("Place Region Furnitures - " + "No furniture prefab has been assigned! " + furnitures.ToString());
+			throw new Exception("Place Region Furnitures - " + "No furniture prefab or spawn transforms have been assigned! " + furnitures.ToString());
 
 		GameObject prefab = furnitures.prefab;
-	}
+		Vector3 basePos = r.innerBounds.center;
+		List<LocalTransform> localTransforms = new List<LocalTransform>(furnitures.spawnTransforms);
 
-	private void GenerateRegions()
-	{
-		
-	}
-
-	private void RandomizeRegionContent()
-	{
-
+		while (localTransforms.Count > 0 && (amount > 0 || amount == -1))
+		{
+			LocalTransform lt = localTransforms[Random.Range(0, localTransforms.Count)];
+			localTransforms.Remove(lt);
+			GameObject placedFurniture = Instantiate(prefab, basePos + lt.position, lt.rotation, furnitureParent.transform);
+			placedFurniture.transform.localScale = lt.scale;
+			r.placedFurnitures.Add(placedFurniture);
+		}
 	}
 
     public Vector3 GetPlayerSpawnPoint()
@@ -190,7 +193,7 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 		else
 		{
-			r = regions[Random.Range(2, regions.Count)];
+			r = regions[Random.Range(1, regions.Count)];
 		}
 
         return new Vector3(r.outerBounds.center.x, r.outerBounds.center.y, 0);
@@ -280,7 +283,7 @@ public class LayoutGenerator : MonoBehaviour {
 			Wall w = walls[wIndex];
 			walls.RemoveAt(wIndex);
 
-			Region newRoom = GenerateRegionAtRandomSpot(w, createCorridor);
+			Region newRoom = CreateRegionAtRandomConnection(w, createCorridor); //GenerateRegionAtRandomSpot(w, createCorridor);
 
 			if (newRoom != null)
 			{
@@ -301,6 +304,57 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 
 		return roomWasCreated;
+	}
+
+	private Region CreateRegionAtRandomConnection(Wall w, bool createCorridor)
+	{
+		List<VariantRegion> possibleRegionLayouts;
+		List<BoundsInt> possibleConnections = new List<BoundsInt>(w.possibleConnections);
+
+		if (createCorridor)
+		{
+			if (corridorLayouts.useSeperateVerticalRegions && !w.isVertical)
+			{
+				possibleRegionLayouts = corridorLayouts.verticalRegionVariations;
+			}
+			else
+			{
+				possibleRegionLayouts = corridorLayouts.regionVariations;
+			}
+		}
+		else
+		{
+			if (roomLayouts.useSeperateVerticalRegions && !w.isVertical)
+			{
+				possibleRegionLayouts = roomLayouts.verticalRegionVariations;
+			}
+			else
+			{
+				possibleRegionLayouts = roomLayouts.regionVariations;
+			}
+		}
+
+		while (possibleConnections.Count > 0)
+		{
+			// Get and remove a connection from the list
+			BoundsInt con = possibleConnections[Random.Range(0, possibleConnections.Count)];
+			possibleConnections.Remove(con);
+
+			List<VariantRegion> regionLayouts = new List<VariantRegion>(possibleRegionLayouts);
+			
+			while(regionLayouts.Count > 0)
+			{
+				VariantRegion layout = regionLayouts[Random.Range(0, regionLayouts.Count)];
+				regionLayouts.Remove(layout);
+
+				// Test layout connections against possbile connections
+				List<BoundsInt> variantConnections = new List<BoundsInt>(w.possibleConnections);
+
+			}
+		}
+
+		// No new Region could be created
+		return null;
 	}
 
 	// Returns the new region
@@ -764,7 +818,7 @@ public class LayoutGenerator : MonoBehaviour {
 			}
 		}
 
-		tileMap[mapPos.x, mapPos.y] = Instantiate(tilePrefab, pos, Quaternion.identity, parent.transform);
+		tileMap[mapPos.x, mapPos.y] = Instantiate(tilePrefab, pos, Quaternion.identity, tileParent.transform);
 		tileMap[mapPos.x, mapPos.y].transform.localScale = size;
 	}
 
@@ -789,13 +843,18 @@ public class LayoutGenerator : MonoBehaviour {
 	}
     private void InitializeMap()
     {
-        if (parent != null)
+        if (tileParent != null)
         {
-            Destroy(parent);
-            parent = null;
+            Destroy(tileParent);
+            tileParent = null;
         }
-
-        parent = new GameObject("Tile Map");
+        tileParent = new GameObject("Tile Map");
+		if (furnitureParent != null)
+        {
+            Destroy(furnitureParent);
+			furnitureParent = null;
+        }
+		furnitureParent = new GameObject("Obstacles");
 
 		// Reset region ids
 		Region.NEXT_ID = 0;
@@ -812,8 +871,7 @@ public class LayoutGenerator : MonoBehaviour {
         {
             for (int y = 0; y < generationBounds.size.y; y++)
             {
-        //        map[x, y] = TileType.Air;
-                regionMap[x, y] = new RegionSpot(RegionType.None, -1);
+				regionMap[x, y] = new RegionSpot(RegionType.None, -1);
 				tileMap[x, y] = null;
             }
         }

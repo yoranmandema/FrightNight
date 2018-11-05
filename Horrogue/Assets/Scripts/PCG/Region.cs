@@ -170,6 +170,8 @@ public class Region
 	public List<RegionFurnitures> furnitures;
 	public List<VariableRegionFurnitures> variableFurnitures;
 
+	public List<GameObject> placedFurnitures = new List<GameObject>();
+
 	public BoundsInt outerBounds;
 	public BoundsInt innerBounds;
 
@@ -333,7 +335,7 @@ public class Region
 		{
 			if (BoundsOverlap(connection, b.bounds))
 			{
-				Debug.LogAssertion("Remove Blocked Connection - " + " Removing Connection: " + connection.ToString() + " (overlap with " + b.bounds.ToString());
+				Debug.LogWarning("Remove Blocked Connection - " + " Removing Connection: " + connection.ToString() + " (overlap with " + b.bounds.ToString());
 			}
 			else
 			{

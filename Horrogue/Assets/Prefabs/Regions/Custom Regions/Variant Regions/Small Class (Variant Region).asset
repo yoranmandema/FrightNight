@@ -17,64 +17,150 @@ MonoBehaviour:
   furnitures:
   - name: Black Boards
     prefab: {fileID: 0}
-    spawnLocations:
-    - {x: -50, y: 7.14, z: 0}
+    spawnTransforms:
+    - position: {x: 0, y: 7.14, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
   - name: Tables
     prefab: {fileID: 0}
-    spawnLocations:
-    - {x: -52, y: 5.77, z: 0}
-    - {x: -53, y: 5.77, z: 0}
+    spawnTransforms:
+    - position: {x: -2, y: 5.77, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -3, y: 5.77, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
   - name: Bins
     prefab: {fileID: 0}
-    spawnLocations:
-    - {x: -44.54, y: 5.49, z: 0}
-    - {x: -55.54, y: -5.51, z: 0}
-    - {x: -55.54, y: 5.49, z: 0}
-    - {x: -44.54, y: -5.51, z: 0}
+    spawnTransforms:
+    - position: {x: 5.46, y: 5.49, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -5.54, y: -5.51, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -5.54, y: 5.49, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 5.46, y: -5.51, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
   connections: []
   tileset: {fileID: 0}
   variableFurnitures:
   - name: Tables
-    spawnAmount: 18
     prefab: {fileID: 0}
-    spawnLocations:
-    - {x: -52.52, y: 2.28, z: 0}
-    - {x: -51.52, y: 2.28, z: 0}
-    - {x: -50.52, y: 2.28, z: 0}
-    - {x: -49.52, y: 2.28, z: 0}
-    - {x: -48.52, y: 2.28, z: 0}
-    - {x: -47.52, y: 2.28, z: 0}
-    - {x: -47.52, y: -0.060000032, z: 0}
-    - {x: -48.52, y: -0.060000032, z: 0}
-    - {x: -49.52, y: -0.060000032, z: 0}
-    - {x: -50.52, y: -0.060000032, z: 0}
-    - {x: -51.52, y: -0.06, z: 0}
-    - {x: -52.52, y: -0.060000032, z: 0}
-    - {x: -52.52, y: -2.72, z: 0}
-    - {x: -51.52, y: -2.72, z: 0}
-    - {x: -50.52, y: -2.72, z: 0}
-    - {x: -49.52, y: -2.72, z: 0}
-    - {x: -48.52, y: -2.72, z: 0}
-    - {x: -47.52, y: -2.72, z: 0}
+    spawnTransforms:
+    - position: {x: -2.5200005, y: 2.28, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.5200005, y: 2.28, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.52000046, y: 2.28, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.47999954, y: 2.28, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1.4799995, y: 2.28, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.4799995, y: 2.28, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.48, y: -0.060000032, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1.4799995, y: -0.060000032, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.47999954, y: -0.060000032, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.52000046, y: -0.060000032, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.5200005, y: -0.06, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.5200005, y: -0.060000032, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.5200005, y: -2.72, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.5200005, y: -2.72, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.52000046, y: -2.72, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.47999954, y: -2.72, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1.4799995, y: -2.72, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.4799995, y: -2.72, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    spawnAmount: 18
   - name: Chairs
-    spawnAmount: 18
     prefab: {fileID: 0}
-    spawnLocations:
-    - {x: -52.55, y: 1.12, z: 0}
-    - {x: -51.55, y: 1.12, z: 0}
-    - {x: -50.55, y: 1.12, z: 0}
-    - {x: -49.55, y: 1.12, z: 0}
-    - {x: -48.55, y: 1.12, z: 0}
-    - {x: -47.55, y: 1.12, z: 0}
-    - {x: -47.55, y: -1.24, z: 0}
-    - {x: -48.55, y: -1.24, z: 0}
-    - {x: -49.55, y: -1.24, z: 0}
-    - {x: -50.55, y: -1.24, z: 0}
-    - {x: -51.55, y: -1.24, z: 0}
-    - {x: -52.55, y: -1.24, z: 0}
-    - {x: -52.55, y: -3.88, z: 0}
-    - {x: -51.55, y: -3.88, z: 0}
-    - {x: -50.55, y: -3.88, z: 0}
-    - {x: -49.55, y: -3.88, z: 0}
-    - {x: -48.55, y: -3.88, z: 0}
-    - {x: -47.55, y: -3.88, z: 0}
+    spawnTransforms:
+    - position: {x: -2.5499992, y: 1.12, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.5499992, y: 1.12, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.55, y: 1.12, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.45000076, y: 1.12, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1.4500008, y: 1.12, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.4500008, y: 1.12, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.4500008, y: -1.24, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1.4500008, y: -1.24, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.45000076, y: -1.24, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.54999924, y: -1.24, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.5499992, y: -1.24, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.5499992, y: -1.24, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.5499992, y: -3.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.5499992, y: -3.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.54999924, y: -3.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.45000076, y: -3.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1.4500008, y: -3.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.4500008, y: -3.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    spawnAmount: 18

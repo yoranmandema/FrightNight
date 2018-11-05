@@ -8,6 +8,6 @@ public class CustomRegion : ScriptableObject {
 	public RegionType type;
 	public List<VariantRegion> regionVariations;
 
-	public bool seperateVerticalRegions = false;
+	public bool useSeperateVerticalRegions = false;
 	public List<VariantRegion> verticalRegionVariations;
 }
