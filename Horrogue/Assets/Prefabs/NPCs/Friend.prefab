@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 114703525414172094}
   - component: {fileID: 114306670261343948}
   - component: {fileID: 114655834571383558}
+  - component: {fileID: 114020183823891280}
   m_Layer: 20
   m_Name: Friend
   m_TagString: Friend
@@ -221,6 +222,17 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &114020183823891280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407853565990524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d6f600582833e41a63a4d75db2989b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114148428672696646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,7 +458,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6d2b9d75710ba4b47aed343c2ccd9686, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -492,7 +504,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6d2b9d75710ba4b47aed343c2ccd9686, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
