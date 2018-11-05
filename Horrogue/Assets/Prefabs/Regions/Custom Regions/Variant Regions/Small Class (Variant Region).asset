@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d269def0ea72bc4589c11c3300120fd, type: 3}
+  m_Name: Small Class (Variant Region)
+  m_EditorClassIdentifier: 
+  type: 0
+  innerRegionWidth: 12
+  innerRegionLength: 12
+  furnitures:
+  - name: Black Boards
+    prefab: {fileID: 0}
+    spawnLocations:
+    - {x: -50, y: 7.14, z: 0}
+  - name: Tables
+    prefab: {fileID: 0}
+    spawnLocations:
+    - {x: -52, y: 5.77, z: 0}
+    - {x: -53, y: 5.77, z: 0}
+  - name: Bins
+    prefab: {fileID: 0}
+    spawnLocations:
+    - {x: -44.54, y: 5.49, z: 0}
+    - {x: -55.54, y: -5.51, z: 0}
+    - {x: -55.54, y: 5.49, z: 0}
+    - {x: -44.54, y: -5.51, z: 0}
+  connections: []
+  tileset: {fileID: 0}
+  variableFurnitures:
+  - name: Tables
+    spawnAmount: 18
+    prefab: {fileID: 0}
+    spawnLocations:
+    - {x: -52.52, y: 2.28, z: 0}
+    - {x: -51.52, y: 2.28, z: 0}
+    - {x: -50.52, y: 2.28, z: 0}
+    - {x: -49.52, y: 2.28, z: 0}
+    - {x: -48.52, y: 2.28, z: 0}
+    - {x: -47.52, y: 2.28, z: 0}
+    - {x: -47.52, y: -0.060000032, z: 0}
+    - {x: -48.52, y: -0.060000032, z: 0}
+    - {x: -49.52, y: -0.060000032, z: 0}
+    - {x: -50.52, y: -0.060000032, z: 0}
+    - {x: -51.52, y: -0.06, z: 0}
+    - {x: -52.52, y: -0.060000032, z: 0}
+    - {x: -52.52, y: -2.72, z: 0}
+    - {x: -51.52, y: -2.72, z: 0}
+    - {x: -50.52, y: -2.72, z: 0}
+    - {x: -49.52, y: -2.72, z: 0}
+    - {x: -48.52, y: -2.72, z: 0}
+    - {x: -47.52, y: -2.72, z: 0}
+  - name: Chairs
+    spawnAmount: 18
+    prefab: {fileID: 0}
+    spawnLocations:
+    - {x: -52.55, y: 1.12, z: 0}
+    - {x: -51.55, y: 1.12, z: 0}
+    - {x: -50.55, y: 1.12, z: 0}
+    - {x: -49.55, y: 1.12, z: 0}
+    - {x: -48.55, y: 1.12, z: 0}
+    - {x: -47.55, y: 1.12, z: 0}
+    - {x: -47.55, y: -1.24, z: 0}
+    - {x: -48.55, y: -1.24, z: 0}
+    - {x: -49.55, y: -1.24, z: 0}
+    - {x: -50.55, y: -1.24, z: 0}
+    - {x: -51.55, y: -1.24, z: 0}
+    - {x: -52.55, y: -1.24, z: 0}
+    - {x: -52.55, y: -3.88, z: 0}
+    - {x: -51.55, y: -3.88, z: 0}
+    - {x: -50.55, y: -3.88, z: 0}
+    - {x: -49.55, y: -3.88, z: 0}
+    - {x: -48.55, y: -3.88, z: 0}
+    - {x: -47.55, y: -3.88, z: 0}

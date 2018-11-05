@@ -48,7 +48,7 @@ public class LayoutGenerator : MonoBehaviour {
 	#endregion
 
 	#region Public Variables
-	[Header("General")]
+	[Header("General", order = 0)]
 	public bool useRandomSeed = false;	// Should a seed be generated
 	public string seed = "elementary";  // The current seed used for generation
 
@@ -58,10 +58,12 @@ public class LayoutGenerator : MonoBehaviour {
     // How many times the generator should try placing content before skipping to the next step
     public int maxGenerationAttempts = 25;
 
-	[Header("New Spawning Behaviour")]
+	[Header("New Spawning Behaviour", order = 0)]
+	[Header("Amounts", order = 1)]
 	public int additionalCorridorAmount = 2;
 	public int additionalRoomAmount = 10;
 
+	[Header("Prefabs", order = 1)]
 	public PremadeRegion spawnRoomLayout;
 	public PremadeRegion mainCorridorLayout;
 
@@ -88,7 +90,7 @@ public class LayoutGenerator : MonoBehaviour {
     // Tile prefabs and settings
     [Header("Generator Tiles")]
 	public int tileSize = 1;
-	public List<Tileset> floorTiles;
+	public Tileset floorTiles;
 	public Tileset wallTiles;
 	public Tileset connectionTiles;
 	#endregion
@@ -106,6 +108,7 @@ public class LayoutGenerator : MonoBehaviour {
 	private GameObject parent;
 
     Region spawnRoom, mainCorridor;
+	Direction lastRandConDir;
     int numAddCor, numAddRoom;
 
     BoundsInt DebugBounds = new BoundsInt();
@@ -118,23 +121,48 @@ public class LayoutGenerator : MonoBehaviour {
 
         SetupSpawn();
 
-        CreateAdditionalCorridors();
-        GenerateRegions();
-		CreateAdditionalRooms();
-		RandomizeRegionContent();
+        //CreateAdditionalCorridors();
+        //GenerateRegions();
+		//CreateAdditionalRooms();
 
         CreateTileMap();
+		PlaceRegionContents();
+	}
+
+	private void PlaceRegionContents()
+	{
+		for (int i = 0; i < regions.Count; i++)
+		{
+			Region r = regions[i];
+			if (!r.isFurnished)
+			{
+				for (int j = 0; j < r.furnitures.Count; j++)
+				{
+					RegionFurnitures rf = r.furnitures[j];
+					PlaceRegionFurnitures(rf);
+				}
+
+				for (int j = 0; j < r.variableFurnitures.Count; j++)
+				{
+					VariableRegionFurnitures vrf = r.variableFurnitures[j];
+				}
+
+				regions[i].isFurnished = true;
+			}
+		}
+	}
+
+	private void PlaceRegionFurnitures(RegionFurnitures furnitures)
+	{
+		if (furnitures.prefab == null || furnitures.spawnTransforms == null || furnitures.spawnTransforms.Count == 0)
+			throw new Exception("Place Region Furnitures - " + "No furniture prefab has been assigned! " + furnitures.ToString());
+
+		GameObject prefab = furnitures.prefab;
 	}
 
 	private void GenerateRegions()
 	{
-		//throw new NotImplementedException();
-
-		// Add a principals office
-		// Add a gym
-		// Add a music room
-		// Add a chemistry room
-
+		
 	}
 
 	private void RandomizeRegionContent()
@@ -242,14 +270,14 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 
 		// Create a list of all possible walls
-		List<Region.Wall> walls = new List<Region.Wall>((createCorridor) ? region.GetPerpendicularWalls() : region.walls);
+		List<Wall> walls = new List<Wall>((createCorridor) ? region.GetPerpendicularWalls() : region.walls);
 		bool roomWasCreated = false;
 		// iterating over all walls in random order
 		while (walls.Count > 0)
 		{
 			// Get and remove random wall from list
 			int wIndex = Random.Range(0, walls.Count);
-			Region.Wall w = walls[wIndex];
+			Wall w = walls[wIndex];
 			walls.RemoveAt(wIndex);
 
 			Region newRoom = GenerateRegionAtRandomSpot(w, createCorridor);
@@ -276,7 +304,7 @@ public class LayoutGenerator : MonoBehaviour {
 	}
 
 	// Returns the new region
-	private Region GenerateRegionAtRandomSpot(Region.Wall wall, bool createCorridor)
+	private Region GenerateRegionAtRandomSpot(Wall wall, bool createCorridor)
 	{
 		Vector2Int widthAxis = Region.GetPerpendicularDirectionVector(wall.dir);
 
@@ -395,28 +423,28 @@ public class LayoutGenerator : MonoBehaviour {
 					{
 						switch (wall.dir)
 						{
-							case Region.Direction.NORTH:
+							case Direction.NORTH:
 								pX = s.x - w + 1;
 								pY = s.y - 1;
 								sX = w;
 								sY = l;
 								break;
 
-							case Region.Direction.SOUTH:
+							case Direction.SOUTH:
 								pX = s.x - w + 1;
 								pY = s.y - l;
 								sX = w;
 								sY = l;
 								break;
 
-							case Region.Direction.EAST:
+							case Direction.EAST:
 								pX = s.x;
 								pY = s.y - w + 1;
 								sX = l;
 								sY = w;
 								break;
 
-							case Region.Direction.WEST:
+							case Direction.WEST:
 								pX = s.x - l + 1;
 								pY = s.y - w + 1;
 								sX = l;
@@ -476,7 +504,7 @@ public class LayoutGenerator : MonoBehaviour {
 		return null;
 	}
 
-	private Region MakeRandomRegion(Vector3Int spot, Region.Direction dir, Range width, Range length)
+	private Region MakeRandomRegion(Vector3Int spot, Direction dir, Range width, Range length)
 	{
 		int sX = Random.Range(width.min, width.max + 1);
 		int sY = Random.Range(length.min, length.max + 1);
@@ -488,17 +516,17 @@ public class LayoutGenerator : MonoBehaviour {
 
 		switch (dir)
 		{
-			case Region.Direction.NORTH:
+			case Direction.NORTH:
 				pX = spot.x - sX + 1;
 				pY = spot.y;
 				break;
 
-			case Region.Direction.SOUTH:
+			case Direction.SOUTH:
 				pX = spot.x - sX + 1;
 				pY = spot.y - sY + 1;
 				break;
 
-			case Region.Direction.EAST:
+			case Direction.EAST:
 				sX = sX + sY;
 				sY = sX - sY;
 				sX = sX - sY;
@@ -506,7 +534,7 @@ public class LayoutGenerator : MonoBehaviour {
 				pY = spot.y - sY + 1;
 				break;
 
-			case Region.Direction.WEST:
+			case Direction.WEST:
 				sX = sX + sY;
 				sY = sX - sY;
 				sX = sX - sY;
@@ -539,72 +567,80 @@ public class LayoutGenerator : MonoBehaviour {
 		regions.Add(region);
 		if (isCorrdior) corridors.Add(region);
 		else rooms.Add(region);
+	}
 
-		/*// Add to map
-		for (int x = translatedX; x < translatedX + region.bounds.size.x; x++)
-		{
-			for (int y = translatedY; y < translatedY + region.bounds.size.y; y++)
-			{
-				TileType type = TileType.Ground;
-				if (x == translatedX || y == translatedY || x == translatedX + region.bounds.size.x - 1 || y == translatedY + region.bounds.size.y - 1)
-				{
-					type = TileType.Wall;
-				}
-				map[x, y] = type;
-			}
-		}*/
-
-
+	private void ConnectRegions(Region a, Region b)
+	{
+		a.ConnectToRegion(b);
 	}
 
 	private void ConnectRegions(Region a, Region b, int connectionSize)
 	{
 		BoundsInt overlap = a.ConnectToRegion(b, connectionSize);
-
-		/*int translatedX = overlap.x - generationBounds.x,
-			translatedY = overlap.y - generationBounds.y;
-
-		// Update map
-		for (int x = translatedX; x < translatedX + overlap.size.x; x++)
-		{
-			for (int y = translatedY; y < translatedY + overlap.size.y; y++)
-			{
-				map[x, y] = TileType.Doorway;
-			}
-		}*/
 	}
 
 	private void SetupSpawn()
 	{
-		// Find Spawn Region or create a new one
-		spawnRoom = regions.Find(x => x.isSpawn);
-		if (spawnRoom == null)
+		// Create Spawn Region
+		Vector3Int spawnSize = new Vector3Int(spawnRoomLayout.innerRegionWidth, spawnRoomLayout.innerRegionLength, 1);
+		Vector3Int spawnPosition = Vector3Int.RoundToInt(generationBounds.center - new Vector3(spawnSize.x / 2f, spawnSize.y / 2f));
+		spawnRoom = new Region(spawnRoomLayout, spawnPosition);
+		spawnRoom.isSpawn = true;
+
+		AddRegion(spawnRoom);
+
+		// Create Main Corridor
+		// Pick random connection from spawn and calcualte connection offset
+		BoundsInt connection = GetRandomConnection(spawnRoom);
+		BoundsInt variantConnection = GetRandomConnection((VariantRegion)mainCorridorLayout, Region.GetOppositeDirection(lastRandConDir));
+		Vector3Int alignmentOffset = AlignConnections(connection, variantConnection, lastRandConDir);
+
+		// Calculate the corrdiors position
+		Vector3Int mainCorridorSize = new Vector3Int(mainCorridorLayout.innerRegionWidth, mainCorridorLayout.innerRegionLength, 1);
+		Vector3Int mainCorridorPosition = Vector3Int.RoundToInt(alignmentOffset - new Vector3(mainCorridorSize.x / 2f, mainCorridorSize.y / 2f));
+		mainCorridor = new Region((VariantRegion)mainCorridorLayout, mainCorridorPosition);
+
+		AddRegion(mainCorridor, true);
+
+		ConnectRegions(spawnRoom, mainCorridor);
+	}
+
+	private Vector3Int AlignConnections(BoundsInt connection, BoundsInt otherConnection, Direction connectionSide)
+	{
+		// B to A = A - B, add Wall Thickness too?
+		Vector3Int offset = Vector3Int.FloorToInt(connection.center - otherConnection.center) - Wall.GetDirectionThickness(Region.GetOppositeDirection(connectionSide));
+		if (connectionSide == Direction.SOUTH || connectionSide == Direction.WEST)
 		{
-			Vector3Int size = new Vector3Int(spawnAreaWidth, spawnAreaHeight, 1);
-			Vector3Int position = Vector3Int.RoundToInt(generationBounds.center - new Vector3(size.x / 2f, size.y / 2f));
-			spawnRoom = new Region(new BoundsInt(position, size), RegionType.Toilets);
-			spawnRoom.isSpawn = true;
-
-			AddRegion(spawnRoom);
+			offset += Region.GetDirectionVector(Region.GetOppositeDirection(connectionSide));
 		}
+		Debug.Log("Align Connections - " + "Connection: " + connection.ToString() + ", Other Connection: " + otherConnection.ToString());
+		Debug.Log(offset);
+		return offset;
+	}
 
-		// Find Main Corridor or create a new one
-		mainCorridor = regions.Find(x => x.type == RegionType.MainCorridor);
-		if (mainCorridor == null)
-		{
-			Vector3Int size = new Vector3Int(mainCorridorWidth, mainCorridorHeight, 1);
-			Region.Wall w = spawnRoom.walls.Find(x => x.dir == Region.Direction.EAST);
-			Vector3Int position = Vector3Int.RoundToInt(w.bounds.center - Vector3.Scale(size, new Vector3(0, .5f)));
-			mainCorridor = new Region(new BoundsInt(position, size), RegionType.MainCorridor);
+	private BoundsInt GetRandomConnection(Region region)
+	{
+		List<Wall> walls = region.walls.FindAll(x => x.possibleConnections.Count > 0);
+		Wall randWall = walls[Random.Range(0, walls.Count)];
 
-			AddRegion(mainCorridor, true);
-		}
+		lastRandConDir = randWall.dir;
 
-		// Connect rooms
-		if (!spawnRoom.isConnected)
-		{
-			ConnectRegions(spawnRoom, mainCorridor, 1);
-		}
+		return GetRandomConnection(randWall.possibleConnections);
+	}
+	private BoundsInt GetRandomConnection(VariantRegion varRegion, Direction dir)
+	{
+		RegionConnections conns = varRegion.connections.Find(x => x.direction == dir);
+		return GetRandomConnection(conns.boundsList);
+	}
+	private BoundsInt GetRandomConnection(Region region, Direction dir)
+	{
+		Wall wall = region.walls.Find(x => x.dir == dir);
+		return GetRandomConnection(wall.possibleConnections);
+	}
+	private BoundsInt GetRandomConnection(List<BoundsInt> possibleConnections)
+	{
+		BoundsInt connection = possibleConnections[Random.Range(0, possibleConnections.Count)];
+		return connection;
 	}
 
 	private void CreateTileMap()
@@ -613,90 +649,101 @@ public class LayoutGenerator : MonoBehaviour {
 		for (int i = 0; i < regions.Count; i++)
 		{
 			Region r = regions[i];
-			Vector3Int basePos = r.outerBounds.min;
-			// Temp fix
-			Tileset tsFloor = floorTiles[Random.Range(0, floorTiles.Count)];
+			BoundsInt ob = r.outerBounds;
+			BoundsInt ib = r.innerBounds;
+			Vector3Int basePosWalls = ob.min;
+			Vector3Int basePosFloor = ib.min;
 
-			for (int x = 0; x < r.outerBounds.size.x; x++)
+			Tileset tsFloor = (r.floorTiles != null) ? r.floorTiles : floorTiles;
+			Tileset tsWall = (r.wallTiles != null) ? r.wallTiles : wallTiles;
+
+			// Region Walls
+			for (int x = 0; x < ob.size.x; x++)
 			{
-				for (int y = 0; y < r.outerBounds.size.y; y++)
+				for (int y = 0; y < ob.size.y; y++)
 				{
-					GameObject tilePrefab;
+					GameObject t = null;
 
-					// Walls
-					if (x == 0)
-					{
-						tilePrefab = wallTiles.Left;
-					}
-					else if (x == r.outerBounds.size.x - 1)
-					{
-						tilePrefab = wallTiles.Right;
-					}
-					else if (y == r.outerBounds.size.y - 1)
-					{
-						tilePrefab = wallTiles.Top;
-					}
+					// Wall Corners
+					if (x == 0 && y == 0)
+						t = tsWall.BottomLeft;
+					else if (x == ob.size.x - 1 && y == 0)
+						t = tsWall.BottomRight;
+					else if (x == 0 && y == ob.size.y - 1)
+						t = tsWall.TopLeft;
+					else if (x == ob.size.x - 1 && y == ob.size.y - 1)
+						t = tsWall.TopRight;
+
+					// Wall Sides
+					else if (x == 0)
+						t = tsWall.Left;
+					else if (x == ob.size.x - 1)
+						t = tsWall.Right;
 					else if (y == 0)
-					{
-						tilePrefab = wallTiles.Bottom;
-					}
-					else if (x == 1 && y == 1) // bottom left ground
-					{
-						tilePrefab = tsFloor.BottomLeft;
-					}
-					else if (x == r.outerBounds.size.x - 2 && y == 1) // bottom right ground
-					{
-						tilePrefab = tsFloor.BottomRight;
-					}
-					else if (x == 1 && y == r.outerBounds.size.y - 2) // top left ground
-					{
-						tilePrefab = tsFloor.TopLeft;
-					}
-					else if (x == r.outerBounds.size.x - 2 && y == r.outerBounds.size.y - 2) // bottom right ground
-					{
-						tilePrefab = tsFloor.TopRight;
-					}
-					else if (y == 1) // bottom ground
-					{
-						tilePrefab = tsFloor.Bottom;
-					}
-					else if (x == 1) // left ground
-					{
-						tilePrefab = tsFloor.Left;
-					}
-					else if (x == r.outerBounds.size.x - 2) // right ground
-					{
-						tilePrefab = tsFloor.Right;
-					}
-					else if (y == r.outerBounds.size.y - 2) // top ground
-					{
-						tilePrefab = tsFloor.Top;
-					}
-					else // center ground
-					{
-						tilePrefab = tsFloor.Middle;
-					}
+						t = tsWall.Bottom;
+					else if (y == ob.size.y - 1)
+						t = tsWall.Top;
 
-					SpawnTile(basePos, new Vector2Int(x, y), tilePrefab);
+					// Wall Middle
+					else if (x < Wall.thicknessWest || x > ob.size.x - Wall.thicknessEast - 1
+						  || y < Wall.thicknessSouth || y > ob.size.y - Wall.thicknessNorth - 1)
+						t = tsWall.Middle;
+
+					else continue;
+
+					SpawnTile(basePosWalls, new Vector2Int(x, y), t);
 				}
 			}
+
+			for (int x = 0; x < ib.size.x; x++)
+			{
+				for (int y = 0; y < ib.size.y; y++)
+				{
+					GameObject t = null;
+
+					// Floor Corners
+					if (x == 0 && y == 0)
+						t = tsFloor.BottomLeft;
+					else if (x == ib.size.x - 1 && y == 0)
+						t = tsFloor.BottomRight;
+					else if (x == 0 && y == ib.size.y - 1)
+						t = tsFloor.TopLeft;
+					else if (x == ib.size.x - 1 && y == ib.size.y - 1)
+						t = tsFloor.TopRight;
+
+					// Floor Sides
+					else if (x == 0)
+						t = tsFloor.Left;
+					else if (x == ib.size.x - 1)
+						t = tsFloor.Right;
+					else if (y == 0)
+						t = tsFloor.Bottom;
+					else if (y == ib.size.y - 1)
+						t = tsFloor.Top;
+
+					// Floor Middle
+					else t = tsFloor.Middle;
+
+					SpawnTile(basePosFloor, new Vector2Int(x, y), t);
+				}
+			}
+
 			for (int j = 0; j < r.connections.Count; j++)
 			{
-				BoundsInt con = r.connections[j];
-				Vector3Int conBasePos = con.position;
-				for (int x = 0; x < con.size.x; x++)
+				BoundsInt c = r.connections[j];
+				Vector3Int conBasePos = c.min;
+				for (int x = 0; x < c.size.x; x++)
 				{
-					for (int y = 0; y < con.size.y; y++)
+					for (int y = 0; y < c.size.y; y++)
 					{
-						GameObject tilePrefab = connectionTiles.Middle;
-						SpawnTile(conBasePos, new Vector2Int(x, y), tilePrefab);	
+						SpawnTile(conBasePos, new Vector2Int(x, y), connectionTiles.Middle, true);
 					}
 				}
 			}
 		}
     }
 
-	private void SpawnTile (Vector3 basePosition, Vector2Int relativePosition, GameObject tilePrefab)
+	private void SpawnTile (Vector3 basePosition, Vector2Int relativePosition, GameObject tilePrefab, bool overrideExisiting = false)
 	{
 		// Tile Size
 		Vector3 size = Vector3.Scale(Vector3.one, new Vector3(tileSize, tileSize, 1f));
@@ -704,9 +751,17 @@ public class LayoutGenerator : MonoBehaviour {
 		Vector3 pos = new Vector3(generationBounds.xMin + (mapPos.x + 0.5f) * tileSize,
 			generationBounds.yMin + (mapPos.y + 0.5f) * tileSize);
 
-		if (tileMap[mapPos.x, mapPos.y] != null && tileMap[mapPos.x, mapPos.y] != connectionTiles.Middle)
+		if (tileMap[mapPos.x, mapPos.y] != null)
 		{
-			Destroy(tileMap[mapPos.x, mapPos.y]);
+			if (overrideExisiting)
+			{
+				Destroy(tileMap[mapPos.x, mapPos.y]);
+			}
+			else
+			{
+				Debug.LogWarning("Spawn Tile - " + "Tile spot already taken at " + mapPos.ToString() + "! (" + tilePrefab.name.ToString() + " -> " + tileMap[mapPos.x, mapPos.y].name.ToString() + ")");
+				return;
+			}
 		}
 
 		tileMap[mapPos.x, mapPos.y] = Instantiate(tilePrefab, pos, Quaternion.identity, parent.transform);
@@ -769,50 +824,36 @@ public class LayoutGenerator : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        if (generationBounds != null)
-		{ 
-            Gizmos.color = Color.green;
-
-            Gizmos.DrawLine(new Vector3(generationBounds.xMin, generationBounds.yMin), new Vector3(generationBounds.xMin, generationBounds.yMax));
-            Gizmos.DrawLine(new Vector3(generationBounds.xMin, generationBounds.yMin), new Vector3(generationBounds.xMax, generationBounds.yMin));
-            Gizmos.DrawLine(new Vector3(generationBounds.xMax, generationBounds.yMax), new Vector3(generationBounds.xMin, generationBounds.yMax));
-            Gizmos.DrawLine(new Vector3(generationBounds.xMax, generationBounds.yMax), new Vector3(generationBounds.xMax, generationBounds.yMin));
-            
-
-            if (regions != null && regions.Count > 0)
+        if (regions != null && regions.Count > 0)
+        {
+            foreach (Region r in regions)
             {
-                foreach (Region r in regions)
-                {
-					foreach (Region.Wall w in r.walls)
-					{
-						Gizmos.color = Color.red;
+				foreach (Wall w in r.walls)
+				{
+					Gizmos.color = Color.red;
+					Gizmos.DrawWireCube(w.bounds.center, w.bounds.size);
 
-						Gizmos.DrawLine(new Vector3(w.bounds.xMin, w.bounds.yMin), new Vector3(w.bounds.xMin, w.bounds.yMax));
-						Gizmos.DrawLine(new Vector3(w.bounds.xMin, w.bounds.yMin), new Vector3(w.bounds.xMax, w.bounds.yMin));
-						Gizmos.DrawLine(new Vector3(w.bounds.xMax, w.bounds.yMax), new Vector3(w.bounds.xMin, w.bounds.yMax));
-						Gizmos.DrawLine(new Vector3(w.bounds.xMax, w.bounds.yMax), new Vector3(w.bounds.xMax, w.bounds.yMin));
-					}
-					foreach (BoundsInt b in r.connections)
+					foreach (BoundsInt pCon in w.possibleConnections)
 					{
-						Gizmos.color = Color.magenta;
-
-						Gizmos.DrawLine(new Vector3(b.xMin, b.yMin), new Vector3(b.xMin, b.yMax));
-						Gizmos.DrawLine(new Vector3(b.xMin, b.yMin), new Vector3(b.xMax, b.yMin));
-						Gizmos.DrawLine(new Vector3(b.xMax, b.yMax), new Vector3(b.xMin, b.yMax));
-						Gizmos.DrawLine(new Vector3(b.xMax, b.yMax), new Vector3(b.xMax, b.yMin));
+						Gizmos.color = Color.cyan;
+						Gizmos.DrawWireCube(pCon.center, pCon.size - new Vector3(0.2f, 0.2f));
 					}
 				}
+				foreach (BoundsInt b in r.connections)
+				{
+					Gizmos.color = Color.magenta;
+					Gizmos.DrawWireCube(b.center, b.size);
+				}
+
+				Gizmos.color = Color.black;
+				Bounds outer = new Bounds(r.outerBounds.center, r.outerBounds.size + new Vector3(0.1f, 0.1f));
+				Gizmos.DrawWireCube(outer.center, outer.size);
+
+				Gizmos.color = Color.green;
+				Bounds inner = new Bounds(r.innerBounds.center, r.innerBounds.size - new Vector3(0.1f, 0.1f));
+				Gizmos.DrawWireCube(inner.center, inner.size);
+
 			}
-        }
-
-        if (DebugBounds != null)
-        {
-            Gizmos.color = Color.green;
-
-            Gizmos.DrawLine(new Vector3(DebugBounds.xMin, DebugBounds.yMin), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
-            Gizmos.DrawLine(new Vector3(DebugBounds.xMin, DebugBounds.yMin), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
-            Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMin, DebugBounds.yMax));
-            Gizmos.DrawLine(new Vector3(DebugBounds.xMax, DebugBounds.yMax), new Vector3(DebugBounds.xMax, DebugBounds.yMin));
-        }
+		}
     }
 }

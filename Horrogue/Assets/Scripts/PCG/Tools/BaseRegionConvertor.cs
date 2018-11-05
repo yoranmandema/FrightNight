@@ -39,7 +39,8 @@ public class BaseRegionConvertor : MonoBehaviour {
 
 				for (int j = 0; j < obj.transform.childCount; j++)
 				{
-					rf.AddPosition(obj.transform.GetChild(j).transform.position);
+					Transform trans = obj.transform.GetChild(j).transform;
+					rf.AddPosition(trans.localPosition, trans.localRotation, trans.localScale);
 				}
 
 				furnitures.Add(rf);
@@ -59,8 +60,10 @@ public class BaseRegionConvertor : MonoBehaviour {
 				RegionConnections con = new RegionConnections(obj.name);
 				for (int j = 0; j < cmps.Length; j++)
 				{
-					BoxCollider2D col = (BoxCollider2D)cmps[j];
-					con.AddConnection(col.bounds);
+					Bounds bounds = ((BoxCollider2D)cmps[j]).bounds;
+					bounds.min -= pos;
+					bounds.max -= pos;
+					con.AddConnection(bounds);
 				}
 
 				connections.Add(con);
@@ -84,10 +87,10 @@ public class BaseRegionConvertor : MonoBehaviour {
 				for (int i = 0; i < furnitures.Count; i++)
 				{
 					RegionFurnitures rf = furnitures[i];
-					for (int j = 0; j < rf.spawnLocations.Count; j++)
+					for (int j = 0; j < rf.spawnTransforms.Count; j++)
 					{
 						// Convert to world coords
-						Gizmos.DrawCube(rf.spawnLocations[j], Vector3.one * 0.25f);
+						Gizmos.DrawCube(rf.spawnTransforms[j].position + pos, Vector3.one * 0.25f);
 					}
 				}
 			}
@@ -101,7 +104,7 @@ public class BaseRegionConvertor : MonoBehaviour {
 					for (int j = 0; j < rc.boundsList.Count; j++)
 					{
 						// Are world coords already
-						Gizmos.DrawCube(rc.boundsList[j].center, rc.boundsList[j].size - Vector3.one * 0.25f);
+						Gizmos.DrawCube(rc.boundsList[j].center + pos, rc.boundsList[j].size - Vector3.one * 0.25f);
 					}
 				}
 			}

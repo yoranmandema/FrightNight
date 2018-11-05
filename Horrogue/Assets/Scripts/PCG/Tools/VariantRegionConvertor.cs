@@ -36,7 +36,8 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 
 				for (int j = 0; j < obj.transform.childCount; j++)
 				{
-					vrf.AddPosition(obj.transform.GetChild(j).transform.position);
+					Transform trans = obj.transform.GetChild(j).transform;
+					vrf.AddPosition(trans.localPosition, trans.localRotation, trans.localScale);
 				}
 
 				variableFurnitures.Add(vrf);
@@ -48,8 +49,14 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 
 	private void GenerateVariantRegion()
 	{
-		variantRegionObject = (VariantRegion)ScriptableObject.CreateInstance(typeof(VariantRegion));
-		variantRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset, variableFurnitures);
+		if (createPrefab)
+		{
+			variantRegionObject = (VariantRegion)ScriptableObject.CreateInstance(typeof(VariantRegion));
+		}
+		if (variantRegionObject != null)
+		{
+			variantRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset, variableFurnitures);
+		}
 
 		if (createPrefab)
 		{
@@ -90,10 +97,10 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 				for (int i = 0; i < variableFurnitures.Count; i++)
 				{
 					VariableRegionFurnitures vrf = variableFurnitures[i];
-					for (int j = 0; j < vrf.spawnLocations.Count; j++)
+					for (int j = 0; j < vrf.spawnTransforms.Count; j++)
 					{
 						// Convert to world coords
-						Gizmos.DrawCube(vrf.spawnLocations[j], Vector3.one * 0.4f);
+						Gizmos.DrawCube(vrf.spawnTransforms[j].position + pos, Vector3.one * 0.4f);
 					}
 				}
 			}

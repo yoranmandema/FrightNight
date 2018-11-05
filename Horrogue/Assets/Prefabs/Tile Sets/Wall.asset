@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878a0a3afa0b1d74d9d87a8e6e1eb739, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
-  TopLeft: {fileID: 0}
-  Top: {fileID: 1087665060789828, guid: 8511adf5ea363eb4e9a0b66b3117ed14, type: 2}
-  TopRight: {fileID: 0}
+  TopLeft: {fileID: 1577172713477960, guid: 49b881e45c2dec44f8397ce0422621c6, type: 2}
+  Top: {fileID: 1577172713477960, guid: 91b134f0ba786dd4b8bdcda422936bed, type: 2}
+  TopRight: {fileID: 1675115578835458, guid: 7c66e066caf9ce24086c5e7599cd3132, type: 2}
   Left: {fileID: 1456124680127476, guid: 454284aaceeba5d4d8cc2822a76b6a52, type: 2}
   Middle: {fileID: 1087665060789828, guid: 8511adf5ea363eb4e9a0b66b3117ed14, type: 2}
   Right: {fileID: 1675115578835458, guid: c9672a00aa24d444980890247626ce4a, type: 2}
-  BottomLeft: {fileID: 0}
-  Bottom: {fileID: 1577172713477960, guid: 91b134f0ba786dd4b8bdcda422936bed, type: 2}
-  BottomRight: {fileID: 0}
+  BottomLeft: {fileID: 1456124680127476, guid: 454284aaceeba5d4d8cc2822a76b6a52, type: 2}
+  Bottom: {fileID: 1087665060789828, guid: 8511adf5ea363eb4e9a0b66b3117ed14, type: 2}
+  BottomRight: {fileID: 1675115578835458, guid: c9672a00aa24d444980890247626ce4a,
+    type: 2}
