@@ -13,12 +13,8 @@ public class SpriteOrder : MonoBehaviour {
         SetZ();
     }
 
-	void Update () {
-		//if (parentTransform.hasChanged) {
-            SetZ();
-
-        //    parentTransform.hasChanged = false;
-        //}
+    void Update() {
+        SetZ();
 	}
 
     void SetZ() {

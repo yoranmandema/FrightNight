@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class Interact : MonoBehaviour {
     public float InteractDistance = 0.5f;
+    public RaycastHit2D Hit;
 
 	void Update () {
-		if (Input.GetButtonDown("Interact"))
+        var cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var direction = (cursorPos - transform.position).normalized;
+
+        Hit = Physics2D.CircleCast(transform.position, 0.2f, direction, InteractDistance, ~LayerMask.GetMask("Player"));
+
+        if (Input.GetButtonDown("Interact"))
         {
-            var cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var direction = (cursorPos - transform.position).normalized;
-
-            var hit = Physics2D.CircleCast(transform.position, 0.2f, direction, InteractDistance, ~LayerMask.GetMask("Player"));
-
-            if (hit.collider != null)
+            if (Hit.collider != null)
             {
-                var component = hit.collider.gameObject.GetComponent<Interactable>();
+                var component = Hit.collider.gameObject.GetComponent<Interactable>();
 
                 if (component != null)
                 {

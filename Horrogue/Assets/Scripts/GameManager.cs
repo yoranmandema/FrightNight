@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		ControlledObject = GameObject.FindGameObjectWithTag("Player");
+        Player = ControlledObject = GameObject.FindGameObjectWithTag("Player");
 		CameraObject = GameObject.FindGameObjectWithTag("MainCamera");
 
         generator = GetComponent<LayoutGenerator>();
@@ -63,7 +63,8 @@ public class GameManager : MonoBehaviour {
             Clown = Instantiate(clownPrefab, clownSpawn, Quaternion.identity);
         }
 
-        SpawnFriends();
+        if (friendPrefab != null)
+            SpawnFriends();
     }
 
     private void SpawnFriends () {
@@ -106,9 +107,11 @@ public class GameManager : MonoBehaviour {
     void GenerateLayout()
     {
         // Generate Layout
-        if (generator != null) generator.GenerateLayout();
+        if (generator != null) {
+            generator.GenerateLayout();
 
-		Exit = generator.GetExit();
+            Exit = generator.GetExit();
+        }
 
 		// Scan Generated Layout
 		AstarPath.active.Scan();

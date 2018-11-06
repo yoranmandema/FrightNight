@@ -16,9 +16,10 @@ public class ExitRoom : MonoBehaviour {
     #endregion
 
     void Start () {
-        style = new GUIStyle();
-        style.fontSize = 25;
-        style.alignment = TextAnchor.MiddleCenter;
+        style = new GUIStyle {
+            fontSize = 25,
+            alignment = TextAnchor.MiddleCenter
+        };
         style.normal.textColor = Color.red / 1.5f;
 
         roomCollider = GetComponent<BoxCollider2D>();
@@ -46,6 +47,8 @@ public class ExitRoom : MonoBehaviour {
             var movement = gameManager.Player.GetComponent<PlayerMovement>();
             movement.enabled = false;
         }
+
+        print(playerIsInRoom);
 	}
 
     void OnGUI() {
@@ -62,14 +65,14 @@ public class ExitRoom : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D target) {
+    void OnTriggerEnter2D(Collider2D target) {
         if (target.gameObject.tag.Equals("Player")) {
             playerIsInRoom = true;
         }
     }
 
 
-    void OnCollisionExit2D(Collision2D target) {
+    void OnTriggerExit2D(Collider2D target) {
         if (target.gameObject.tag.Equals("Player")) {
             playerIsInRoom = false;
         }
