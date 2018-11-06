@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Exit (Premade Region)
   m_EditorClassIdentifier: 
   type: 7
-  innerRegionWidth: 2
-  innerRegionLength: 2
+  innerRegionWidth: 4
+  innerRegionLength: 4
   furnitures:
   - name: School Exits
     prefab: {fileID: 1891856763005462, guid: d1d3ef8aca4b6bc449520816fc553685, type: 2}

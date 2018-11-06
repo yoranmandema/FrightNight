@@ -6,32 +6,25 @@ using UnityEngine;
 
 public class PremadeRegionConvertor : BaseRegionConvertor {
 
+
 	[Header("Premade Region Output")]
 	public PremadeRegion premadeRegionObject;
 	public bool createPrefab = false;
 
-	private void OnValidate()
-	{
-		Convert();
-	}
-
-	protected override void Convert()
-	{
-		base.Convert();
-		GeneratePremadeRegion();
-	}
-
-	public void GeneratePremadeRegion()
+	protected override void ApplyRegionToScriptableObject()
 	{
 		if (createPrefab)
 		{
 			premadeRegionObject = (PremadeRegion)ScriptableObject.CreateInstance(typeof(PremadeRegion));
 		}
 
-		if (premadeRegionObject != null)
+		if (premadeRegionObject != null && (createPrefab || updatePrefab))
 		{
-			premadeRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset);
+			premadeRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, regionFurnitures, regionConnections, floorTileset);
+
+			updatePrefab = false;
 		}
+
 
 		if (createPrefab)
 		{

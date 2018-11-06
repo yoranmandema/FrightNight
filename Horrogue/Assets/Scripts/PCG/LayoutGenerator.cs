@@ -113,7 +113,7 @@ public class LayoutGenerator : MonoBehaviour {
 	Direction lastRandConDir;
     int numAddCor, numAddRoom;
 
-    BoundsInt DebugBounds = new BoundsInt();
+    BoundsInt testBounds = new BoundsInt();
     #endregion
 
     public void GenerateLayout()
@@ -374,8 +374,6 @@ public class LayoutGenerator : MonoBehaviour {
 			//Debug.Log("Creating a premade region.");
 			customRegion = new CustomRegion();
 
-
-
 			VariantRegion vr;
 			if (regionLayout.GetType() == typeof(VariantRegion))
 			{
@@ -419,7 +417,7 @@ public class LayoutGenerator : MonoBehaviour {
 					Vector3Int size = new Vector3Int(layout.innerRegionWidth, layout.innerRegionLength, 1);
 					Vector3Int position = Vector3Int.RoundToInt(alignmentOffset - new Vector3(size.x / 2f, size.y / 2f));
 
-					BoundsInt testBounds = DebugBounds = Region.GetOuterBounds(position, size);
+					testBounds = Region.GetOuterBounds(position, size);
 					
 
 					bool isOverlapping = false;
@@ -606,7 +604,7 @@ public class LayoutGenerator : MonoBehaviour {
 						}
 						testBounds.position = new Vector3Int(pX, pY, 0);
 						testBounds.size = new Vector3Int(sX, sY, 1);
-						DebugBounds = testBounds;
+						this.testBounds = testBounds;
 						
 						bool isOverlapping = false;
 						for (int i = 0; i < regions.Count; i++)
@@ -697,7 +695,7 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 
 		BoundsInt newBounds = new BoundsInt(pX, pY, 0, sX, sY, 1);
-		DebugBounds = newBounds;
+		testBounds = newBounds;
 
 		return new Region(newBounds, RegionType.None, Region.GetOppositeDirection(dir));
 	}
@@ -1014,12 +1012,12 @@ public class LayoutGenerator : MonoBehaviour {
 
 			}
 		}
-		if (DebugBounds != null)
+		if (testBounds != null)
 		{
 			Color color = Color.red;
 			color.a = 0.5f;
 			Gizmos.color = color;
-			Gizmos.DrawCube(DebugBounds.center, DebugBounds.size);
+			Gizmos.DrawCube(testBounds.center, testBounds.size);
 		}
 	}
 }

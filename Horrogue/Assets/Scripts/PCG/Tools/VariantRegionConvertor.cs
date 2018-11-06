@@ -7,18 +7,24 @@ using UnityEngine;
 
 public class VariantRegionConvertor : BaseRegionConvertor {
 
-	[Header("Variant Region Parameters")]
-	public GameObject variableFurnitureParent;
+	[Header("Region Connections")]
+	public List<VariableRegionFurnitures> variableRegionFurnitures;
 
 	[Header("Variant Region Output")]
 	public VariantRegion variantRegionObject;
 	public bool createPrefab = false;
 
+	protected GameObject variableFurnitureParent;
 	protected List<VariableRegionFurnitures> variableFurnitures;
 
-	private void OnValidate()
+	protected override void CheckParents()
 	{
-		Convert();
+		base.CheckParents();
+		if (variableFurnitureParent == null)
+		{
+			variableFurnitureParent = new GameObject("Variable Furniture Parent");
+			variableFurnitureParent.transform.SetParent(transform);
+		}
 	}
 
 	protected override void Convert()
@@ -37,25 +43,25 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 				for (int j = 0; j < obj.transform.childCount; j++)
 				{
 					Transform trans = obj.transform.GetChild(j).transform;
-					vrf.AddPosition(trans.localPosition, trans.localRotation, trans.localScale);
+					vrf.AddPosition(trans.localPosition, trans.rotation, trans.localScale);
 				}
 
 				variableFurnitures.Add(vrf);
 			}
 		}
-
-		GenerateVariantRegion();
 	}
 
-	private void GenerateVariantRegion()
+	protected override void ApplyRegionToScriptableObject()
 	{
 		if (createPrefab)
 		{
 			variantRegionObject = (VariantRegion)ScriptableObject.CreateInstance(typeof(VariantRegion));
 		}
-		if (variantRegionObject != null)
+		if (variantRegionObject != null && (createPrefab || updatePrefab))
 		{
-			variantRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, furnitures, connections, tileset, variableFurnitures);
+			variantRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, regionFurnitures, regionConnections, floorTileset, variableFurnitures);
+
+			updatePrefab = false;
 		}
 
 		if (createPrefab)

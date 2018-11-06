@@ -11,38 +11,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b23721944dc7bd4f9fff44807b3761e, type: 3}
   m_Name: Toilets (Premade Region)
   m_EditorClassIdentifier: 
-  type: 3
+  type: 0
   innerRegionWidth: 8
   innerRegionLength: 4
   furnitures:
   - name: Toilet Stalls
-    prefab: {fileID: 0}
+    prefab: {fileID: 1372229311558152, guid: dead46332ea90e84cb82ee5b024c26ed, type: 2}
     spawnTransforms:
-    - position: {x: 3.6, y: 1.9, z: 0}
+    - position: {x: 1, y: 1.9, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - position: {x: 2.6, y: 1.9, z: 0}
+    - position: {x: 1.6400001, y: 1.9, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - position: {x: 1.5999999, y: 1.9, z: 0}
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - position: {x: 0.5999999, y: 1.9, z: 0}
+    - position: {x: 0.4100001, y: 1.9, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Sinks
-    prefab: {fileID: 0}
+    prefab: {fileID: 1372229311558152, guid: 39dc0b5812f5cff449347b23b560d0cb, type: 2}
     spawnTransforms:
-    - position: {x: -3.41, y: 2.03, z: 0}
+    - position: {x: -3, y: 2, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 0.8, y: 0.8, z: 0.8}
-    - position: {x: -2.55, y: 2.03, z: 0}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 3, y: 2, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
+      scale: {x: 1, y: 1, z: 1}
   - name: Box Storage
-    prefab: {fileID: 0}
+    prefab: {fileID: 1120618518968216, guid: 7342ac74dbfd8f14f8a00424f1e6b60e, type: 2}
     spawnTransforms:
-    - position: {x: -0.73, y: 1.77, z: 0}
+    - position: {x: -1.26, y: 1.81, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   connections:
@@ -50,10 +47,16 @@ MonoBehaviour:
     boundsList:
     - m_Position: {x: 4, y: 0, z: 0}
       m_Size: {x: 1, y: 2, z: 0}
-    - m_Position: {x: 4, y: -1, z: 0}
-      m_Size: {x: 1, y: 1, z: 0}
+    - m_Position: {x: 4, y: -2, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
   - direction: 2
     boundsList:
     - m_Position: {x: -1, y: -3, z: 0}
       m_Size: {x: 2, y: 1, z: 0}
+  - direction: 3
+    boundsList:
+    - m_Position: {x: -5, y: 0, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: -5, y: -2, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
   tileset: {fileID: 11400000, guid: af9e6613678eef249b9a5fc756ed87c0, type: 2}
