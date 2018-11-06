@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4233749096472008}
   - component: {fileID: 212614378709085180}
   - component: {fileID: 61000337375454304}
-  m_Layer: 13
+  m_Layer: 23
   m_Name: Wall Tile Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6d2b9d75710ba4b47aed343c2ccd9686, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

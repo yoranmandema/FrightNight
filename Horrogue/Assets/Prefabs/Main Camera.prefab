@@ -203,7 +203,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4718391
+    m_Bits: 13106999
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 0
-  halfViewboxSize: {x: 5.38629, y: 3.03}
+  halfViewboxSize: {x: 5.3871555, y: 3.03}
 --- !u!114 &114839279977927122
 MonoBehaviour:
   m_ObjectHideFlags: 1
