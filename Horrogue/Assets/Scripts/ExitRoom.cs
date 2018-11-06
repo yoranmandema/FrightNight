@@ -16,9 +16,10 @@ public class ExitRoom : MonoBehaviour {
     #endregion
 
     void Start () {
-        style = new GUIStyle();
-        style.fontSize = 25;
-        style.alignment = TextAnchor.MiddleCenter;
+        style = new GUIStyle {
+            fontSize = 25,
+            alignment = TextAnchor.MiddleCenter
+        };
         style.normal.textColor = Color.red / 1.5f;
 
         roomCollider = GetComponent<BoxCollider2D>();
