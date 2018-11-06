@@ -50,7 +50,6 @@ GameObject:
   - component: {fileID: 114703525414172094}
   - component: {fileID: 114306670261343948}
   - component: {fileID: 114655834571383558}
-  - component: {fileID: 114020183823891280}
   m_Layer: 20
   m_Name: Friend
   m_TagString: Friend
@@ -100,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1407853565990524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.917133, y: -8.9966755, z: 0}
+  m_LocalPosition: {x: -1.479, y: -0.472, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4992744216528614}
@@ -222,17 +221,6 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!114 &114020183823891280
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407853565990524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d6f600582833e41a63a4d75db2989b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114148428672696646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -419,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa1fc930dc24b643a8575cdaffd0067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Offset: -0.01
 --- !u!114 &114980284079200280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa1fc930dc24b643a8575cdaffd0067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Offset: 0
 --- !u!212 &212023042806034092
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -477,7 +467,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 708529773
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300026, guid: 24aa86a8f391ea341bfc2438da30d44e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
