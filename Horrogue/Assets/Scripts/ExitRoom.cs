@@ -46,6 +46,8 @@ public class ExitRoom : MonoBehaviour {
             var movement = gameManager.Player.GetComponent<PlayerMovement>();
             movement.enabled = false;
         }
+
+        print(playerIsInRoom);
 	}
 
     void OnGUI() {
@@ -62,14 +64,14 @@ public class ExitRoom : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D target) {
+    void OnTriggerEnter2D(Collider2D target) {
         if (target.gameObject.tag.Equals("Player")) {
             playerIsInRoom = true;
         }
     }
 
 
-    void OnCollisionExit2D(Collision2D target) {
+    void OnTriggerExit2D(Collider2D target) {
         if (target.gameObject.tag.Equals("Player")) {
             playerIsInRoom = false;
         }
