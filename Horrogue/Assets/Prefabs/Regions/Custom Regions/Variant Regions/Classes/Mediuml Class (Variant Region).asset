@@ -16,13 +16,13 @@ MonoBehaviour:
   innerRegionLength: 12
   furnitures:
   - name: Black Boards
-    prefab: {fileID: 0}
+    prefab: {fileID: 1559057433295706, guid: 3b37c83e030047742ba9eef40e49b36f, type: 2}
     spawnTransforms:
     - position: {x: 0, y: 7.14, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Tables
-    prefab: {fileID: 0}
+    prefab: {fileID: 1372229311558152, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
     spawnTransforms:
     - position: {x: -2, y: 5.77, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -31,7 +31,7 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   - name: Bins
-    prefab: {fileID: 0}
+    prefab: {fileID: 1260625184554590, guid: 4b175a73503e9f040af56b3cb290d773, type: 2}
     spawnTransforms:
     - position: {x: 5.46, y: 5.49, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -75,7 +75,7 @@ MonoBehaviour:
   tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
   variableFurnitures:
   - name: Tables
-    prefab: {fileID: 0}
+    prefab: {fileID: 1372229311558152, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
     spawnTransforms:
     - position: {x: -2.5200005, y: 2.28, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -131,9 +131,11 @@ MonoBehaviour:
     - position: {x: 2.4799995, y: -2.72, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    spawnAmount: 18
+    spawnAmount:
+      min: 10
+      max: 18
   - name: Chairs
-    prefab: {fileID: 0}
+    prefab: {fileID: 1765175424795030, guid: cc148f6289b49af4f95691acc3895c6d, type: 2}
     spawnTransforms:
     - position: {x: -2.5499992, y: 1.12, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
@@ -189,4 +191,6 @@ MonoBehaviour:
     - position: {x: 2.4500008, y: -3.88, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    spawnAmount: 18
+    spawnAmount:
+      min: 10
+      max: 18

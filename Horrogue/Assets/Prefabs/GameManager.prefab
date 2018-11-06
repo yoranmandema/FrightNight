@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1968991252197160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0822854, y: -1.7, z: 0.013683837}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,12 +59,14 @@ MonoBehaviour:
     m_Position: {x: -125, y: -125, z: 0}
     m_Size: {x: 250, y: 250, z: 1}
   maxGenerationAttempts: 50
-  additionalCorridorAmount: 3
-  additionalRoomAmount: 10
-  spawnRoomLayout: {fileID: 11400000, guid: e5913861e8c632c4a9f43ca32494c22e, type: 2}
+  additionalCorridorAmount: 5
+  additionalRoomAmount: 0
+  spawnRoomLayout: {fileID: 11400000, guid: 9eb050a883198964c9bcaa956c4e15b2, type: 2}
+  exitRoomLayout: {fileID: 11400000, guid: 598ce70299dc8d04093657f838a0dc63, type: 2}
   mainCorridorLayout: {fileID: 11400000, guid: 18ef593eb19977642b9396a393b5d391, type: 2}
   otherPremadeLayouts:
-  - {fileID: 11400000, guid: e7b17f8858197ae4fbb4c656c847cdf7, type: 2}
+  - {fileID: 11400000, guid: ad6be49a597bb7842a1583afba8ce8e1, type: 2}
+  - {fileID: 11400000, guid: cd4c2e4c7f4ddaf4eb27b8c8f558c9c9, type: 2}
   corridorLayouts: {fileID: 11400000, guid: 28c007141f33abf4c9e69ccc72f9a306, type: 2}
   roomLayouts: {fileID: 11400000, guid: 1e532af7782f43440bab6cd75b828410, type: 2}
   spawnAreaWidth: 10
@@ -81,9 +83,7 @@ MonoBehaviour:
     min: 8
     max: 15
   tileSize: 1
-  floorTiles:
-  - {fileID: 11400000, guid: af9e6613678eef249b9a5fc756ed87c0, type: 2}
-  - {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
+  floorTiles: {fileID: 0}
   wallTiles: {fileID: 11400000, guid: 5fc5893ea8f30724aa66cadc193f8311, type: 2}
   connectionTiles: {fileID: 11400000, guid: b0e8ab4273bde7f4ca4cc7969470b328, type: 2}
 --- !u!114 &114150000751926110
@@ -107,9 +107,11 @@ MonoBehaviour:
     type: 2}
   ControlledObject: {fileID: 0}
   CameraObject: {fileID: 0}
+  Exit: {fileID: 0}
   Player: {fileID: 0}
   Clown: {fileID: 0}
   Friends: []
+  PlayerIsAlive: 0
 --- !u!114 &114198062469927730
 MonoBehaviour:
   m_ObjectHideFlags: 1

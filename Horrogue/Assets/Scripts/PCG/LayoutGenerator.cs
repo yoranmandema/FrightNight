@@ -4,29 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[Serializable]
+public struct Range
+{
+	public int min;
+	public int max;
 
+	public Range(int min, int max)
+	{
+		this.min = min;
+		this.max = max;
+	}
+
+	public override string ToString()
+	{
+		return ("[" + min + "|" + max + "]");
+	}
+}
 
 public class LayoutGenerator : MonoBehaviour {
 
 	#region Structs
-	[Serializable]
-	public struct Range
-	{
-		public int min;
-		public int max;
-
-		public Range(int min, int max)
-		{
-			this.min = min;
-			this.max = max;
-		}
-
-		public override string ToString()
-		{
-			return ("[" + min + "|" + max + "]");
-		}
-	}
-
 	[Serializable]
 	public struct SpawnOptions
 	{
@@ -167,7 +165,7 @@ public class LayoutGenerator : MonoBehaviour {
 				for (int j = 0; j < r.variableFurnitures.Count; j++)
 				{
 					VariableRegionFurnitures vrf = r.variableFurnitures[j];
-					PlaceRegionFurnitures(r, (RegionFurnitures)vrf, vrf.spawnAmount);
+					PlaceRegionFurnitures(r, (RegionFurnitures)vrf, Random.Range(vrf.spawnAmount.min, vrf.spawnAmount.max + 1));
 				}
 
 				regions[i].isFurnished = true;
@@ -195,6 +193,8 @@ public class LayoutGenerator : MonoBehaviour {
 			GameObject placedFurniture = Instantiate(prefab, basePos + lt.position, lt.rotation, furnitureParent.transform);
 			placedFurniture.transform.localScale = lt.scale;
 			r.placedFurnitures.Add(placedFurniture);
+
+			if (amount > 0) amount--;
 		}
 	}
 

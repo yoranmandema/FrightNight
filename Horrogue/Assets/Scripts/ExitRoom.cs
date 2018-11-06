@@ -48,7 +48,7 @@ public class ExitRoom : MonoBehaviour {
             movement.enabled = false;
         }
 
-        print(playerIsInRoom);
+        //print(playerIsInRoom);
 	}
 
     void OnGUI() {

@@ -237,16 +237,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: floorTiles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: otherPremadeLayouts.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4041915422278414, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -281,75 +271,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
-      propertyPath: corridorLayouts
-      value: 
-      objectReference: {fileID: 11400000, guid: 28c007141f33abf4c9e69ccc72f9a306,
-        type: 2}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: roomLayouts
-      value: 
-      objectReference: {fileID: 11400000, guid: 1e532af7782f43440bab6cd75b828410,
-        type: 2}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: spawnRoomLayout
-      value: 
-      objectReference: {fileID: 11400000, guid: e5913861e8c632c4a9f43ca32494c22e,
-        type: 2}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: mainCorridorLayout
-      value: 
-      objectReference: {fileID: 11400000, guid: 18ef593eb19977642b9396a393b5d391,
-        type: 2}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: floorTiles.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05,
-        type: 2}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: floorTiles.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05,
-        type: 2}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: useRandomSeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
       propertyPath: additionalRoomAmount
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: additionalCorridorAmount
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114150000751926110, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: disableAutomaticGeneration
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968991252197160, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: otherPremadeLayouts.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
-        type: 2}
-      propertyPath: exitRoomLayout
-      value: 
-      objectReference: {fileID: 11400000, guid: 598ce70299dc8d04093657f838a0dc63,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c720cba1471ac5642b9bf49c6ccdf777, type: 2}
   m_IsPrefabAsset: 0

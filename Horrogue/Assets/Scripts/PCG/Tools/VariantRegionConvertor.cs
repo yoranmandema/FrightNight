@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class VariantRegionConvertor : BaseRegionConvertor {
 
-	[Header("Region Connections")]
+	[Header("Variable Region Furnitures")]
 	public List<VariableRegionFurnitures> variableRegionFurnitures;
 
 	[Header("Variant Region Output")]
@@ -15,16 +15,15 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 	public bool createPrefab = false;
 
 	protected GameObject variableFurnitureParent;
-	protected List<VariableRegionFurnitures> variableFurnitures;
 
 	protected override void CheckParents()
 	{
-		base.CheckParents();
 		if (variableFurnitureParent == null)
 		{
 			variableFurnitureParent = new GameObject("Variable Furniture Parent");
 			variableFurnitureParent.transform.SetParent(transform);
 		}
+		base.CheckParents();
 	}
 
 	protected override void Convert()
@@ -32,7 +31,7 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 		base.Convert();
 
 		// Convert variable region furniture
-		variableFurnitures = new List<VariableRegionFurnitures>();
+		variableRegionFurnitures = new List<VariableRegionFurnitures>();
 		for (int i = 0; i < variableFurnitureParent.transform.childCount; i++)
 		{
 			GameObject obj = variableFurnitureParent.transform.GetChild(i).gameObject;
@@ -46,7 +45,7 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 					vrf.AddPosition(trans.localPosition, trans.rotation, trans.localScale);
 				}
 
-				variableFurnitures.Add(vrf);
+				variableRegionFurnitures.Add(vrf);
 			}
 		}
 	}
@@ -59,7 +58,7 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 		}
 		if (variantRegionObject != null && (createPrefab || updatePrefab))
 		{
-			variantRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, regionFurnitures, regionConnections, floorTileset, variableFurnitures);
+			variantRegionObject.Init(this.name, innerRegionWidth, innerRegionLength, regionFurnitures, regionConnections, floorTileset, variableRegionFurnitures);
 
 			updatePrefab = false;
 		}
@@ -97,12 +96,12 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 
 		if (drawGizmos)
 		{
-			if (variableFurnitures != null)
+			if (variableRegionFurnitures != null)
 			{
 				Gizmos.color = Color.cyan;
-				for (int i = 0; i < variableFurnitures.Count; i++)
+				for (int i = 0; i < variableRegionFurnitures.Count; i++)
 				{
-					VariableRegionFurnitures vrf = variableFurnitures[i];
+					VariableRegionFurnitures vrf = variableRegionFurnitures[i];
 					for (int j = 0; j < vrf.spawnTransforms.Count; j++)
 					{
 						// Convert to world coords
