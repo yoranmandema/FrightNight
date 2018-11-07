@@ -9,34 +9,16 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1765175424795030}
+  m_RootGameObject: {fileID: 1304651164881398}
   m_IsPrefabAsset: 1
---- !u!1 &1326787717067000
+--- !u!1 &1304651164881398
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4602562736898756}
-  - component: {fileID: 212458610808742320}
-  - component: {fileID: 61254195750987122}
-  - component: {fileID: 114170830285077038}
-  m_Layer: 0
-  m_Name: Sprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1765175424795030
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4184050902479242}
+  - component: {fileID: 4590168479508782}
   m_Layer: 0
   m_Name: Chair Normal
   m_TagString: Untagged
@@ -44,39 +26,57 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4184050902479242
+--- !u!1 &1982990367238494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4778525535944442}
+  - component: {fileID: 212664909407633548}
+  - component: {fileID: 61251089584472652}
+  - component: {fileID: 114046909100709356}
+  m_Layer: 0
+  m_Name: Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4590168479508782
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1765175424795030}
+  m_GameObject: {fileID: 1304651164881398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4602562736898756}
+  - {fileID: 4778525535944442}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4602562736898756
+--- !u!4 &4778525535944442
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1326787717067000}
+  m_GameObject: {fileID: 1982990367238494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4184050902479242}
+  m_Father: {fileID: 4590168479508782}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61254195750987122
+--- !u!61 &61251089584472652
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1326787717067000}
+  m_GameObject: {fileID: 1982990367238494}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -96,28 +96,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.90444815, y: 0.25890768}
   m_EdgeRadius: 0
---- !u!114 &114170830285077038
+--- !u!114 &114046909100709356
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1326787717067000}
+  m_GameObject: {fileID: 1982990367238494}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afa1fc930dc24b643a8575cdaffd0067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   Offset: 0
-=======
-  Offset: -0.5
->>>>>>> 14ea7e2a5ad75c8cd3cbf13c614e5d3a0c32263c
---- !u!212 &212458610808742320
+--- !u!212 &212664909407633548
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1326787717067000}
+  m_GameObject: {fileID: 1982990367238494}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

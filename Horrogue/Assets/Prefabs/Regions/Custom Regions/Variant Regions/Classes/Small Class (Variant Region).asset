@@ -16,7 +16,7 @@ MonoBehaviour:
   innerRegionLength: 8
   furnitures:
   - name: Tables
-    prefab: {fileID: 1372229311558152, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
+    prefab: {fileID: 1063535939613098, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
     spawnTransforms:
     - position: {x: -2.25, y: 4.18, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}

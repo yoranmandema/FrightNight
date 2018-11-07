@@ -272,12 +272,12 @@ Prefab:
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: additionalRoomAmount
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114140738958205604, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
       propertyPath: additionalCorridorAmount
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114198062469927730, guid: c720cba1471ac5642b9bf49c6ccdf777,
         type: 2}
