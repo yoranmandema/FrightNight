@@ -16,11 +16,15 @@ public class VariantRegionConvertor : BaseRegionConvertor {
 
 	protected GameObject variableFurnitureParent;
 
+	private const string VARIABLE_FURNITURE_PARENT_NAME = "Variable Furniture Parent";
+
 	protected override void CheckParents()
 	{
+		Transform t = transform.Find(VARIABLE_FURNITURE_PARENT_NAME);
+		variableFurnitureParent = (t != null) ? t.gameObject : null;
 		if (variableFurnitureParent == null)
 		{
-			variableFurnitureParent = new GameObject("Variable Furniture Parent");
+			variableFurnitureParent = new GameObject(VARIABLE_FURNITURE_PARENT_NAME);
 			variableFurnitureParent.transform.SetParent(transform);
 		}
 		base.CheckParents();

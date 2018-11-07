@@ -19,5 +19,6 @@ MonoBehaviour:
   type: 4
   regionVariations:
   - {fileID: 11400000, guid: 83bcb09ad4b305846b4b8c232690040c, type: 2}
-  seperateVerticalRegions: 0
+  - {fileID: 11400000, guid: ac4e590ce5a7d50449160cd0bebd661d, type: 2}
+  useSeperateVerticalRegions: 0
   verticalRegionVariations: []

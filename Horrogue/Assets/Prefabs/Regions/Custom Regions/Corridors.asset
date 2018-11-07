@@ -15,11 +15,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
   type: 2
   regionVariations:
-  - {fileID: 11400000, guid: 641191c15825be34bbb25e7e748c05e8, type: 2}
   - {fileID: 11400000, guid: 1e93521ebae532e42a6decf010a7fc23, type: 2}
   - {fileID: 11400000, guid: e8bf35a0369ae6d44b604221e41850f9, type: 2}
   useSeperateVerticalRegions: 1
   verticalRegionVariations:
-  - {fileID: 11400000, guid: 18ef593eb19977642b9396a393b5d391, type: 2}
   - {fileID: 11400000, guid: 1b951d1fd6785854782c0589742eec6a, type: 2}
   - {fileID: 11400000, guid: 6fdb734d0e6d5c241b5ba9295b45dab3, type: 2}

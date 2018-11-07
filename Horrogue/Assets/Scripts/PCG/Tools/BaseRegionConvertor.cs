@@ -38,6 +38,9 @@ public abstract class BaseRegionConvertor : MonoBehaviour {
 	protected GameObject furnitureParent;
 	protected GameObject connectionParent;
 
+	protected const string FURNITURE_PARENT_NAME = "Furniture Parent",
+		TILE_PARENT_NAME = "Tile Parent",
+		CONNECTION_PARENT_NAME = "Connection Parent";
 
 	protected Dictionary<GameObject, RegionFurnitures> furnitureObjectsParents;
 	protected Dictionary<GameObject, RegionConnections> connectionObjectParents;
@@ -47,9 +50,6 @@ public abstract class BaseRegionConvertor : MonoBehaviour {
 	protected virtual void OnValidate()
 	{
 		CheckParents();
-
-		size = new Vector3(innerRegionWidth, innerRegionLength);
-		pos = transform.position;
 
 		if (update)
 		{
@@ -104,6 +104,8 @@ public abstract class BaseRegionConvertor : MonoBehaviour {
 				}
 			}
 		}
+
+		refreshTiles = false;
 	}
 
 	IEnumerator Destroy(GameObject go)
@@ -111,6 +113,7 @@ public abstract class BaseRegionConvertor : MonoBehaviour {
 		yield return new WaitForEndOfFrame();
 		DestroyImmediate(go);
 		go = null;
+		refreshTiles = true;
 	}
 
 	protected virtual void ApplyInspectorValues()
@@ -152,6 +155,14 @@ public abstract class BaseRegionConvertor : MonoBehaviour {
 
 	protected virtual void CheckParents()
 	{
+		if (innerRegionWidth != size.x || innerRegionLength != size.y || transform.position != pos)
+		{
+			size = new Vector3(innerRegionWidth, innerRegionLength);
+			pos = transform.position;
+
+			StartCoroutine(Destroy(tileParent));
+		}
+		
 		if (furnitureObjectsParents == null)
 		{
 			furnitureObjectsParents = new Dictionary<GameObject, RegionFurnitures>();
@@ -161,27 +172,29 @@ public abstract class BaseRegionConvertor : MonoBehaviour {
 			connectionObjectParents = new Dictionary<GameObject, RegionConnections>();
 		}
 
+		Transform t = transform.Find(FURNITURE_PARENT_NAME);
+		furnitureParent = ( t != null) ? t.gameObject : null;
 		if (furnitureParent == null)
 		{
-			furnitureParent = new GameObject("Furniture Parent");
+			furnitureParent = new GameObject(FURNITURE_PARENT_NAME);
 			furnitureParent.transform.SetParent(transform);
 			furnitureParent.transform.localPosition = Vector3.zero;
 		}
+
+		t = transform.Find(CONNECTION_PARENT_NAME);
+		connectionParent = (t != null) ? t.gameObject : null;
 		if (connectionParent == null)
 		{
-			connectionParent = new GameObject("Connection Parent");
+			connectionParent = new GameObject(CONNECTION_PARENT_NAME);
 			connectionParent.transform.SetParent(transform);
 			connectionParent.transform.localPosition = Vector3.zero;
 		}
 
-		if (innerRegionWidth != size.x || innerRegionLength != size.y || transform.position != pos)
+		t = transform.Find(TILE_PARENT_NAME);
+		tileParent = (t != null) ? t.gameObject : null;
+		if (refreshTiles || (tileParent == null && floorTileset != null && wallTileset != null))
 		{
-			StartCoroutine(Destroy(tileParent));
-		}
-
-		if (tileParent == null && floorTileset != null && wallTileset != null)
-		{
-			tileParent = new GameObject("Tile Parent (visaul purpose, ignore)");
+			tileParent = new GameObject(TILE_PARENT_NAME);
 			tileParent.transform.SetParent(transform);
 			tileParent.transform.localPosition = Vector3.zero;
 

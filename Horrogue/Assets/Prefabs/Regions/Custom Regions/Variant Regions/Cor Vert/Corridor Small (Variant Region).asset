@@ -15,6 +15,58 @@ MonoBehaviour:
   innerRegionWidth: 6
   innerRegionLength: 20
   furnitures: []
-  connections: []
+  connections:
+  - direction: 0
+    boundsList:
+    - m_Position: {x: -1, y: 10, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+    - m_Position: {x: 1, y: 10, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+    - m_Position: {x: -3, y: 10, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+  - direction: 3
+    boundsList:
+    - m_Position: {x: -4, y: -10, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+    - m_Position: {x: -4, y: 6, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  - direction: 1
+    boundsList:
+    - m_Position: {x: 3, y: -10, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+    - m_Position: {x: 3, y: 6, z: 0}
+      m_Size: {x: 1, y: 4, z: 0}
+  - direction: 2
+    boundsList:
+    - m_Position: {x: -1, y: -11, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+    - m_Position: {x: 1, y: -11, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+    - m_Position: {x: -3, y: -11, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
   tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
-  variableFurnitures: []
+  variableFurnitures:
+  - name: Locker Rows (side)
+    prefab: {fileID: 1871177759411146, guid: 2ab2544acfdf11046b13319212a47d17, type: 2}
+    spawnTransforms:
+    - position: {x: 2.65, y: 2.52, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.65, y: -1.48, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.65, y: -5.48, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.65, y: -5.48, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: -1, y: 1, z: 1}
+    - position: {x: -2.65, y: -1.48, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: -1, y: 1, z: 1}
+    - position: {x: -2.65, y: 2.52, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: -1, y: 1, z: 1}
+    spawnAmount:
+      min: 4
+      max: 6

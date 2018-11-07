@@ -14,7 +14,22 @@ MonoBehaviour:
   type: 2
   innerRegionWidth: 28
   innerRegionLength: 8
-  furnitures: []
+  furnitures:
+  - name: Locker Rows
+    prefab: {fileID: 1247067029666288, guid: 3eb60fded19ba6840a49a49f4f565e93, type: 2}
+    spawnTransforms:
+    - position: {x: -6.07, y: 3.83, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 6.09, y: 3.87, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -6.0699997, y: -3.18, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: -1, z: 1}
+    - position: {x: 6.09, y: -3.1400032, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: -1, z: 1}
   connections:
   - direction: 1
     boundsList:
@@ -41,4 +56,34 @@ MonoBehaviour:
     - m_Position: {x: 10, y: -5, z: 0}
       m_Size: {x: 4, y: 1, z: 0}
   tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
-  variableFurnitures: []
+  variableFurnitures:
+  - name: Water Fountains
+    prefab: {fileID: 1914384909828020, guid: a67c65341ac4a024590d172a5d28ecef, type: 2}
+    spawnTransforms:
+    - position: {x: -9.16, y: 4, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -2.79, y: 4, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 2.77, y: 4, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 9.27, y: 4, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -9.16, y: -3.9199982, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: -1, z: 1}
+    - position: {x: 2.7700005, y: -3.9199982, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: -1, z: 1}
+    - position: {x: -2.790001, y: -3.9199982, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: -1, z: 1}
+    - position: {x: 9.27, y: -3.92, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: -1, z: 1}
+    spawnAmount:
+      min: 2
+      max: 3

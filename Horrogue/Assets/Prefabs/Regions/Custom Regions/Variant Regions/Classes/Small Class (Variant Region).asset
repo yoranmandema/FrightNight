@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d269def0ea72bc4589c11c3300120fd, type: 3}
+  m_Name: Small Class (Variant Region)
+  m_EditorClassIdentifier: 
+  type: 0
+  innerRegionWidth: 6
+  innerRegionLength: 8
+  furnitures:
+  - name: Tables
+    prefab: {fileID: 1372229311558152, guid: bce043a5a09ed4e48b5b30da47958570, type: 2}
+    spawnTransforms:
+    - position: {x: -2.25, y: 4.18, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+  - name: Blackboard
+    prefab: {fileID: 1559057433295706, guid: 3b37c83e030047742ba9eef40e49b36f, type: 2}
+    spawnTransforms:
+    - position: {x: -0.02, y: 5.08, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+  connections:
+  - direction: 1
+    boundsList:
+    - m_Position: {x: 3, y: -4, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: 3, y: 2, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: 3, y: -1, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+  - direction: 0
+    boundsList:
+    - m_Position: {x: 2, y: 4, z: 0}
+      m_Size: {x: 1, y: 1, z: 0}
+  - direction: 3
+    boundsList:
+    - m_Position: {x: -4, y: -4, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: -4, y: 2, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+    - m_Position: {x: -4, y: -1, z: 0}
+      m_Size: {x: 1, y: 2, z: 0}
+  - direction: 2
+    boundsList:
+    - m_Position: {x: 2, y: -5, z: 0}
+      m_Size: {x: 1, y: 1, z: 0}
+    - m_Position: {x: -3, y: -5, z: 0}
+      m_Size: {x: 2, y: 1, z: 0}
+  tileset: {fileID: 11400000, guid: 4a65c58d50e4a754eac4eec173361c05, type: 2}
+  variableFurnitures:
+  - name: Bins
+    prefab: {fileID: 1260625184554590, guid: 4b175a73503e9f040af56b3cb290d773, type: 2}
+    spawnTransforms:
+    - position: {x: 1.72, y: 3.73, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.48, y: -3.96, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    spawnAmount:
+      min: 1
+      max: 1
+  - name: Chair and Table
+    prefab: {fileID: 1862723535872024, guid: 2903959bb52c7124e94003be0bffe63f, type: 2}
+    spawnTransforms:
+    - position: {x: 0, y: -2.58, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1, y: -2.37, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1, y: -2.37, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1, y: -0.3699999, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.024734497, y: -0.20926766, z: 0}
+      rotation: {x: -0, y: -0, z: -0.029603262, w: 0.9995618}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 1, y: -0.37, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: 0.8569946, y: 1.8854046, z: 0}
+      rotation: {x: -0, y: -0, z: 0.080420844, w: 0.996761}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -0.20999908, y: 1.6700001, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - position: {x: -1.21, y: 1.88, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    spawnAmount:
+      min: 6
+      max: 9
