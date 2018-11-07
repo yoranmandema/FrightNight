@@ -107,7 +107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa1fc930dc24b643a8575cdaffd0067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   Offset: 0
+=======
+  Offset: -0.5
+>>>>>>> 14ea7e2a5ad75c8cd3cbf13c614e5d3a0c32263c
 --- !u!212 &212458610808742320
 SpriteRenderer:
   m_ObjectHideFlags: 1
