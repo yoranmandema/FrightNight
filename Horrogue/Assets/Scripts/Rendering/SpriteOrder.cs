@@ -8,7 +8,7 @@ public class SpriteOrder : MonoBehaviour {
     private Transform parentTransform;
 
     void Start () {
-        parentTransform = transform.root;
+        parentTransform = transform.parent;
 
         SetZ();
     }
@@ -19,7 +19,7 @@ public class SpriteOrder : MonoBehaviour {
 
     void SetZ() {
         var currentPos = transform.localPosition;
-        currentPos.z = (parentTransform.position.y + Offset) / 50 + 10 - transform.parent.localPosition.z;
+        currentPos.z = (parentTransform.position.y + Offset) / 50 + 10;
 
         transform.localPosition = currentPos;
     }
