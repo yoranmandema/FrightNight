@@ -83,7 +83,7 @@ MonoBehaviour:
     - position: {x: -1, y: -0.3699999, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - position: {x: -0.024734497, y: -0.20926766, z: 0}
+    - position: {x: -0.024734497, y: -0.483, z: 0}
       rotation: {x: -0, y: -0, z: -0.029603262, w: 0.9995618}
       scale: {x: 1, y: 1, z: 1}
     - position: {x: 1, y: -0.37, z: 0}

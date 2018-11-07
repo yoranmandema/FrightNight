@@ -97,7 +97,10 @@ public class LayoutGenerator : MonoBehaviour {
 
 	#region Private Variables
     private List<Region> regions;
-	private RegionSpot[,] regionMap;
+    private List<Region> spawnableRegions;
+    private List<Region> spawnableRooms;
+
+    private RegionSpot[,] regionMap;
 
 	private List<Region> rooms;
 	private List<Region> corridors;
@@ -112,6 +115,7 @@ public class LayoutGenerator : MonoBehaviour {
     int numAddCor, numAddRoom;
 
     BoundsInt testBounds = new BoundsInt();
+
     #endregion
 
     public void GenerateLayout()
@@ -127,9 +131,16 @@ public class LayoutGenerator : MonoBehaviour {
 
         CreateTileMap();
 		PlaceRegionContents();
-	}
 
-	public GameObject GetExit()
+        spawnableRegions = new List<Region>(regions);
+        spawnableRegions.RemoveAt(0);
+        spawnableRegions.RemoveAt(1);
+
+        spawnableRooms = new List<Region>(rooms);
+        spawnableRooms.RemoveAt(0);
+    }
+
+    public GameObject GetExit()
 	{
 		return exitRoom.placedFurnitures[0];
 	}
@@ -208,9 +219,10 @@ public class LayoutGenerator : MonoBehaviour {
 		Region r;
 		if (excludeCorridors)
 		{
-			if (rooms.Count > 1)
+			if (rooms.Count > 0)
 			{
-				r = rooms[Random.Range(1, rooms.Count)];
+                r = spawnableRooms[Random.Range(0, spawnableRooms.Count)];
+                spawnableRooms.Remove(r);
 			} else
 			{
 				r = mainCorridor;
@@ -218,7 +230,15 @@ public class LayoutGenerator : MonoBehaviour {
 		}
 		else
 		{
-			r = regions[Random.Range(2, regions.Count)];
+            if (rooms.Count > 0)
+            {
+                r = spawnableRegions[Random.Range(0, spawnableRegions.Count)];
+                spawnableRegions.Remove(r);
+            }
+            else
+            {
+                r = mainCorridor;
+            }
 		}
 		if (r == exitRoom)
 		{

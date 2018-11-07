@@ -10,7 +10,7 @@ public class Interact : MonoBehaviour {
         var cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var direction = (cursorPos - transform.position).normalized;
 
-        Hit = Physics2D.CircleCast(transform.position, 0.2f, direction, InteractDistance, ~LayerMask.GetMask("Player"));
+        Hit = Physics2D.CircleCast(transform.position, 0.2f, direction, InteractDistance, ~LayerMask.GetMask("Player", "Default"));
 
         if (Input.GetButtonDown("Interact"))
         {
